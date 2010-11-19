@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     Nov 18, 2010 2:20:20 PM                                                        
+
+     Sones    
+     description
+                   
+     ptixiaki                                                                
+     ====================================================================== -->
+<project name="Sones" default="all" basedir=".">
+	
+	<!-- Project directories -->
+	<property name="src.dir" value="src"/>
+	<property name="lib.dir" value="lib"/>
+	<property name="dist.dir" value="dist"/>
+	<property name="bin.dir" value="bin"/>
+	<property name="test.dir" value="test"/>
+	
+	<!-- Temporary project directories -->
+	<property name="build.dir" value="build"/>
+	<property name="build.classes" value="${build.dir}/classes"/>
+	<property name="build.lib" value="${build.dir}/lib"/>
+	<property name="build.tests" value="${bin.dir}/tests"/>
+
+	<!-- Compiler options -->
+	<property name="javac.debug" value="on"/>
+	<property name="build.compiler" value="modern"/>
+
+	<!-- Libraries path -->
+	<path id="libpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>	
+		</fileset>
+	</path>
+	
+	<!-- Data's path -->
+	<path id="data.path">
+		<fileset dir="${basedir}">
+			<include name="*.txt"/>
+		</fileset>
+	</path>
+	
+	<!-- Distribution Libraries Classpath -->
+	<path id="distribution.libraries.classpath">
+		<fileset dir="${build.dir}">
+			<include name="lib/*.jar"/>
+		</fileset>
+	</path>
+	
+	<!-- ================================= 
+          target: prepare              
+         ================================= -->
+    <target name="prepare" description="Creates project's directories">
+        <mkdir dir="${build.dir}"/>
+    	<mkdir dir="${build.classes}"/>
+    	<mkdir dir="${build.lib}"/>
+    	<mkdir dir="${build.tests}"/>
+    	
+    	<copy todir="${build.lib}">
+    		<fileset dir="${lib.dir}"></fileset>
+    	</copy>
+			
+		<mkdir dir="${dist.dir}"/>
+	    <mkdir dir="${dist.dir}/bin"/>
+	    <mkdir dir="${dist.dir}/lib"/>
+    </target>
+	
+	<!-- ================================= 
+          target: build              
+         ================================= -->
+    <target name="build" depends="cleanall,prepare" description="Builds the application">
+        <!-- Compile the application classes -->
+    	<javac srcdir="${src.dir}"
+    		destdir="${build.classes}"
+    		debug="${javac.debug}"
+    		deprecation="on">
+    		<classpath refid="libpath"/>
+    	</javac>
+    	
+    	<!--   It doesn't work because takes the absolute paths 
+    	<pathconvert property="mf.libpath" pathsep=" ">
+       		<path refid="libpath"></path>	
+        </pathconvert>
+        -->
+    	<manifestclasspath property="jar.classpath" jarfile="${build.lib}/proof.jar">
+    		<classpath refid="libpath"></classpath>
+    	</manifestclasspath>
+    	<jar jarfile="${build.dir}/proof.jar"
+    		basedir="${build.classes}">
+    		<manifest>
+    			<attribute name="Main-Class" value="proof.Main"/>
+    			<attribute name="Class-Path" value="${jar.classpath}"/>
+    		</manifest>	
+    	</jar>
+    </target>
+	
+
+	<!-- ================================= 
+          target: deploy              
+         ================================= -->
+    <target name="deploy" depends="build" description="Deploy the application in a ready-to-run state">
+        <copy todir="${dist.dir}/lib">
+        	<fileset dir="${lib.dir}" includes="*.jar"/>
+        </copy>
+    	<copy todir="${dist.dir}/bin" >
+    		<fileset dir="${build.dir}" includes="proof.jar"/>
+    		<fileset dir="${basedir}" includes="*.txt"/>
+    	</copy>
+    </target>
+
+
+	<!-- ================================= 
+          target: all              
+         ================================= -->
+    <target name="all" depends="deploy">
+        
+    </target>
+
+	
+	<!-- ================================= 
+          target: clean              
+         ================================= -->
+    <target name="clean" description="Delete the temporary files">
+        <delete verbose="false">
+        	<fileset dir="${build.classes}"/>
+        	<fileset dir="${build.lib}"/>
+        	
+        	<fileset dir="${dist.dir}"/>
+        	
+        </delete>
+    </target>
+	
+	
+	<!-- ================================= 
+          target: cleanall              
+         ================================= -->
+    <target name="cleanall" depends="clean" description="Deletes build folder">
+        <delete dir="${build.dir}"/>
+    </target>
+
+
+</project>
