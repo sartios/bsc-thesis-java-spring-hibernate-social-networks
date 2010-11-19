@@ -68,7 +68,7 @@
 	<!-- ================================= 
           target: build              
          ================================= -->
-    <target name="build" depends="cleanall,prepare" description="Builds the application">
+    <target name="build" depends="prepare" description="Builds the application">
         <!-- Compile the application classes -->
     	<javac srcdir="${src.dir}"
     		destdir="${build.classes}"
