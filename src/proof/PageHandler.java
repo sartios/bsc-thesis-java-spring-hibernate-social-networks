@@ -4,8 +4,17 @@ package proof;
 import java.net.*;
 import java.io.*;
 
+/**
+ * Web pages handler
+ * @author ptixiaki
+ */
 public class PageHandler {
-    
+
+    /**
+     * Connects to the url and get its contents
+     * @param homeURL
+     * @param content
+     */
     public static void getPage(String homeURL, StringBuffer content){
 
         try {     

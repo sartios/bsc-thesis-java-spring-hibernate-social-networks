@@ -4,10 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 
-
+/**
+ * This class reads and writes files
+ */
 public class FileHandler {
 
- 
+    /**
+     * Reads from file
+     * @param filename
+     * @return
+     * @throws IOException
+     */
     public static String readFile (String filename) throws IOException{
 
            FileInputStream file = new FileInputStream(filename);
@@ -22,6 +29,13 @@ public class FileHandler {
             file.close();
         return content;
     }
+
+    /**
+     * Puts a file in an array, where every row is a line
+     * @param filename
+     * @return array of the lines
+     * @throws IOException
+     */
     public static String[] getTableFromFile(String filename) throws IOException{
            FileInputStream file = new FileInputStream(filename);
            BufferedReader br = new BufferedReader(new InputStreamReader(file));
@@ -36,6 +50,13 @@ public class FileHandler {
           String[] lineTable = lineList.toArray(new String[0]);
            return lineTable;
     }
+
+    /**
+     * Puts a file in an list, where each node is a line
+     * @param filename
+     * @return list of the lines
+     * @throws IOException
+     */
         public static List<String> getListFromFile(String filename) throws IOException{
            FileInputStream file = new FileInputStream(filename);
            BufferedReader br = new BufferedReader(new InputStreamReader(file));
@@ -51,7 +72,12 @@ public class FileHandler {
            return lineList;
     }
 
-
+    /**
+     * Writes into given file the content
+     * @param filename
+     * @param content
+     * @throws IOException
+     */
     public static void writeFile (String filename,String content) throws IOException{
             FileWriter fstream = new FileWriter(filename);
             BufferedWriter fileBuffer = new BufferedWriter(fstream);
@@ -59,39 +85,55 @@ public class FileHandler {
             fileBuffer.close();
 
     }
+
+    /**
+     * Writes into file. Gets an array and for each row creates a new line
+     * @param filename
+     * @param content
+     * @throws IOException
+     */
         public static void writeFile (String filename,String[] content) throws IOException{
             FileWriter fstream = new FileWriter(filename);
             BufferedWriter fileBuffer = new BufferedWriter(fstream);
-           for(int i=0;i<content.length;i++){
-            fileBuffer.append(content[i]);
-            fileBuffer.newLine();
+            for(int i=0;i<content.length;i++){
+                fileBuffer.append(content[i]);
+                fileBuffer.newLine();
            }
 
             fileBuffer.close();
 
     }
-            public static void writeFile (String filename,List<String> content) throws IOException{
-            FileWriter fstream = new FileWriter(filename);
-            BufferedWriter fileBuffer = new BufferedWriter(fstream);
-           for(int i=0;i<content.size();i++){
+    /**
+     * Writes into file. Gets a list and for each node creates a line
+     * @param filename
+     * @param content
+     * @throws IOException
+     */
+        public static void writeFile (String filename,List<String> content) throws IOException{
+        FileWriter fstream = new FileWriter(filename);
+        BufferedWriter fileBuffer = new BufferedWriter(fstream);
+        for(int i=0;i<content.size();i++){
             fileBuffer.append(content.get(i));
             fileBuffer.newLine();
-           }
+       }
 
-            fileBuffer.close();
+        fileBuffer.close();
 
     }
 
 
-          
+        /**
+         * Append new content to file.
+         * @param filename
+         * @param content
+         * @throws IOException
+         */
     public static void appendFile (String filename,String content) throws IOException{
-            FileWriter fstream = new FileWriter(filename,true);
-            BufferedWriter fileBuffer = new BufferedWriter(fstream);
-           fstream.append(content);
-            fileBuffer.newLine();
-                    
-            fileBuffer.close();
-
+        FileWriter fstream = new FileWriter(filename,true);
+        BufferedWriter fileBuffer = new BufferedWriter(fstream);
+        fstream.append(content);
+        fileBuffer.newLine();
+        fileBuffer.close();
     }
 
 

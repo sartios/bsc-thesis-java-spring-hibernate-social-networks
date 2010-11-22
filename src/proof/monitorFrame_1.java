@@ -20,98 +20,38 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import proof.FeedObjects.FeedObject;
 import proof.Searcher.keywordInfo;
+public class monitorFrame_1 extends javax.swing.JFrame {
 
-
-/**
- * A GUI class which shows the searching results. We can chose the keyword
- * or the combo and get the results. We can see as well some informations,
- * the date of this search and when it will be the next.
- *
- * This class uses the @see javax.swing.DefaultListModel which it's
- * implements the @see java.util.Vector interface and notifies the
- * @see javax.swing.event.ListDataListener for changes occur.
- */
-public class monitorFrame extends javax.swing.JFrame {
-
-// The try icon
 final TrayIcon trayIcon =  new TrayIcon((new ImageIcon(getClass().getResource("/proof/tray.gif"), "tray icon")).getImage());
 
-/**
- *  The map which comments are saved. First parameter of map is the ID of comment
- *  and the second is an FeedObject which contains the comments.
- */
+
 Map<String,FeedObjects.FeedObject> commentMap= new HashMap<String,FeedObjects.FeedObject>();
-
-/**
- * A map which contains the keywords and for each keyword there is another map
- * which contains the combination (id,published_content). The general map is like
- *
- *              keyword => (id => published_content)
- */
 private Map<String,Map<String,FeedObjects.FeedObject>> resultsMap = new HashMap<String,Map<String,FeedObjects.FeedObject>>();
-
-/**
- * Contains the ID's of the found results. This list will be shown on GUI
- */
 private DefaultListModel resultListModel = new DefaultListModel();
-
-/**
- * Contains the ID's of the found comments. This list will be shown on GUI
- */
 private DefaultListModel commentListModel = new DefaultListModel();
-
-/**
- * The list of keywords and combos that will be shown on GUI
- */
 private DefaultComboBoxModel keywordsComboModel = new DefaultComboBoxModel();
-
-/**
- * @see proof.monitorEngine
- */
 private monitorEngine engine;
-
-/**
- * @see  proof.monitorSettings
- */
 private monitorSettings monSettings;
-
-/**
- * Contains the statistics of the keywords, specified by their ID.
- * Statistics like how many times this keyword or combo found.
- */
 Map<String,keywordInfo> keywordStats = new HashMap<String,keywordInfo>();
-
 final SystemTray tray ;
 
-
-/**
- * Constructor which initializes the GUI and sends the program into tray
- * @param settings
- */
-public monitorFrame(monitorSettings settings) {
+ public monitorFrame_1(monitorSettings settings) {
         monSettings=settings;
         initComponents();
-        
-        // Send to try
         if(SystemTray.isSupported()){
+            
             tray=SystemTray.getSystemTray();
             initializeTray();
         }else{
             tray=null;
         }
-          /**
-           * We get the keywords from the GUI and we put them in a new map, the
-           * {@link #resultsMap}
-           */
+            
         for(int j=0;j<settings.getKeywords().size();j++){
-            resultsMap.put(settings.getKeywords().get(j).getKeyword(), new HashMap<String,FeedObjects.FeedObject>());
+        resultsMap.put(settings.getKeywords().get(j).getKeyword(), new HashMap<String,FeedObjects.FeedObject>());
         }
         
         engine = new monitorEngine(settings);
-
-        /**
-         * The timer for internals
-         */
+        
         MonitorTimer timer = new MonitorTimer(settings.timerInterval);
         timer.start();
        
@@ -466,65 +406,46 @@ public monitorFrame(monitorSettings settings) {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Tray initialization
-     */
-public  void initializeTray(){
-    
-    try{
-        // We add into the tray obj some elements. Now only icon & menu
+        public  void initializeTray(){
+          try{
         tray.add(trayIcon);
         trayIcon.setPopupMenu(trayPopup);
         trayIcon.setImageAutoSize(true);
-    }
-    catch(Exception e){}
-
-    // We create a mouse event listener and add him double click event.
-    MouseListener mouseListener = new MouseListener() {
-        // Double click
+        }catch(Exception e){}
+        MouseListener mouseListener = new MouseListener() {
         public void mouseClicked(MouseEvent e) {
             if(e.getClickCount()==2){
             setVisible(true);
-            }
+             }
         }
-
         public void mouseEntered(MouseEvent e) {
-        }
 
+        }
         public void mouseExited(MouseEvent e) {
-        }
 
+        }
         public void mousePressed(MouseEvent e) {
+
         }
         public void mouseReleased(MouseEvent e) {
+
         }
     };
-
-    // We add the mouse listener into the tray object
     trayIcon.addMouseListener(mouseListener);
-}
 
-    /**
-     * It shows the comments of the publish which we have select. If there aren't
-     * comments then the button is disabled. In addition, if we comments are empty
-     * then we get a notification from the Console
-     * @param evt
-     */
+    }
+
+
     private void showCommentsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showCommentsButtonActionPerformed
 
         FeedObjects.FeedObject viewedObject,commentObject;
-
-        // We get the keyword's text
         viewedObject=resultsMap.get(keywordsCombo.getSelectedItem().toString()).get(foundList.getSelectedValue().toString());
 
-        // We get the comments of the published text
         commentMap=viewedObject.getComments();
-
 
         if(commentMap==null){
             System.out.println("No comments");
-        }
-        else{
+        } else{
             commentListModel.clear();
             commentsFrame.setVisible(true);
             commentsFrame.setBounds(this.getX()+this.getWidth(),this.getY(), 500, 300);
@@ -532,13 +453,12 @@ public  void initializeTray(){
             comCreatedField.setText("");
             comMessageArea.setText("");
 
-            // We sort a map by
             commentMap = UtilityFunctions.mapSort.sortByValue(commentMap);
             Iterator commentIterator =  commentMap.entrySet().iterator();
             Map.Entry commentEntry;
 
             while(commentIterator.hasNext()){
-                // We add the id of the comment to the comment list box
+
                 commentEntry = (Map.Entry) commentIterator.next();
                 commentObject=(FeedObject) commentEntry.getValue();
                 commentListModel.addElement(commentObject.getId());
@@ -551,10 +471,6 @@ public  void initializeTray(){
     private void foundListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_foundListKeyPressed
     }//GEN-LAST:event_foundListKeyPressed
 
-    /**
-     * Sets gui edit boxes with the informations of the comment
-     * @param evt
-     */
     private void commentListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_commentListKeyPressed
         FeedObjects.FeedObject viewedComment;
         viewedComment=commentMap.get(commentListModel.get(commentList.getSelectedIndex()).toString());
@@ -564,82 +480,59 @@ public  void initializeTray(){
 }//GEN-LAST:event_commentListKeyPressed
 
 
-/**
- * Refreshes the list every time that a new word is selected from the combo box
- * @param keyword
- */
-public void refreshResultList(String keyword){
-    Searcher.keywordInfo info;
 
-    // Clears te result list box
-    resultListModel.clear();
+      public void refreshResultList(String keyword){
+          Searcher.keywordInfo info;
+          resultListModel.clear();
 
-    Iterator mapIter = resultsMap.get(keyword).entrySet().iterator();
-    
-    // We get the statistics from the keyword
-    info=keywordStats.get(keyword);
+        Iterator mapIter = resultsMap.get(keyword).entrySet().iterator();
+        info=keywordStats.get(keyword);
 
-    // Get the results that found into the edit box
-    lastResultsFoundField.setText(String.valueOf(info.getLastTimeFound())+": Results Found last time");
+        lastResultsFoundField.setText(String.valueOf(info.getLastTimeFound())+": Results Found last time");
+        totalResultsFound.setText(String.valueOf(info.getTotalTimesFound())+": Times found total");
+        averageResultsFound.setText(String.valueOf(info.getAverageTimesFound())+": Average times found per search");
 
-    // Get the results of how many times found into the edit box
-    totalResultsFound.setText(String.valueOf(info.getTotalTimesFound())+": Times found total");
+        for(int i=0;i<resultsMap.get(keyword).size();i++){
+         Map.Entry entry = (Map.Entry) mapIter.next();
+         resultListModel.addElement(entry.getKey().toString());
+        }
 
-    // Get the results of average founds of the keyword into a search and put it into the edit box
-    averageResultsFound.setText(String.valueOf(info.getAverageTimesFound())+": Average times found per search");
 
-    // We update the result list box with the entries of comments. There we see the ID
-    for(int i=0;i<resultsMap.get(keyword).size();i++){
-        Map.Entry entry = (Map.Entry) mapIter.next();
-        resultListModel.addElement(entry.getKey().toString());
-    }
-}
 
-/**
- * Every time that an entry is been selected with enter the form is been updated
- */
-public void updateResultView(){
-
-    try{
-        FeedObjects.FeedObject viewedObject;
-
-        // The selected object. We get it contents from the map
-        viewedObject=resultsMap.get(keywordsCombo.getSelectedItem().toString()).get(foundList.getSelectedValue().toString());
-
-        // We set all the fields of the form
-        fromField.setText(viewedObject.getFromName());
-        typeField.setText(viewedObject.getType());
-        captionField.setText(viewedObject.getCaption());
-        linkField.setText(viewedObject.getLink());
-        sourceField.setText(viewedObject.getSource());
-        descriptionArea.setText(viewedObject.getDescription());
-        messageArea.setText(viewedObject.getMessage());
-        nameField.setText(viewedObject.getName());
-        createdField.setText(viewedObject.getCreatedTime().toString());
-        foundAtField.setText(viewedObject.getSiteSource());
+      }
+      public void updateResultView(){
 
         try{
-            // In a URL object we return the picture
+         FeedObjects.FeedObject viewedObject;
+         viewedObject=resultsMap.get(keywordsCombo.getSelectedItem().toString()).get(foundList.getSelectedValue().toString());
+         fromField.setText(viewedObject.getFromName());
+         typeField.setText(viewedObject.getType());
+         captionField.setText(viewedObject.getCaption());
+         linkField.setText(viewedObject.getLink());
+         sourceField.setText(viewedObject.getSource());
+         descriptionArea.setText(viewedObject.getDescription());
+         messageArea.setText(viewedObject.getMessage());
+         nameField.setText(viewedObject.getName());
+         createdField.setText(viewedObject.getCreatedTime().toString());
+         foundAtField.setText(viewedObject.getSiteSource());
+         try{
             java.net.URL where = new URL(viewedObject.getPicture());
             ImageIcon anotherIcon = new ImageIcon(where);
             imageLabel.setIcon( anotherIcon);
+
         }catch(Exception e){
-
-            try{
-            ImageIcon icon = new ImageIcon(getClass().getResource("/proof/nophoto.gif"));
-            imageLabel.setIcon(icon);}
-
-            catch(Exception e2){}
+        try{
+        ImageIcon icon = new ImageIcon(getClass().getResource("/proof/nophoto.gif"));
+             imageLabel.setIcon(icon);}catch(Exception e2){}
         }
         if(viewedObject.getComments()!=null){
             showCommentsButton.setEnabled(true);
         }
         else{
-            showCommentsButton.setEnabled(false);
+             showCommentsButton.setEnabled(false);
         }
-    }catch(Exception e){ }
-}
-
+        }catch(Exception e){ }
+      }
     private void comFromFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comFromFieldActionPerformed
 
 }//GEN-LAST:event_comFromFieldActionPerformed
@@ -679,14 +572,9 @@ public void updateResultView(){
     private void lastResultsFoundFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lastResultsFoundFieldActionPerformed
 
     }//GEN-LAST:event_lastResultsFoundFieldActionPerformed
-
-    /**
-     * The timer which is used by the updates
-     */
+ 
     public class MonitorTimer implements ActionListener{
         private Timer t;
-
-        // The interval of search
         int Interval;
         MonitorTimer(int interval){
             t=new Timer(interval,this);
@@ -700,72 +588,48 @@ public void updateResultView(){
             t.stop();
         }
 
-        /**
-         * It updates the results.
-         * @param e
-         */
-        public void actionPerformed(ActionEvent e) {
+     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == t) {
-            updateMonitor(Interval);
+                    updateMonitor(Interval);
         }
     }
     }
+     public void updateMonitor(int interval){
+          
 
-    /**
-     * This method runs every time that we want to make a new search
-     * @param interval
-     */
-    public void updateMonitor(int interval){
+            Date searchTime = timeHandler.getCurrentTime().getTime();
+            long next;
+            Map<String,Map<String,FeedObjects.FeedObject>> recentResults= new HashMap<String,Map<String,FeedObjects.FeedObject>>();
+       
 
-        // The time get updated
-        Date searchTime = timeHandler.getCurrentTime().getTime();
 
-        long next;
+            recentResults=engine.performSearch();
+            keywordStats=engine.getKeywordStats();
+            trayNotifier();
 
-        // The map of results
-        Map<String,Map<String,FeedObjects.FeedObject>> recentResults= new HashMap<String,Map<String,FeedObjects.FeedObject>>();
-
-        // We get the new results
-        recentResults=engine.performSearch();
-
-        // We get the new statistics
-        keywordStats=engine.getKeywordStats();
-
-        // We run the searching and notify the user if we found something
-        trayNotifier();
-        for(int i=0;i<monSettings.keys.size();i++){
-
-            // We insert to every map of the found keyword the new results
+            for(int i=0;i<monSettings.keys.size();i++){
+            
             resultsMap.get(monSettings.getKeywords().get(i).getKeyword()).putAll(recentResults.get(monSettings.getKeywords().get(i).getKeyword()));
-
-            // We sort the all the maps
             resultsMap.put(monSettings.getKeywords().get(i).getKeyword(),UtilityFunctions.mapSort.sortByValue(resultsMap.get(monSettings.getKeywords().get(i).getKeyword())));
-        }
+            }
 
-        // GUI components is being updated
 
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
-        lastSearchLabel.setText("Last Search Performed At : "+sdf.format(searchTime));
-        next=searchTime.getTime()+interval;
-        searchTime.setTime(next);
-        nextSearchLabel.setText("Next Search Will Be Performed At : "+sdf.format(searchTime));
-        trayIcon.setToolTip("Next Search Will Be Performed At : "+sdf.format(searchTime));
-        if(keywordsCombo.getSelectedItem()!=null){
-            refreshResultList(keywordsCombo.getSelectedItem().toString());
-        }
-    }
+                SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+                lastSearchLabel.setText("Last Search Performed At : "+sdf.format(searchTime));
+                next=searchTime.getTime()+interval;
+                searchTime.setTime(next);
+                nextSearchLabel.setText("Next Search Will Be Performed At : "+sdf.format(searchTime));
+                trayIcon.setToolTip("Next Search Will Be Performed At : "+sdf.format(searchTime));
+                if(keywordsCombo.getSelectedItem()!=null)
+                {refreshResultList(keywordsCombo.getSelectedItem().toString());}
+       
 
-    /**
-     * Shows the new notifications
-     */
+     }
+
      private void trayNotifier(){
-
-         // Gets the new notifications
         String notification=engine.getNotifications();
-
         if(notification!=null){
-            // Display them
-            trayIcon.displayMessage("Notification event ocured", notification, TrayIcon.MessageType.INFO);
+        trayIcon.displayMessage("Notification event ocured", notification, TrayIcon.MessageType.INFO);
         }
      }
      
