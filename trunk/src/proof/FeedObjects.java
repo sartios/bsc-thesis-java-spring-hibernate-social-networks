@@ -10,8 +10,17 @@ import java.util.Map;
 
 public abstract interface FeedObjects {
 
+ /**
+  * The factory of feeds.
+  */
  public static class feedFactory{
 
+     /**
+      * Creates an object of the given type and sets the id
+      * @param type
+      * @param Id
+      * @return FeedObject of the given type
+      */
    public static FeedObject getFeedClass(String type,String Id){
        if(type.equals("status")){
            StatusObject statusClass = new StatusObject(type,Id);
@@ -42,7 +51,12 @@ public abstract interface FeedObjects {
 public abstract class FeedObject implements Comparable{
 
 
-    private String id,type,updatedTime,fromId,fromName,siteSource;
+    private String id;
+    private String type;
+    private String updatedTime;
+    private String fromId;
+    private String fromName;
+    private String siteSource;
     Date createdTime;
     Map comments=null;
 
@@ -104,17 +118,30 @@ public abstract class FeedObject implements Comparable{
    public abstract String getPicture();
    public abstract String getSubject();
 
-     public int compareTo(Object feed2) throws ClassCastException {
-    if (!(feed2 instanceof FeedObject))
+   /**
+    * This object and the object that coming as parameter are being compared
+    * by the date that created. The object is extending the Comparable @see java.lang.Comparable
+    * so it must implements this method.
+    * @param feed2
+    * @return 0 when the dates are same
+    * @throws ClassCastException if the two objects haven't the same class or dirived class
+    */
+    public int compareTo(Object feed2) throws ClassCastException {
+
+    // The two objects must have the same class or dirived class
+    // otherwise we throw an exception
+    if (!(feed2 instanceof FeedObject)){
       throw new ClassCastException("FbFeed Object Expected");
+    }
+    // Creation date of the parameter feed
     Date feed2Date = ((FeedObject) feed2).getCreatedTime();
+
+    // Creation date of this feed
     Date thisDate = this.getCreatedTime();
-   // return thisDate.compareTo(feed2Date);
+
+    // return thisDate.compareTo(feed2Date);
     return feed2Date.compareTo(thisDate);
   }
-
-
-
 
 }
 
@@ -383,6 +410,10 @@ public class entityObject{
 
 }
 
+
+/**
+ * This class contains the keyword and the threshold
+ */
 public class keywordObject{
     protected String keyword;
     protected int threshold;
@@ -410,7 +441,12 @@ public class keywordObject{
     
 }
 
+/**
+ * This class extends the keywordObject and provides the mechanism of combo objects
+ */
 public class comboObject extends keywordObject {
+
+    // The combo
     private List<String> keyList;
     boolean mode=false;
 

@@ -1,4 +1,8 @@
+
+
 package proof;
+
+
 
 import javax.swing.DefaultListModel;
 
@@ -10,264 +14,144 @@ import twitter4j.PagableResponseList;
 import twitter4j.Twitter;
 import twitter4j.User;
 
-public class configFrame extends javax.swing.JFrame {
 
-    /**
-     * Vector of Facebook's public sites
-     */
+
+public class configFrame_1 extends javax.swing.JFrame {
     private DefaultListModel pSitesListModel = new DefaultListModel();
-    /**
-     * Vector of User's liked Facebook sites
-     */
     private DefaultListModel uSitesListModel = new DefaultListModel();
-    /**
-     * Vector of User's friends
-     */
     private DefaultListModel frSitesListModel = new DefaultListModel();
-    /**
-     * 
-     */
     private DefaultListModel keywordListModel = new DefaultListModel();
-    /**
-     * Vector of Twitter's public sites
-     */
     private DefaultListModel twitterListModel = new DefaultListModel();
-    /**
-     * Vector of User's Twitter firends
-     */
     private DefaultListModel twitterFriendsListModel = new DefaultListModel();
-    /**
-     * Vector of User's followers
-     */
     private DefaultListModel twitterFollowersListModel = new DefaultListModel();
-    /**
-     *
-     */
     private DefaultListModel keysComboListModel = new DefaultListModel();
-    /**
-     * 
-     */
     private DefaultComboBoxModel keysComboComboModel = new DefaultComboBoxModel();
-    /**
-     *
-     */
-    FeedObjects.entityObject[] uSitelist, frList;
-    /**
-     *
-     */
+    FeedObjects.entityObject[] uSitelist,frList;
     List<FeedObjects.keywordObject> keywordObjList = new ArrayList();
-    /**
-     *
-     */
     List<FeedObjects.comboObject> comboObjList = new ArrayList();
-    /**
-     *
-     */
     configFrameSettings settings;
-    /**
-     * 
-     */
     Twitter twitter;
+    
 
-    public configFrame(configFrameSettings set) {
-        settings = set;
 
-        if (settings.twAuth == true) {
-            twitter = set.twitter;
+    public configFrame_1(configFrameSettings set) {
+        settings=set;
+
+          if(settings.twAuth==true){
+          twitter = set.twitter;
         }
         initComponents();
         modeRadioGroup.add(this.orModeRadio);
         modeRadioGroup.add(this.andModeRadio);
-        modeRadioGroup.setSelected(andModeRadio.getModel(), true);
+        modeRadioGroup.setSelected(andModeRadio.getModel(),true);
         firstSearchSpinner.setValue(timeHandler.getCurrentTime().getTime());
+      
 
-
-
+        
     }
 
-    /**
-     * Initialize Facebook public list box
-     * This version reads the public sites from a txt file.
-     *
-     * @version 1.0
-     * @return public users list
-     */
-    public DefaultListModel initializePSiteLists() {
+ 
 
-        try {
-            List<String> siteList;
 
-            siteList = FileHandler.getListFromFile("psiteslist.txt");
 
-            for (int i = 0; i < siteList.size(); i++) {
-                pSitesListModel.add(i, siteList.get(i));
-            }
-        } catch (Exception GuiException) {
-            System.out.println(GuiException.getMessage());
+
+
+
+    public DefaultListModel initializePSiteLists(){
+      
+        try{    
+        List<String> siteList;
+
+        siteList=FileHandler.getListFromFile("psiteslist.txt");
+        
+        for(int i=0;i<siteList.size();i++){
+        pSitesListModel.add(i, siteList.get(i));
         }
-
+        }catch(Exception GuiException){System.out.println(GuiException.getMessage());}
+             
         return pSitesListModel;
     }
+        public DefaultListModel initializeTwitterList(){
 
-    /**
-     * Initialize the list box which contains the twitter public list.
-     * With public list we mean entities like CNN, BBC etc.
-     *
-     * This version reads the public sites from a file.
-     * 
-     * DefaultListModel is something like Vector
-     *
-     * @version 1.0
-     * @return public sites list
-     */
-    public DefaultListModel initializeTwitterList() {
-        try {
-            List<String> siteList;
+        try{
+        List<String> siteList;
 
-            // Get the list from the file
-            siteList = FileHandler.getListFromFile("twitterlist.txt");
+        siteList=FileHandler.getListFromFile("twitterlist.txt");
 
-            for (int i = 0; i < siteList.size(); i++) {
-                // Add them to the vector
-                twitterListModel.add(i, siteList.get(i));
-            }
-        } catch (Exception GuiException) {
-            System.out.println(GuiException.getMessage());
+        for(int i=0;i<siteList.size();i++){
+        twitterListModel.add(i, siteList.get(i));
         }
+        }catch(Exception GuiException){System.out.println(GuiException.getMessage());}
 
         return twitterListModel;
     }
-
-    /**
-     * Initialize the account list box. It contains the pages that user likes.
-     * We have to note that facebook uses JSON to represent the data. When we
-     * make a call that returns JSON file.
-     *
-     * <b><i> J S O N </i></b>
-     *
-     * JSON is a data interchange format. It is a text format which is independent
-     * but uses conventions that are familiar with C-family languages.
-     *
-     * JSON is built on two structures:
-     * <ul>
-     *  <li> A collection of name/pairs. In various languages, this is realized
-     *      like object, structure, record, hash table, dictionary, keyed table
-     *      or associative array.</li>
-     *  <li> An ordered list of values. In most languages is realized like an array,
-     *       vector, list or sequence.</li>
-     * </ul>
-     *
-     * Example :
-     *
-     * { "widget" : {
-     *     "debug" : "on"
-     *     "window" : {
-     *          "title" : "Sample Widget"
-     *          "name"  : "main_window"
-     *          "width" : 500
-     *          "height": 500
-     *      }
-     *  }
-     * }
-     *
-     * @return pages which are liked
-     */
-    public DefaultListModel initializeUSiteLists() {
-
-        // Check is it's authorized
-        if (settings.fbAuth == true) {
-            try {
-                // We use the JsonHandler to parse the entries
-                uSitelist = JsonHandler.ExtractEntitysFromRest(RestHandler.getPagesUserLikes(settings.fbToken));
-
-                for (int i = 0; i < uSitelist.length; i++) {
-
-                    uSitesListModel.add(i, uSitelist[i].getName());
-                }
-            } catch (Exception GuiException) {
-                System.out.println(GuiException.getMessage());
-            }
-
+    public DefaultListModel initializeUSiteLists(){
+      
+        if(settings.fbAuth==true){
+        try{
+       
+        uSitelist=JsonHandler.ExtractEntitysFromRest(RestHandler.getPagesUserLikes(settings.fbToken));
+        
+        for(int i=0;i<uSitelist.length;i++){
+           
+        uSitesListModel.add(i, uSitelist[i].getName());
+        }
+      }catch(Exception GuiException)
+      {System.out.println(GuiException.getMessage());}
+        
         }
         return uSitesListModel;
     }
-
-    /**
-     * Initialize the facebook friend list box
-     * @return friends of user
-     * @see  #initializeUSiteLists() for informations about JSON
-     */
-    public DefaultListModel initializeFrSiteLists() {
-        // Check is it's authorized
-        if (settings.fbAuth == true) {
-            try {
-                frList = JsonHandler.ExtractEntitysFromRest(RestHandler.getFriends(settings.fbToken));
-
-                for (int i = 0; i < frList.length; i++) {
-                    frSitesListModel.add(i, frList[i].getName());
-                }
-
-            } catch (Exception GuiException) {
-                System.out.println(GuiException.getMessage());
-            }
-
+    public DefaultListModel initializeFrSiteLists(){
+       if(settings.fbAuth==true){
+        try{
+        
+       
+        frList=JsonHandler.ExtractEntitysFromRest(RestHandler.getFriends(settings.fbToken));
+       
+        for(int i=0;i<frList.length;i++){
+        frSitesListModel.add(i, frList[i].getName());
         }
+      }catch(Exception GuiException)
+      {System.out.println(GuiException.getMessage());}
+        
+       }
         return frSitesListModel;
     }
-
-    /**
-     * Initialize the twitter friend list box
-     */
-    public DefaultListModel initializeTwitterFriendsList() {
-
-        // If there is authentication
-        if (settings.twAuth == true) {
+    public DefaultListModel initializeTwitterFriendsList(){
+    
+        if(settings.twAuth==true){
             try {
-                // twitter4j.PagableResponseList
-                // twitter4j.User
-                PagableResponseList<User> response;
-
+               PagableResponseList<User> response;
                 response = twitter.getFriendsStatuses();
-                for (int i = 0; i < response.size(); i++) {
-                    twitterFriendsListModel.addElement(response.get(i).getScreenName());
+                for(int i=0;i<response.size();i++){
+                twitterFriendsListModel.addElement(response.get(i).getScreenName());
                 }
 
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
+            } catch(Exception ex){System.out.println(ex.getMessage());}
         }
 
         return twitterFriendsListModel;
     }
+    public DefaultListModel initializeTwitterFollowersList(){
 
-    /**
-     * Initialize the twitter follower list box.
-     *
-     * <b><i> F O L L O W E R </i></b>
-     *
-     * Follower is a person who follows someone and can get her tweets.
-     * To be someone's follower you just need to push the follower button
-     * on the person's home page. The Twitter sends an email when someone
-     * new follows you. You have the opportunity to restrict someone to follow
-     * and protect your account.
-     */
-    public DefaultListModel initializeTwitterFollowersList() {
-
-        if (settings.twAuth == true) {
+        if(settings.twAuth==true){
             try {
-                PagableResponseList<User> response;
+               PagableResponseList<User> response;
                 response = twitter.getFollowersStatuses();
-                for (int i = 0; i < response.size(); i++) {
-                    twitterFollowersListModel.addElement(response.get(i).getScreenName());
+                for(int i=0;i<response.size();i++){
+                twitterFollowersListModel.addElement(response.get(i).getScreenName());
                 }
 
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage());
-            }
+            } catch(Exception ex){System.out.println(ex.getMessage());}
         }
 
         return twitterFollowersListModel;
     }
+
+
+
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -389,7 +273,7 @@ public class configFrame extends javax.swing.JFrame {
         });
         twSourcesPanel.add(twitterSitesNone, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 70, 23));
 
-        addTwitterUser.setFont(new java.awt.Font("Tahoma", 0, 9));
+        addTwitterUser.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         addTwitterUser.setText("Add");
         addTwitterUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -559,7 +443,7 @@ public class configFrame extends javax.swing.JFrame {
         minutesLabel.setText("Minutes");
         fbSourcesPanel.add(minutesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 390, 50, -1));
 
-        addSiteButton.setFont(new java.awt.Font("Tahoma", 0, 10));
+        addSiteButton.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         addSiteButton.setText("Add");
         addSiteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -595,7 +479,7 @@ public class configFrame extends javax.swing.JFrame {
         getContentPane().add(startButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 540, 132, -1));
 
         notifyEveryTimeBox.setText("Notify me every new search");
-        getContentPane().add(notifyEveryTimeBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 230, -1));
+        getContentPane().add(notifyEveryTimeBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 190, -1));
 
         averagePMNotifyBox.setText("Notify me if average results exeed their threshold per minutes");
         getContentPane().add(averagePMNotifyBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 380, 360, -1));
@@ -622,13 +506,13 @@ public class configFrame extends javax.swing.JFrame {
         getContentPane().add(pmMinutesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 360, 80, -1));
 
         lifetimeNotifyBox.setText("Notify me if a keyword exceeds a lifetime found limit");
-        getContentPane().add(lifetimeNotifyBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 390, -1));
+        getContentPane().add(lifetimeNotifyBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 480, 340, -1));
 
         lifetimeSpinner.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(1.0f), Float.valueOf(1.0f), null, Float.valueOf(0.5f)));
-        getContentPane().add(lifetimeSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 480, 60, -1));
+        getContentPane().add(lifetimeSpinner, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 480, 60, -1));
 
         lifetimeLabel.setText("x Threshold");
-        getContentPane().add(lifetimeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 460, 70, -1));
+        getContentPane().add(lifetimeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 460, 70, -1));
 
         keywordsPane.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -669,12 +553,12 @@ public class configFrame extends javax.swing.JFrame {
                     .addGroup(keywordsPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(180, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         keywordsPanelLayout.setVerticalGroup(
             keywordsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, keywordsPanelLayout.createSequentialGroup()
-                .addComponent(keywordsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                .addComponent(keywordsLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -782,329 +666,223 @@ public class configFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void pSitesAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pSitesAllActionPerformed
-        pSitesList.setSelectionInterval(0, pSitesList.getModel().getSize() - 1);
+       pSitesList.setSelectionInterval(0,pSitesList.getModel().getSize()-1 );
     }//GEN-LAST:event_pSitesAllActionPerformed
 
     private void pSitesNoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pSitesNoneActionPerformed
-        pSitesList.clearSelection();
+       pSitesList.clearSelection();
     }//GEN-LAST:event_pSitesNoneActionPerformed
 
     private void uSitesNoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uSitesNoneActionPerformed
-        uSitesList.clearSelection();
+       uSitesList.clearSelection();
     }//GEN-LAST:event_uSitesNoneActionPerformed
 
     private void uSitesAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uSitesAllActionPerformed
-        uSitesList.setSelectionInterval(0, uSitesList.getModel().getSize() - 1);
+        uSitesList.setSelectionInterval(0,uSitesList.getModel().getSize()-1 );
     }//GEN-LAST:event_uSitesAllActionPerformed
 
     private void frSitesAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frSitesAllActionPerformed
-
-        frSitesList.setSelectionInterval(0, frSitesList.getModel().getSize() - 1);
-
+        
+        frSitesList.setSelectionInterval(0,frSitesList.getModel().getSize() -1);
+        
     }//GEN-LAST:event_frSitesAllActionPerformed
 
     private void frSitesNoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_frSitesNoneActionPerformed
-        frSitesList.clearSelection();
+       frSitesList.clearSelection();
     }//GEN-LAST:event_frSitesNoneActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         monitorSettings set = new monitorSettings();
-        Object interval = intervalSpinner.getValue();
-        // Public class member
-        set.timerInterval = ((Integer) interval).intValue() * 60000;
+        Object interval=intervalSpinner.getValue();
+        set.timerInterval=((Integer)interval).intValue()*60000;
 
-        /**
-         * The first search check box indicates when to start searching
-         */
-        if (firstSearchBox.isSelected()) {
-            // Public class member
-            set.firstSearch = true;
-            // Public class member
-            set.firstSearchDate = (Date) firstSearchSpinner.getValue();
+
+      
+         
+      
+
+        if(firstSearchBox.isSelected()){
+            set.firstSearch=true;
+            set.firstSearchDate =  (Date) firstSearchSpinner.getValue();
         }
-        /**
-         * The fb search now box when it's checked starts the search right now
-         */
-        else if (fbSearchNowBox.isSelected()) {
-            // Public class member
-            set.firstSearch = true;
-            // Public class member
-            set.firstSearchDate = timeHandler.getCurrentTime().getTime();
-            // Public class member
-            set.twitterSearchFromNow = true;
-        } else {
-            // Public class member
-            set.firstSearch = false;
+        else if(fbSearchNowBox.isSelected()){
+            set.firstSearch=true;
+            set.firstSearchDate=timeHandler.getCurrentTime().getTime();
+            set.twitterSearchFromNow=true;
+        }else{set.firstSearch=false;}
+
+   
+        set.searchComments=commentsCheckBox.isSelected();
+        set.fbToken=settings.fbToken;
+
+       
+        if(settings.twAuth==true){
+            set.twitterInstance=twitter;
+        }else{set.authTwitter=false;}
+
+       set.notSettings.notifyEveryNewSearch=notifyEveryTimeBox.isSelected();
+       set.notSettings.notifyWhenExceedThreshold=singleExeedBox.isSelected();
+
+       if(averagePMNotifyBox.isSelected()){
+       set.notSettings.notifyExeedAveragePM=true;
+       Object tempPMVal=perMinuteSpinner.getValue();
+       set.notSettings.perMinuteExeed=((Integer)tempPMVal).intValue();
+       Object tempPMPercent=pmPercentSpinner.getValue();
+       set.notSettings.perMinutePercent=((Integer)tempPMPercent).intValue();
+       }else{set.notSettings.notifyExeedAveragePM=false;}
+
+       if(overalCheckBox.isSelected()){
+        set.notSettings.notifyExeedOveralThresholds=true;
+        Object tempOVVal=overalSpinner.getValue();
+        set.notSettings.overalThresholdExeed=((Integer) tempOVVal).intValue();
+       }else{set.notSettings.notifyExeedOveralThresholds=false;}
+
+       if(lifetimeNotifyBox.isSelected()){
+         set.notSettings.lifetimeExceed=true;
+         Object tempLFVal=lifetimeSpinner.getValue();
+         set.notSettings.lifetimeExceedTimes=((Float) tempLFVal).floatValue();
+       }else{set.notSettings.lifetimeExceed=false;}
+
+       set.fbSources=this.getFbSources();
+       set.twitterSources=this.getTwitterSources();
+       keywordObjList.addAll(comboObjList);
+       set.keys=keywordObjList;
+
+       if(!set.keys.isEmpty()){
+        if( (set.twitterSources.isEmpty()) && (set.fbSources.length==0) ){
+            JOptionPane.showMessageDialog(rootPane,"No Sources Selected!!");
         }
-
-        // Public class member
-        // To search also in comments
-        set.searchComments = commentsCheckBox.isSelected();
-        // Public class member
-        set.fbToken = settings.fbToken;
-
-        // If the authentication on twitter is ok
-        if (settings.twAuth == true) {
-            set.twitterInstance = twitter;
-        } else {
-            set.authTwitter = false;
+        else{
+            monitorFrame.main(set);
+            this.dispose();
         }
-
-        set.notSettings.notifyEveryNewSearch = notifyEveryTimeBox.isSelected();
-        set.notSettings.notifyWhenExceedThreshold = singleExeedBox.isSelected();
-
-        /**
-         * If we want average notification using threshold % per minutes
-         */
-        if (averagePMNotifyBox.isSelected()) {
-            set.notSettings.notifyExeedAveragePM = true;
-            Object tempPMVal = perMinuteSpinner.getValue();
-            set.notSettings.perMinuteExeed = ((Integer) tempPMVal).intValue();
-            Object tempPMPercent = pmPercentSpinner.getValue();
-            set.notSettings.perMinutePercent = ((Integer) tempPMPercent).intValue();
-        } else {
-            set.notSettings.notifyExeedAveragePM = false;
-        }
-
-        /**
-         * Notify me when the other all results exceed the threshold
-         */
-        if (overalCheckBox.isSelected()) {
-            set.notSettings.notifyExeedOveralThresholds = true;
-            Object tempOVVal = overalSpinner.getValue();
-            set.notSettings.overalThresholdExeed = ((Integer) tempOVVal).intValue();
-        } else {
-            set.notSettings.notifyExeedOveralThresholds = false;
-        }
-
-        /**
-         * Notifications will come if the lifetime comes to a limit
-         */
-        if (lifetimeNotifyBox.isSelected()) {
-            set.notSettings.lifetimeExceed = true;
-            Object tempLFVal = lifetimeSpinner.getValue();
-            set.notSettings.lifetimeExceedTimes = ((Float) tempLFVal).floatValue();
-        } else {
-            set.notSettings.lifetimeExceed = false;
-        }
-
-        // Set the facebook sources
-        set.fbSources = this.getFbSources();
-        // Set the twitter sources
-        set.twitterSources = this.getTwitterSources();
-        // The list which contains the combos
-        keywordObjList.addAll(comboObjList);
-        set.keys = keywordObjList;
-
-        // When there are combos
-        if (!set.keys.isEmpty()) {
-
-            // And the sources are empty
-            if ((set.twitterSources.isEmpty()) && (set.fbSources.length == 0)) {
-                // Prompt
-                JOptionPane.showMessageDialog(rootPane, "No Sources Selected!!");
-            }
-            // Otherwise, if also the sources are setted
-            else {
-                // Run the monitor frame
-                monitorFrame.main(set);
-                // and close this window
-                this.dispose();
-            }
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "No keywords given!");
-        }
-
-
+       }
+       else{JOptionPane.showMessageDialog(rootPane,"No keywords given!");}
+       
+       
     }//GEN-LAST:event_startButtonActionPerformed
 
-    /**
-     * Takes the keyword from an edit box, checks if it doesn't exist and
-     * insert it into the edit box and into the keyword list.
-     * @param evt
-     */
     private void addWordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addWordButtonActionPerformed
-        Object thresholdObj = thresholdSpinner.getValue();
-        // Creates a FeedObjects.keywordObject which contains the word and the threshold
-        FeedObjects.keywordObject addWord = new FeedObjects.keywordObject(keywordField.getText().toLowerCase(), ((Integer) thresholdObj).intValue());
-        boolean alreadyExist = false;
+               Object thresholdObj=thresholdSpinner.getValue();
+               FeedObjects.keywordObject addWord = new FeedObjects.keywordObject(keywordField.getText().toLowerCase(),((Integer)thresholdObj).intValue());
+                boolean alreadyExist=false;
+             
+               if((!addWord.getKeyword().equals(""))&&(addWord!=null)){
+                   
+                    for(int i=0;i<keywordObjList.size();i++){
+                        if(keywordField.getText().toLowerCase().equals(keywordObjList.get(i).getKeyword().toLowerCase())){
+                            alreadyExist=true;                    
+                        }
+                    }
+                    if(alreadyExist==false){
+                    keywordListModel.addElement(addWord.getKeyword()+" : "+String.valueOf(addWord.getThreshold()));
 
-        // If the keyword isn't empty or null
-        if ((!addWord.getKeyword().equals("")) && (addWord != null)) {
-
-            // Check if exists again in the list
-            for (int i = 0; i < keywordObjList.size(); i++) {
-                if (keywordField.getText().toLowerCase().equals(keywordObjList.get(i).getKeyword().toLowerCase())) {
-                    alreadyExist = true;
-                }
-            }
-            // If doesn't exist then add it
-            if (alreadyExist == false) {
-                // Add it to the DefaultListObject which contains all the keywords
-                keywordListModel.addElement(addWord.getKeyword() + " : " + String.valueOf(addWord.getThreshold()));
-                // ***********************************
-                keywordObjList.add(addWord); //*******  What is it doing?
-                // ***********************************
-                // Clears the edit box in which we add the keyword
-                keywordField.setText("");
-                // Resets the thresshold
-                thresholdSpinner.setValue(0);
-
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Keyword already exists", "Keyword already exists", 2);
-            }
+                    keywordObjList.add(addWord);
+                    keywordField.setText("");
+                    thresholdSpinner.setValue(0);
+                    
+                    }
+                    else{
+                      JOptionPane.showMessageDialog(rootPane, "Keyword allready exist","Keyword allready exist",2);
+                    }
 
         }
     }//GEN-LAST:event_addWordButtonActionPerformed
 
-    /**
-     * Remove the keyword from :
-     * 1. keywordList
-     * 2. keywordListModel
-     * @param evt
-     */
     private void removeWordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeWordButtonActionPerformed
-        // keywordList is the list box which contains all the keywords
-        int index = keywordList.getSelectedIndex();
-        
-        // if there are keywords into the ListModel
-        if (!keywordListModel.isEmpty()) {
-            
-            // remove the keyword in the specific index
-            keywordListModel.remove(index);
-            keywordObjList.remove(index);
+        int index =keywordList.getSelectedIndex();
+        if(!keywordListModel.isEmpty()){
+        keywordListModel.remove(index);
+        keywordObjList.remove(index);
         }
 
-
+        
 
     }//GEN-LAST:event_removeWordButtonActionPerformed
 
-    /**
-     * It adds a new public site into the text file which contains all the
-     * public sites
-     * @param evt
-     */
     private void addSiteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSiteButtonActionPerformed
         String entry;
+         entry=JOptionPane.showInputDialog(this,"just copy the site name Example" +
+                "\n www.facebook.com/\"siteName\"" , "Enter new site here", 1);
+         if(entry!=null){
+         if(!entry.isEmpty()){
+         try{
+         FileHandler.appendFile("psiteslist.txt", entry);
+         pSitesListModel.addElement(entry);
 
-        // Get the site
-        entry = JOptionPane.showInputDialog(this, "just copy the site name Example"
-                + "\n www.facebook.com/\"siteName\"", "Enter new site here", 1);
-
-        if (entry != null) {
-            if (!entry.isEmpty()) {
-                try {
-                    // Add it into the file
-                    FileHandler.appendFile("psiteslist.txt", entry);
-                    // add it also to the listModel
-                    pSitesListModel.addElement(entry);
-
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(rootPane, "Cannot add source \n Possibly the application cannot create text file \n Check for write protection!");
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
+         }catch(Exception e){
+             JOptionPane.showMessageDialog(rootPane,"Cannot add source \n Possibly the application cannot create text file \n Check for write protection!");
+             System.out.println(e.getMessage());}
+    }}
     }//GEN-LAST:event_addSiteButtonActionPerformed
 
-    /**
-     * Removes some public sites which we have select. After remove it
-     * replace the file where we save the sites with the new list of sites.
-     * @param evt
-     */
     private void removeSiteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSiteButtonActionPerformed
-        try {
-            Object[] indices;
+        try{
+        Object[] indices;
 
-            // The list of sites
-            ArrayList<String> sites = new ArrayList();
-
-            // The sites we have select. Is an array which contains all the sites
-            // we have select.
-            indices = pSitesList.getSelectedValues();
-
-            // Remove all the sites of the array from the main List
-            for (int i = 0; i < indices.length; i++) {
-                pSitesListModel.removeElement(indices[i]);
-            }
-
-            // Prepare the new list
-            for (int i = 0; i < pSitesListModel.size(); i++) {
-
-                // Put all the sites of the main ListModel to the sites array {@link #sites}
-                sites.add((String) pSitesListModel.get(i));
-            }
-
-            // Replace the file with the new sites
-            FileHandler.writeFile("psiteslist.txt", sites);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        ArrayList<String> sites = new ArrayList();
+        indices=pSitesList.getSelectedValues();
+        for(int i=0;i<indices.length;i++){
+            pSitesListModel.removeElement(indices[i]);
         }
+        
+        for(int i=0;i<pSitesListModel.size();i++){
+            sites.add((String) pSitesListModel.get(i));
+        }
+        
+        FileHandler.writeFile("psiteslist.txt",sites);
+    
+        }catch(Exception e){System.out.println(e.getMessage());}
     }//GEN-LAST:event_removeSiteButtonActionPerformed
 
     private void twitterSitesAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twitterSitesAllActionPerformed
-        twitterPublicList.setSelectionInterval(0, twitterPublicList.getModel().getSize() - 1);
+       twitterPublicList.setSelectionInterval(0,twitterPublicList.getModel().getSize()-1 );
     }//GEN-LAST:event_twitterSitesAllActionPerformed
 
     private void twitterSitesNoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_twitterSitesNoneActionPerformed
         twitterPublicList.clearSelection();
     }//GEN-LAST:event_twitterSitesNoneActionPerformed
 
-    /**
-     * Adds a new Twitter user to the list
-     * @param evt
-     */
     private void addTwitterUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTwitterUserActionPerformed
-        String entry;
-        // Get the user
-        entry = JOptionPane.showInputDialog(this, "just copy the twitter user name", "Enter new twitter user", 1);
-        if (entry != null) {
-            if (!entry.isEmpty()) {
-                try {
-                    // Add it to the file
-                    FileHandler.appendFile("twitterlist.txt", entry);
-                    twitterListModel.addElement(entry);
-
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(rootPane, "Cannot add source \n Possibly the application cannot create text file \n Check for write protection!");
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
+         String entry;
+         entry=JOptionPane.showInputDialog(this,"just copy the twitter user name" , "Enter new twitter user", 1);
+         if(entry!=null){
+         if(!entry.isEmpty()){
+         try{
+         FileHandler.appendFile("twitterlist.txt", entry);
+         twitterListModel.addElement(entry);
+         
+         }catch(Exception e){
+             JOptionPane.showMessageDialog(rootPane,"Cannot add source \n Possibly the application cannot create text file \n Check for write protection!");
+             System.out.println(e.getMessage());}
+    }}
     }//GEN-LAST:event_addTwitterUserActionPerformed
 
-    /**
-     * Remove Twitter public user from the list box
-     * @param evt
-     */
     private void removeTwitterUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeTwitterUserActionPerformed
-        try {
-            Object[] indices;
+         try{
+        Object[] indices;
 
-            ArrayList<String> sites = new ArrayList();
-            indices = twitterPublicList.getSelectedValues();
-            for (int i = 0; i < indices.length; i++) {
-                twitterListModel.removeElement(indices[i]);
-            }
-
-            for (int i = 0; i < twitterListModel.size(); i++) {
-                sites.add((String) twitterListModel.get(i));
-            }
-
-            FileHandler.writeFile("twitterlist.txt", sites);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        ArrayList<String> sites = new ArrayList();
+        indices=twitterPublicList.getSelectedValues();
+        for(int i=0;i<indices.length;i++){
+            twitterListModel.removeElement(indices[i]);
         }
+
+        for(int i=0;i<twitterListModel.size();i++){
+            sites.add((String) twitterListModel.get(i));
+        }
+
+        FileHandler.writeFile("twitterlist.txt",sites);
+    
+        }catch(Exception e){System.out.println(e.getMessage());}
     }//GEN-LAST:event_removeTwitterUserActionPerformed
 
     private void friendsAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsAllButtonActionPerformed
-        twitterFriendList.setSelectionInterval(0, twitterFriendList.getModel().getSize() - 1);
+         twitterFriendList.setSelectionInterval(0,twitterFriendList.getModel().getSize()-1 );
     }//GEN-LAST:event_friendsAllButtonActionPerformed
 
     private void followersAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_followersAllButtonActionPerformed
-        twitterFollowersList.setSelectionInterval(0, twitterFollowersList.getModel().getSize() - 1);
+         twitterFollowersList.setSelectionInterval(0,twitterFollowersList.getModel().getSize()-1 );
     }//GEN-LAST:event_followersAllButtonActionPerformed
 
     private void friendsNoneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_friendsNoneButtonActionPerformed
@@ -1115,192 +893,153 @@ public class configFrame extends javax.swing.JFrame {
         twitterFollowersList.clearSelection();
     }//GEN-LAST:event_followersNoneButtonActionPerformed
 
-    /**
-     * Takes a combination and if it does't exist, it adds it into the list
-     * @param evt
-     */
     private void addToComboButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addToComboButtonActionPerformed
-        boolean alreadyExist = false;
-        // Get the text from the edit box
-        String word = keywordField.getText().toLowerCase();
+            boolean alreadyExist=false;
+            String word = keywordField.getText().toLowerCase();
 
-        // If it's not null or empty
-        if ((!word.equals("")) && (word != null)) {
 
-            // Check if this combination exists
-            for (int i = 0; i < keysComboListModel.size(); i++) {
-               
-                if (word.equals(keysComboListModel.get(i).toString())) {
-                    alreadyExist = true; // This combination exists
-                }
+            if((!word.equals(""))&&(word!=null)){
+            for(int i=0;i<keysComboListModel.size();i++){
+                        if(word.equals(keysComboListModel.get(i).toString())){
+                            alreadyExist=true;
+                        }
+             }
             }
-        }
-        if (alreadyExist == false) {
-            // Add to the list
-            keysComboListModel.addElement(word);
-            keywordField.setText("");
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Keyword allready exist", "Keyword allready exist", 2);
-        }
+            if(alreadyExist==false){
+                keysComboListModel.addElement(word);
+                keywordField.setText("");
+            }
+            else{
+                JOptionPane.showMessageDialog(rootPane, "Keyword allready exist","Keyword allready exist",2);
+            }
 
 
     }//GEN-LAST:event_addToComboButtonActionPerformed
 
-    /**
-     * Remove a combo from the list
-     * @param evt
-     */
     private void removeFromComboButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeFromComboButtonActionPerformed
-        int index = comboKeyList.getSelectedIndex();
-        if (!keysComboListModel.isEmpty()) {
+            int index=comboKeyList.getSelectedIndex();
+            if(!keysComboListModel.isEmpty()){
             keysComboListModel.removeElementAt(index);
-        }
+            }
 
 
     }//GEN-LAST:event_removeFromComboButtonActionPerformed
 
-    /**
-     * Create a combo.
-     * @param evt
-     */
     private void newComboButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newComboButtonActionPerformed
-    
-        // We can give a name to our combo, this is the name
-        String comboName = comboNameField.getText();
+            String comboName=comboNameField.getText();
 
-        boolean isListEmpty, comboAllreadyExist = false;
-        int listSize;
-        
-        // How many combos exist
-        listSize = keysComboListModel.size();
+            boolean isListEmpty,comboAllreadyExist=false;
+            int listSize;
+            listSize=keysComboListModel.size();
+            
+            if(listSize>1){
+                isListEmpty=false;
+            }else{isListEmpty=true;}
 
-        if (listSize > 1) {
-            isListEmpty = false;
-        } else {
-            isListEmpty = true;
-        }
+                if((!comboName.equals(""))&&(comboName!=null)){
+                      for(int j=0;j<keysComboComboModel.getSize();j++){
+                        if(comboName.equals(keysComboComboModel.getElementAt(j).toString())){
+                            comboAllreadyExist=true;
+                        }
+                      }
 
-        // If there is a combo name
-        if ((!comboName.equals("")) && (comboName != null)) {
+                   if(comboAllreadyExist==false){
+                    if(isListEmpty==false){
+                        Object thresholdObj=thresholdSpinner.getValue();
+                        FeedObjects.comboObject comboObj = new FeedObjects.comboObject(comboName,((Integer)thresholdObj).intValue());
+                        for(int i=0;i<keysComboListModel.size();i++){
+                            comboObj.addWord(keysComboListModel.getElementAt(i).toString());
+                        }
+                        comboObj.setTrueForAndFalseForOR(andModeRadio.isSelected());
 
-            // Search to find if the same combo exists
-            for (int j = 0; j < keysComboComboModel.getSize(); j++) {
-                if (comboName.equals(keysComboComboModel.getElementAt(j).toString())) {
-                    comboAllreadyExist = true;
-                }
-            }
+                        comboObjList.add(comboObj);
+                        keysComboComboModel.addElement(comboName);
 
-            // If doesn't exist
-            if (comboAllreadyExist == false) {
+                        keysComboListModel.clear();
+                        comboNameField.setText("");
 
-                // and the combo list isn't empty
-                if (isListEmpty == false) {
 
-                    //get the threshold
-                    Object thresholdObj = thresholdSpinner.getValue();
-                    
-                    // and create a new FeedObjects.comboObject using the given name and the threshold
-                    FeedObjects.comboObject comboObj = new FeedObjects.comboObject(comboName, ((Integer) thresholdObj).intValue());
-                    
-                    // and add all the combos to the comboObj internal List
-                    for (int i = 0; i < keysComboListModel.size(); i++) {
-                        comboObj.addWord(keysComboListModel.getElementAt(i).toString());
                     }
-
-                    // set the relationship
-                    comboObj.setTrueForAndFalseForOR(andModeRadio.isSelected());
-
-                    comboObjList.add(comboObj);
-                    keysComboComboModel.addElement(comboName);
-
-                    keysComboListModel.clear();
-                    comboNameField.setText("");
-
-
-                } else {
-                    JOptionPane.showMessageDialog(rootPane, "Keyword List is Empty", "Keyword list is empty plz enter at least 2 keywords", 2);
+                    else{
+                    JOptionPane.showMessageDialog(rootPane, "Keyword List is Empty","Keyword list is empty plz enter at least 2 keywords",2);
+                    }
+                   }
+                   else{
+                    JOptionPane.showMessageDialog(rootPane, "Combo name allreay exist","Combo name allready exist chose another name",2);
+                   }
                 }
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Combo name allreay exist", "Combo name allready exist chose another name", 2);
-            }
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Combo Name Field is Empty", "Combo Name Field is Empty", 2);
-        }
+                else{
+                JOptionPane.showMessageDialog(rootPane, "Combo Name Field is Empty","Combo Name Field is Empty",2);
+                }
 
 
     }//GEN-LAST:event_newComboButtonActionPerformed
 
-    /**
-     * Removes combo from list box and the lists
-     * @param evt
-     */
     private void removeComboButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeComboButtonActionPerformed
-        if (keyComboComboBox.getSelectedItem() != null) {
-            int index = keyComboComboBox.getSelectedIndex();
-            keysComboComboModel.removeElementAt(index);
-            comboObjList.remove(index);
-        }
+                if(keyComboComboBox.getSelectedItem()!=null){
+                    int index=keyComboComboBox.getSelectedIndex();
+                    keysComboComboModel.removeElementAt(index);
+                    comboObjList.remove(index);
+                }
 
     }//GEN-LAST:event_removeComboButtonActionPerformed
 
-    /**
-     * GUI actions when we check the SearchNow checkbox
-     * @param evt
-     */
     private void fbSearchNowBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fbSearchNowBoxActionPerformed
-        if (fbSearchNowBox.isSelected()) {
+        if(fbSearchNowBox.isSelected()){
             firstSearchBox.setEnabled(false);
             firstSearchSpinner.setEnabled(false);
-        } else {
-            firstSearchBox.setEnabled(true);
+        }
+        else{
+              firstSearchBox.setEnabled(true);
             firstSearchSpinner.setEnabled(true);
         }
     }//GEN-LAST:event_fbSearchNowBoxActionPerformed
 
     private void keywordFieldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_keywordFieldMouseClicked
-        keywordField.setText("");
+      keywordField.setText("");
     }//GEN-LAST:event_keywordFieldMouseClicked
 
-    /**
-     * @return list of all twitter sources. Public + Following + Followers
-     */
-    public List<String> getTwitterSources() {
+
+    public List<String> getTwitterSources(){
         List<String> temp = new ArrayList();
         int[] indices;
-        indices = twitterPublicList.getSelectedIndices();
-        for (int i = 0; i < indices.length; i++) {
+        indices=twitterPublicList.getSelectedIndices();
+        for(int i=0;i<indices.length;i++){
             temp.add((String) twitterListModel.getElementAt(indices[i]));
         }
-        indices = twitterFriendList.getSelectedIndices();
-        for (int i = 0; i < indices.length; i++) {
+        indices=twitterFriendList.getSelectedIndices();
+         for(int i=0;i<indices.length;i++){
             temp.add((String) twitterFriendsListModel.getElementAt(indices[i]));
         }
-        indices = twitterFollowersList.getSelectedIndices();
-        for (int i = 0; i < indices.length; i++) {
+         indices=twitterFollowersList.getSelectedIndices();
+         for(int i=0;i<indices.length;i++){
             temp.add((String) twitterFollowersListModel.getElementAt(indices[i]));
         }
-
+        
         return temp;
     }
 
-    /**
-     * @return list of all Facebook sources Public + MyLikes + Friends
-     */
-    public String[] getFbSources() {
-        List<String> temp = new ArrayList();
+
+
+ 
+
+  
+
+    public String[] getFbSources(){
+         List<String> temp = new ArrayList();
         int[] indices;
 
-        indices = uSitesList.getSelectedIndices();
-        for (int i = 0; i < indices.length; i++) {
-            temp.add(uSitelist[indices[i]].getID());
+        indices=uSitesList.getSelectedIndices();
+        for(int i=0;i<indices.length;i++){
+        temp.add(uSitelist[indices[i]].getID());
         }
-        indices = frSitesList.getSelectedIndices();
-        for (int i = 0; i < indices.length; i++) {
-            temp.add(frList[indices[i]].getID());
+        indices=frSitesList.getSelectedIndices();
+        for(int i=0;i<indices.length;i++){
+        temp.add(frList[indices[i]].getID());
         }
-        indices = pSitesList.getSelectedIndices();
-        for (int i = 0; i < indices.length; i++) {
-            temp.add((String) pSitesListModel.get(indices[i]));
+        indices=pSitesList.getSelectedIndices();
+        for(int i=0;i<indices.length;i++){
+        temp.add((String) pSitesListModel.get(indices[i]));
 
         }
 
@@ -1309,6 +1048,10 @@ public class configFrame extends javax.swing.JFrame {
         return sourceArray;
 
     }
+
+       
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSiteButton;
     private javax.swing.JButton addToComboButton;
@@ -1393,4 +1136,5 @@ public class configFrame extends javax.swing.JFrame {
     private javax.swing.JList uSitesList;
     private javax.swing.JButton uSitesNone;
     // End of variables declaration//GEN-END:variables
+
 }
