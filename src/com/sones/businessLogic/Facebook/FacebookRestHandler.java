@@ -94,10 +94,23 @@ public class FacebookRestHandler {
 		return jsonHandler.getGroups(jsonString);
 	}
 	
+	/**
+	 * Connects to the internet and downloads the feed with the specified ID
+	 * @param ID
+	 * @param TOKEN
+	 * @return feed
+	 */
+	public Feed getFeed(final String ID,final String TOKEN){
+		String jsonString=doGet("https://graph.facebook.com/"+ID+"?"+TOKEN);
+		FacebookJsonHandler jsonHandler = new FacebookJsonHandler();
+		return jsonHandler.getFeed(jsonString);
+	}
+	
 	private String doGet(final String link){
 		StringBuffer content = new StringBuffer();
 		PageHandler  handler = new PageHandler();
 		handler.getPage(link,content);
 		return content.toString();
 	}
+	
 }

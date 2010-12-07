@@ -132,6 +132,18 @@ public class FacebookJsonHandler {
 		return groups;
 	}
 	
+	/**
+	 * Extracts the feed from a JSON string
+	 * @param jsonString
+	 * @return feed
+	 */
+	public Feed getFeed(final String jsonString){
+		this.object_ = JSONObject.fromObject(jsonString);
+		DynaBean beanObject;
+		beanObject = (DynaBean) JSONObject.toBean(this.object_);
+		return FeedFactory.getInstance().getFeed(beanObject);
+	}
+	
     /**
      * Casts an Object to DynaBean
      * @param aBean
