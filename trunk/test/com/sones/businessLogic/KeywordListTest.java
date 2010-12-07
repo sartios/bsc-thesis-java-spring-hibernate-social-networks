@@ -11,7 +11,7 @@ public class KeywordListTest {
 	@Test
 	public void addKeyword_twice_Test(){
 		KeywordList list = new KeywordList();
-		String keyword = "keyword";
+		Keyword keyword = new Keyword("keyword");
  		list.addKeyword(keyword);
  		assertFalse(list.addKeyword(keyword));
 	}
@@ -22,9 +22,9 @@ public class KeywordListTest {
 	@Test
 	public void addKeyword_CaseSensitive_Test(){
 		KeywordList list = new KeywordList();
-		String keyword = "keyword";
- 		list.addKeyword(keyword.toLowerCase());
- 		assertFalse(list.addKeyword(keyword.toUpperCase()));
+		Keyword keyword = new Keyword("keyword");
+ 		list.addKeyword(new Keyword("KEYWORD"));
+ 		assertFalse(list.addKeyword(keyword));
 	}
 	
 	/**
@@ -33,9 +33,9 @@ public class KeywordListTest {
 	@Test
 	public void addKeyword_BlankSpace_Test(){
 		KeywordList list = new KeywordList();
-		String keyword = "keyword";
+		Keyword keyword = new Keyword("keyword");
  		list.addKeyword(keyword);
- 		assertFalse(list.addKeyword(keyword+"  "));
+ 		assertFalse(list.addKeyword(new Keyword(keyword.getValue()+"  ")));
 	}
 	
 	/**
@@ -44,10 +44,10 @@ public class KeywordListTest {
 	@Test
 	public void getKeyword_MoreThanExist_Test(){
 		KeywordList list = new KeywordList();
-		String keyword = "keyword";
+		Keyword keyword = new Keyword("keyword");
 		boolean returnsNull=false;
 		for(int i=0;i<3;i++){
-			list.addKeyword(keyword+i);
+			list.addKeyword(new Keyword(keyword.getValue()+i));
 		}
 		for(int i=0;i<10;i++){
 			if(list.getKeyword()==null){

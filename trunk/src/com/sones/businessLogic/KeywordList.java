@@ -13,7 +13,7 @@ public class KeywordList {
 	/**
 	 * The list of keywords
 	 */
-	private List<String> keywords_;
+	private List<Keyword> keywords_;
 	
 	/**
 	 * The index of keywords list
@@ -24,14 +24,14 @@ public class KeywordList {
 	 * Constructor
 	 */
 	public KeywordList(){
-		keywords_ = new ArrayList<String>();
+		keywords_ = new ArrayList<Keyword>();
 		index_ = 0;
 	}
 	
 	/**
 	 * Add a keyword into the list
 	 */
-	public boolean addKeyword(final String keyword){
+	public boolean addKeyword(final Keyword keyword){
 		if(keywords_.isEmpty()){
 			return keywords_.add(keyword);
 		}
@@ -45,10 +45,10 @@ public class KeywordList {
 	 * Check if the keyword already exists into the list
 	 * @return true if it doesn't exist
 	 */
-	private boolean haveNotAddThis(final String keyword){
+	private boolean haveNotAddThis(final Keyword keyword){
 		if(keyword!=null){
 			for(int i=0;i<keywords_.size();i++){
-				if(keyword.trim().equalsIgnoreCase(keywords_.get(i).trim().toString())){
+				if(keyword.equals(keywords_.get(i))){
 					return false;
 				}
 			}
@@ -61,10 +61,29 @@ public class KeywordList {
 	 * Return the next keyword or null if the list came to the end
 	 * @return keyword
 	 */
-	public String getKeyword(){
+	public Keyword getKeyword(){
 		if(index_<keywords_.size()){
 			return keywords_.get(index_++);
 		}
 		return null;
+	}
+	
+	public boolean isEmpty(){
+		return keywords_.isEmpty();
+	}
+	
+	public void reset(){
+		index_ = 0;
+	}
+	
+	public Keyword getKeyword(final int index){
+		if(index<keywords_.size()){
+			return keywords_.get(index);
+		}
+		return null;
+	}
+	
+	public int getSize(){
+		return keywords_.size();
 	}
 }
