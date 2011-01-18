@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.sones.businessLogic.Facebook.FacebookFriend;
+import com.sones.businessLogic.Facebook.FacebookRestHandler;
 
 import static org.junit.Assert.*;
 
@@ -135,5 +136,32 @@ public class SearchManagerTest {
 		KeywordList results = manager.search_new();
 		List<String> ids = results.getKeyword(0).getIDs();
 		assertEquals(ids.size(),1);
+	}
+	
+	/**
+	 * Search online
+	 */
+	@Test
+	public void searchAndToComments_Online_Test(){
+		String ID = "100000866964787";
+		String TOKEN = new String("access_token=106911326013695|ea1c5d947c3788fa382b0abf-747618741|MeTjo25aPlPeqlEucqb4ZoZe50Y");
+		
+		FeedList feeds = new FacebookRestHandler().getWall(ID, TOKEN);
+		KeywordList keywords = new KeywordList();
+		keywords.addKeyword(new Keyword("κόφι"));
+		SearchingManager searcher = new SearchingManager(feeds, keywords);
+		assertTrue(searcher.search().getIDs("κόφι")!=null);
+	}
+	
+	/**
+	 * Search for feeds with a specified comment number
+	 */
+	@Test
+	public void searchForFeedsWithCommentNumber(){
+		String ID = "100000866964787";
+		String TOKEN = new String("access_token=106911326013695|ea1c5d947c3788fa382b0abf-747618741|MeTjo25aPlPeqlEucqb4ZoZe50Y");
+		FeedList feeds = new FacebookRestHandler().getWall(ID, TOKEN);
+		SearchingManager searcher = new SearchingManager(feeds);
+		assertEquals(searcher.getFeedsWithCommentNumber(5).size(),1);
 	}
 }
