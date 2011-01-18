@@ -2,26 +2,31 @@ package com.sones.businessLogic;
 
 import com.sones.businessLogic.Facebook.FacebookFriend;
 
-public class Status extends Feed{
+/**
+ * Facebook comment class
+ * @author Sartios
+ */
+public class Comment extends Feed{
 
 	/**
-	 * The message of the status
+	 * The message of comment
 	 */
-	private final String MESSAGE_;	
+	private final String message_;
+	
 	/**
-	 * Constructor which doesn't set comments
-	 * @param ID
-	 * @param FROM
-	 * @param CREATED_TIME
-	 * @param MESSAGE
+	 * Constructor
+	 * @param
+	 * @param
+	 * @param	 
+	 * @param
 	 */
-	public Status(final String ID, final FacebookFriend FROM,final String CREATED_TIME,final String MESSAGE){
+	public Comment(final String ID, final FacebookFriend FROM,final String CREATED_TIME,final String MESSAGE){
 		super(ID, FROM, CREATED_TIME);
-		this.MESSAGE_=MESSAGE;
+		message_ = MESSAGE;
 	}
 	
 	public String getMessage(){
-		return MESSAGE_;
+		return this.message_;
 	}
 	
 	/**

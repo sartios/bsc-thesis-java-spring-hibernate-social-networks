@@ -1,5 +1,8 @@
 package com.sones.businessLogic;
 
+import java.util.Collections;
+import java.util.List;
+
 import com.sones.businessLogic.Facebook.FacebookFriend;
 
 /**
@@ -10,6 +13,13 @@ import com.sones.businessLogic.Facebook.FacebookFriend;
  *
  */
 public abstract class Feed {
+	
+	/**
+	 * Number of comments. It's not sure that all the feeds will have comments.
+	 * That's why we don't put it in constructor. If the feed will have comments
+	 * then we will extract this number.
+	 */
+	private String numberOfComments_ = "0";
 	
 	/**
 	 * Feed's ID
@@ -27,6 +37,11 @@ public abstract class Feed {
 	private final String CREATED_TIME_;
 	
 	/**
+	 * Comments for this feed
+	 */
+	private List<Comment> comments_;
+	
+	/**
 	 * Constructor
 	 * @param ID
 	 * @param FROM
@@ -34,6 +49,7 @@ public abstract class Feed {
 	 * @param TYPE
 	 */
 	public Feed(final String ID, final FacebookFriend FROM,final String CREATED_TIME){
+		this.comments_ = null;
 		this.ID_ = ID;
 		this.FROM_= FROM;
 		this.CREATED_TIME_ = CREATED_TIME;
@@ -61,6 +77,40 @@ public abstract class Feed {
 	}
 	
 	/**
+	 * Sets the comments for this feed
+	 */
+	public void setComments(final List<Comment> comments){
+		if(null!=comments){
+			this.comments_ = comments;
+		}
+	}
+	
+	/**
+	 * @return comments
+	 */
+	public List<Comment> getComments(){
+		return Collections.unmodifiableList(this.comments_);
+	}
+	
+	/**
+	 * This method searches to the comment list and if it finds
+	 * the keyword returns just true. It can't work in the case that
+	 * we need comment's ID, only feed's id.
+	 * @param keyword
+	 * @return true 
+	 */
+	public boolean	searchIntoCommentsFor(final String keyword){
+		if(comments_!=null){
+			for(int i=0;i<comments_.size();i++){
+				if(comments_.get(i).find(keyword)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
 	 * Feed's equality
 	 * @param feed
 	 * @return true if the feeds are same
@@ -80,6 +130,14 @@ public abstract class Feed {
 	@Override
 	public int hashCode(){
 		return this.getID().hashCode();
+	}
+	
+	public void setNumberOfComments(final String numberOfComments){
+		this.numberOfComments_ = numberOfComments;
+	}
+	
+	public String getNumberOfComments(){
+		return numberOfComments_;
 	}
 	
 	public abstract boolean find(final String keyword);

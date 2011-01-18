@@ -65,7 +65,7 @@ public class FacebookRestHandler {
      * @return feeds of the wall
      */
 	public FeedList getWall(final String ID, final String TOKEN){
-		String jsonString=doGet("https://graph.facebook.com/"+ID+"/feed/?"+TOKEN);
+		String jsonString=doGet("https://graph.facebook.com/"+ID+"/feed/?until=now&"+TOKEN);
 		FacebookJsonHandler jsonHanlder = new FacebookJsonHandler();
 		return jsonHanlder.getWallFeeds(jsonString);
 	}

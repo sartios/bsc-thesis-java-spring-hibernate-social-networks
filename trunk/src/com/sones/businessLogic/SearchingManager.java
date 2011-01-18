@@ -23,6 +23,11 @@ public class SearchingManager {
 		this.keywords_=keywords;
 	}
 	
+	public SearchingManager(final FeedList feeds){
+		this.feeds_=feeds;
+		this.keywords_=null;
+	}
+	
 	/**
 	 * Searches for the keywords into the feeds. If a feed doesn't have keywords
 	 * we delete the feed. If it contains keywords, we add its ID into the list.
@@ -37,7 +42,7 @@ public class SearchingManager {
 		if(listsAreOk(feeds_,keywords_)){
 			while(null!=(feed = feeds_.getFeed())){
 				while(null!=(keyword=keywords_.getKeyword())){
-					if(feed.find(keyword.getValue())){
+					if(feed.find(keyword.getValue())||feed.searchIntoCommentsFor(keyword.getValue())){
 						results.addID(keyword.getValue(), feed.getID());
 						keyword.increaseNumberOfAppears();
 					}
@@ -57,7 +62,7 @@ public class SearchingManager {
 		if(listsAreOk(feeds_,keywords_)){
 			while(null!=(feed = feeds_.getFeed())){
 				for(int i=0;i<keywords_.getSize();i++){
-					if(feed.find(keywords_.getKeyword(i).getValue())){
+					if(feed.find(keywords_.getKeyword(i).getValue())||feed.searchIntoCommentsFor(keywords_.getKeyword(i).getValue())){
 						keywords_.getKeyword(i).addID(feed.getID());
 						keywords_.getKeyword(i).increaseNumberOfAppears();
 					}
@@ -97,4 +102,23 @@ public class SearchingManager {
 		return keywords;
 	}
 	
+	/**
+	 * Searches for feeds which their number of comments are equal or more than a specified
+	 * comment number
+	 * @param numberOfComments
+	 */
+	public List<String> getFeedsWithCommentNumber(int numberOfComments){
+		if((numberOfComments>0)&&(null!=feeds_)){
+			List<String> feedIDs = new ArrayList<String>();
+			Feed feed = feeds_.getFeed();
+			while(feed!=null){
+				if(Integer.parseInt(feed.getNumberOfComments())>=numberOfComments){
+					feedIDs.add(feed.getID());
+				}
+				feed = feeds_.getFeed();
+			}
+			return feedIDs;
+		}
+		return null;
+	}
 }
