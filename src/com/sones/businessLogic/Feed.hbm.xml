@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- Generated 7 Μαρ 2011 7:08:45 μμ by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="com.sones.businessLogic">
+
+<class name="Feed" table="FEEDS" abstract="true">
+
+	<id name="ID_" type="string" access="field">
+	<column name="FID" />
+	    <generator class="assigned" />
+    </id>
+
+    <discriminator type="string">
+		<column name="FEED_TYPE" />
+    </discriminator>   
+
+    <property name="numberOfComments_" type="integer" access="field">
+<column name="NUMBER_OF_COMMENTS" />
+  </property>
+</class>
+
+</hibernate-mapping>
