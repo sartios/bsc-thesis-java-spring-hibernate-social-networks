@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11 ??? 2011 4:09:01 ?? by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="com.sones.businessLogic">
+
+ <class name="Feed" table="FEED" lazy="false">
+  	<id name="id_" type="string">
+   		<column name="FEED_ID"/>
+   		<generator class="assigned"/>
+  	</id>
+  
+  	<property name="fromId_" type="string" lazy="false">
+   		<column name="USER_ID"/>
+  	</property>
+  
+  	<property name="numberOfComments_" type="integer" lazy="false">
+   		<column name="NUMBER_OF_COMMENTS"/>
+  	</property>
+  	
+  	<property name="numberOfLikes_" type="integer" lazy="false">
+  		<column name="NUMBER_OF_LIKES"></column>
+  	</property>
+  
+  	<property generated="never" lazy="false" name="createdTime_" type="string">
+   		<column name="CREATED_TIME"/>
+  	</property>
+  
+  	<set lazy="true" name="comments_" sort="unsorted">
+   		<key>
+    		<column name="FEED_ID"/>
+   		</key>
+   		<one-to-many class="Comment"/>
+  	</set>
+  </class>
+</hibernate-mapping>
