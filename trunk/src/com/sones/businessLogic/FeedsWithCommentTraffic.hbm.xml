@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.sones.businessLogic">
+
+    <class name="FeedsWithCommentTraffic" table="LISTS_WITH_COMMENT_TRAFFIC">
+		
+		<id name="id" type="long" column="ID">
+			<generator class="native"/>
+		</id>
+		
+		<map name="feeds" table="FEEDS_WITH_COMMENT_TRAFFIC" lazy="true">
+            <key>
+                <column name="ID" />
+            </key>
+            <index type="java.lang.String" length="1">
+            	<column name="FEED_ID"></column>
+            </index>
+            <element type="java.lang.String">
+                <column name="COMMENTS_NUMBER_DISTANCE" />
+            </element>
+        </map>
+        
+        <property name="date" column="SEARCHING_DATE" type="string"/>
+    </class>
+</hibernate-mapping>
