@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11 ??? 2011 4:09:01 ?? by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="com.sones.businessLogic">
+    <class name="Comment" table="COMMENTS">
+        <id name="id_" type="string">
+            <column name="COMMENT_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="feedId_" type="string">
+            <column name="FEED_ID" />
+        </property>
+    </class>
+</hibernate-mapping>
