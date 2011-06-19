@@ -1,0 +1,65 @@
+{
+ "id": "100000866964787",
+   "name": "Sartios Savramis",
+   "first_name": "Sartios",
+   "last_name": "Savramis",
+   "link": "https://www.facebook.com/profile.php?id=100000866964787",
+   "birthday": "04/17/1988",
+   "hometown": {
+      "id": "108970542465145",
+      "name": "S\u00e1rti, Khalkidhiki, Greece"
+   },
+   "favorite_teams": [
+      {
+         "id": "9627504105",
+         "name": "Aris"
+      },
+      {
+         "id": "197394889304",
+         "name": "FC Barcelona"
+      },
+      {
+         "id": "162702947115714",
+         "name": "Aris Thessaloniki & Botev Plovdiv"
+      },
+      {
+         "id": "102438224660",
+         "name": "ARIS 1914"
+      },
+      {
+         "id": "9555694247",
+         "name": "CABJ - Club Atl\u00e9tico Boca Juniors"
+      },
+      {
+         "id": "205385772819913",
+         "name": "Aris Athletic Club 1914"
+      },
+      {
+         "id": "107043391657",
+         "name": "SUPER 3 KAVALAS"
+      },
+      {
+         "id": "169600629747627",
+         "name": "Barca"
+      },
+      {
+         "id": "40570764288",
+         "name": "ARIS Thessaloniki"
+      }
+   ],
+   "favorite_athletes": [
+      {
+         "id": "128030337214709",
+         "name": "Lionel Andr\u00e9s Messi"
+      },
+      {
+         "id": "176063032413299",
+         "name": "Leo Messi"
+      }
+   ],
+   "gender": "male",
+   "timezone": 3,
+   "locale": "en_US",
+   "verified": true,
+   "updated_time": "2011-06-13T07:17:18+0000"
+}

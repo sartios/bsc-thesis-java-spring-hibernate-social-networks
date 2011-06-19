@@ -1,0 +1,75 @@
+{
+   "id": "100000866964787_206852752686955",
+   "from": {
+      "name": "Sartios Savramis",
+      "id": "100000866964787"
+   },
+   "message": "test",
+   "actions": [
+      {
+         "name": "Comment",
+         "link": "https://www.facebook.com/100000866964787/posts/206852752686955"
+      },
+      {
+         "name": "Like",
+         "link": "https://www.facebook.com/100000866964787/posts/206852752686955"
+      }
+   ],
+   "privacy": {
+      "description": "Friends Only",
+      "value": "ALL_FRIENDS"
+   },
+   "type": "status",
+   "created_time": "2011-05-27T13:06:46+0000",
+   "updated_time": "2011-05-28T12:51:56+0000",
+   "comments": {
+      "data": [
+         {
+            "id": "100000866964787_206852752686955_2922754",
+            "from": {
+               "name": "Anestis Kivranoglou",
+               "id": "747618741"
+            },
+            "message": "Oppp arxisame??? :P",
+            "created_time": "2011-05-27T14:31:19+0000"
+         },
+         {
+            "id": "100000866964787_206852752686955_2926662",
+            "from": {
+               "name": "Sartios Savramis",
+               "id": "100000866964787"
+            },
+            "message": "xaxaxa nai nai! Douleuw to demo twra ki etsi !",
+            "created_time": "2011-05-28T12:51:56+0000"
+         },
+           {
+            "id": "1",
+            "from": {
+               "name": "Sartios Savramis",
+               "id": "100000866964787"
+            },
+            "message": "xaxaxa nai nai! Douleuw to demo twra ki etsi !",
+            "created_time": "2011-05-28T12:51:56+0000"
+         },
+           {
+            "id": "2",
+            "from": {
+               "name": "Sartios Savramis",
+               "id": "100000866964787"
+            },
+            "message": "xaxaxa nai nai! Douleuw to demo twra ki etsi !",
+            "created_time": "2011-05-28T12:51:56+0000"
+         },
+           {
+            "id": "3",
+            "from": {
+               "name": "Sartios Savramis",
+               "id": "100000866964787"
+            },
+            "message": "xaxaxa nai nai! Douleuw to demo twra ki etsi !",
+            "created_time": "2011-05-28T12:51:56+0000"
+         }
+      ],
+      "count": 2
+   }
+}
