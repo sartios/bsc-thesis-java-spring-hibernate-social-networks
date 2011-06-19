@@ -1,0 +1,41 @@
+{
+   "id": "100000866964787_211949868835890",
+   "from": {
+      "name": "Sartios Savramis",
+      "id": "100000866964787"
+   },
+   "picture": "https://s-external.ak.fbcdn.net/safe_image.php?d=1211cc367da9292999f722fac5ddc963&w=130&h=130&url=http\u00253A\u00252F\u00252Fi3.ytimg.com\u00252Fvi\u00252FVY6U30pbNXM\u00252Fdefault.jpg",
+   "link": "http://www.youtube.com/watch?v=VY6U30pbNXM&feature=share",
+   "source": "http://www.youtube.com/v/VY6U30pbNXM?version=3&autohide=1&autoplay=1",
+   "name": "Skies & Kwstas Tournas ela hlie mou",
+   "caption": "www.youtube.com",
+   "description": "\u03c3\u03ba\u03b9\u03b5\u03c2 \u03ba\u03c9\u03c3\u03c4\u03b1\u03c2 \u03c4\u03bf\u03c5\u03c1\u03bd\u03b1\u03c2 \u03b5\u03bb\u03b1 \u03b7\u03bb\u03b9\u03b5 \u03bc\u03bf\u03c5,",
+   "icon": "https://s-static.ak.facebook.com/rsrc.php/v1/yj/r/v2OnaTyTQZE.gif",
+   "actions": [
+      {
+         "name": "Comment",
+         "link": "https://www.facebook.com/100000866964787/posts/211949868835890"
+      },
+      {
+         "name": "Like",
+         "link": "https://www.facebook.com/100000866964787/posts/211949868835890"
+      }
+   ],
+   "privacy": {
+      "description": "Friends Only",
+      "value": "ALL_FRIENDS"
+   },
+   "type": "video",
+   "application": null,
+   "created_time": "2011-05-24T16:23:07+0000",
+   "updated_time": "2011-05-24T16:23:07+0000",
+   "likes": {
+      "data": [
+         {
+            "name": "Sartios Savramis",
+            "id": "100000866964787"
+         }
+      ],
+      "count": 1
+   }
+}
