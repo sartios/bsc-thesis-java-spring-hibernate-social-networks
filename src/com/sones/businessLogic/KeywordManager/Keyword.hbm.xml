@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12 ???? 2011 11:06:50 ?? by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping>
+    <class name="com.sones.businessLogic.KeywordManager.Keyword" table="KEYWORDS">
+        <id name="keywordID_" type="string">
+            <column name="KEYWORD_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="value_" type="string">
+            <column name="KEYWORD_VALUE" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11 ??? 2011 4:09:01 ?? by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="com.sones.businessLogic.Facebook">
+
+ <class name="Feed" table="FACEBOOK_FEEDS" lazy="false" >
+  	<id name="id_" type="string">
+   		<column name="FACEBOOK_FEED_ID"/>
+   		<generator class="assigned"/>
+  	</id>
+  
+  	<property name="fromId_" type="string" lazy="false">
+   		<column name="CREATOR_ID"/>
+  	</property>
+  
+  	<property generated="never" lazy="false" name="createdTime_" type="string">
+   		<column name="CREATION_TIME"/>
+  	</property>
+  </class>
+</hibernate-mapping>
