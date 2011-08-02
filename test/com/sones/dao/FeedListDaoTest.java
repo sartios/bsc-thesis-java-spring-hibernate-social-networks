@@ -4,9 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sones.businessLogic.Facebook.FacebookUser;
+import com.sones.businessLogic.Facebook.Source.FacebookUser;
 import com.sones.businessLogic.Facebook.Feed;
-import com.sones.businessLogic.Facebook.FeedList;
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class FeedListDaoTest {
 
 	private FeedListDao dao=new FeedListDao();
-	private FeedList feeds;
+	private FacebookFeedList feeds;
 	private Feed feed;
 	private FeedDao feedDao;
 	private FacebookUser user;
@@ -22,7 +22,7 @@ public class FeedListDaoTest {
 	
 	@Before
 	public void setUp(){
-		feeds = new FeedList();
+		feeds = new FacebookFeedList();
 		feed = new Feed("001","007");
 		user = new FacebookUser("007","0001");
 		feeds.setUserID(user.getFacebookUserID_());
@@ -93,7 +93,7 @@ public class FeedListDaoTest {
 	@Test
 	public void findUserFeeds_getTheCorrectUserID_Test(){
 		dao.saveUserFeeds(feeds);
-		FeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
+		FacebookFeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
 		dao.deleteUserFeeds(feeds);
 		assertEquals(feedsFromDB.getUserID(), user.getFacebookUserID_());
 	}
@@ -101,7 +101,7 @@ public class FeedListDaoTest {
 	@Test
 	public void findUserFeeds_getTheCorrectFeedID_Test(){
 		dao.saveUserFeeds(feeds);
-		FeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
+		FacebookFeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
 		dao.deleteUserFeeds(feeds);
 		assertEquals(feedsFromDB.getFeed(0).getId_(), feed.getId_());
 	}
@@ -109,7 +109,7 @@ public class FeedListDaoTest {
 	@Test
 	public void findUserFeeds_getTheCorrectNumberOfFeeds_Test(){
 		dao.saveUserFeeds(feeds);
-		FeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
+		FacebookFeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
 		dao.deleteUserFeeds(feeds);
 		assertEquals(feedsFromDB.getSize(), feeds.getSize());
 	}
@@ -117,7 +117,7 @@ public class FeedListDaoTest {
 	@Test
 	public void findUserFeeds_getTheCorrectCommentNumber_Test(){
 		dao.saveUserFeeds(feeds);
-		FeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
+		FacebookFeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
 		dao.deleteUserFeeds(feeds);
 		assertEquals(feedsFromDB.getFeed(0).getNumberOfComments_(), feeds.getFeed(0).getNumberOfComments_());
 	}
@@ -125,7 +125,7 @@ public class FeedListDaoTest {
 	@Test
 	public void findUserFeeds_getTheCorrectFeedCreator_Test(){
 		dao.saveUserFeeds(feeds);
-		FeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
+		FacebookFeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
 		dao.deleteUserFeeds(feeds);
 		assertEquals(feedsFromDB.getFeed(0).getFromId_(), feeds.getFeed(0).getFromId_());
 	}
@@ -133,7 +133,7 @@ public class FeedListDaoTest {
 	@Test
 	public void findUserFeeds_getTheCorrectFeedCreationTime_Test(){
 		dao.saveUserFeeds(feeds);
-		FeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
+		FacebookFeedList feedsFromDB = dao.findUserFeeds(user.getFacebookUserID_());
 		dao.deleteUserFeeds(feeds);
 		assertEquals(feedsFromDB.getFeed(0).getCreatedTime_(), feeds.getFeed(0).getCreatedTime_());
 	}
@@ -141,7 +141,7 @@ public class FeedListDaoTest {
 	@Test
 	public void findUserFeeds_UserDoesNotExist_Test(){
 		dao.saveUserFeeds(feeds);
-		FeedList feedsFromDB = dao.findUserFeeds("blablabla");
+		FacebookFeedList feedsFromDB = dao.findUserFeeds("blablabla");
 		dao.deleteUserFeeds(feeds);
 		assertTrue(feedsFromDB.getSize()==0);
 	}

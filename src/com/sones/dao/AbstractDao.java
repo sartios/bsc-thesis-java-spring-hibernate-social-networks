@@ -25,18 +25,25 @@ public abstract class AbstractDao {
 		HibernateUtil.buildIfNeeded();
 	}
 	
-	protected void saveOrUpdate(Object obj){
-		try{
-			startOperation();
-			session.saveOrUpdate(obj);
-			tx.commit();
+	protected boolean saveOrUpdate(Object obj){
+		boolean operationCompleted = false;
+		if(null!=obj){
+			try{
+				startOperation();
+				session.saveOrUpdate(obj);
+				session.flush();
+				tx.commit();
+				operationCompleted=true;
+			}
+			catch(HibernateException e){
+				handleException(e);
+				operationCompleted=false;
+			}
+			finally{
+				HibernateUtil.close(session);
+			}
 		}
-		catch(HibernateException e){
-			handleException(e);
-		}
-		finally{
-			HibernateUtil.close(session);
-		}
+		return operationCompleted;
 	}
 	
 	protected boolean delete(Object obj){

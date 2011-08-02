@@ -11,8 +11,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sones.businessLogic.Facebook.FacebookGroup;
-import com.sones.businessLogic.Facebook.FacebookGroupList;
+import com.sones.businessLogic.Facebook.Source.FacebookGroup;
+import com.sones.businessLogic.Facebook.Source.FacebookGroupList;
 
 public class FacebookGroupDaoTest {
 

@@ -8,7 +8,7 @@ import java.awt.RenderingHints.Key;
 import org.junit.Test;
 
 import com.sones.businessLogic.Facebook.Feed;
-import com.sones.businessLogic.Facebook.FeedList;
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
 
 public class KeywordTest {
 
@@ -152,7 +152,7 @@ public class KeywordTest {
 	
 	@Test
 	public void setFeeds_FeedListIsValid_Test(){
-		FeedList feeds = new FeedList();
+		FacebookFeedList feeds = new FacebookFeedList();
 		Feed feed = new Feed("feed_id", "user_id");
 		feeds.setFeed(feed);
 		Keyword keyword = new Keyword();

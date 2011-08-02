@@ -1,7 +1,7 @@
 package com.sones.businessLogic.KeywordManager;
 
 import com.sones.businessLogic.Facebook.Feed;
-import com.sones.businessLogic.Facebook.FeedList;
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
 
 /**
  * This class is represents the keyword
@@ -24,7 +24,7 @@ public class Keyword {
 	/**
 	 * Facebook's feed list in which the keyword exists
 	 */
-	private FeedList feeds_;
+	private FacebookFeedList feeds_;
 	
 	/**
 	 * No args constructor
@@ -32,7 +32,7 @@ public class Keyword {
 	public Keyword(){
 		setKeywordID_(new String());
 		setValue_(new String());
-		setFeeds_(new FeedList());
+		setFeeds_(new FacebookFeedList());
 	}
 	
 	/**
@@ -41,7 +41,7 @@ public class Keyword {
 	public Keyword(final String value){
 		setKeywordID_(new String());
 		setValue_(value);
-		setFeeds_(new FeedList());
+		setFeeds_(new FacebookFeedList());
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class Keyword {
 	 * Set the feeds that contain the keyword
 	 * @param feeds
 	 */
-	public void setFeeds_(final FeedList feeds) {
+	public void setFeeds_(final FacebookFeedList feeds) {
 		if(null!=feeds){
 			this.feeds_ = feeds;
 		}
@@ -91,7 +91,7 @@ public class Keyword {
 	/**
 	 * @return feeds that contain the keyword
 	 */
-	public FeedList getFeeds_() {
+	public FacebookFeedList getFeeds_() {
 		return feeds_;
 	}
 	

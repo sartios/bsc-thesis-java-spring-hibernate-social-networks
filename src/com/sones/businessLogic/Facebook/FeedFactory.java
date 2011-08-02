@@ -2,18 +2,22 @@ package com.sones.businessLogic.Facebook;
 
 
 import java.util.ArrayList;
-
+ 
 import net.sf.ezmorph.MorphException;
 import net.sf.json.JSONException;
 
 import org.apache.commons.beanutils.DynaBean;
 
+import com.sones.utilities.DateConverter;
+
 public class FeedFactory {
 	
 	private static FeedFactory instance_ = null;
 	private String type = new String();
+	private DateConverter dateConverter;
 	
-	private FeedFactory(){	
+	private FeedFactory(){
+		dateConverter=new DateConverter();
 	}
 	
 	public static FeedFactory getInstance(){
@@ -47,7 +51,7 @@ public class FeedFactory {
 	
 	private StatusMessage getStatus(final DynaBean object){
 		String id = object.get("id").toString();
-		String created_time = object.get("created_time").toString();
+		String created_time = getCreationDateInUnixTimestamp(object);
 		String message = object.get("message").toString();
 		String from_id = ((DynaBean)(object.get("from"))).get("id").toString();
 		StatusMessage feed = new StatusMessage(message,id,from_id);
@@ -56,6 +60,7 @@ public class FeedFactory {
 		
 		this.setCommentNumber(feed,object);
 		this.setLikeNumber(feed, object);
+		feed.setComments_(this.getComments(object));
 		
 /*		List<Comment> comments=getComments(object,feed);
 		
@@ -67,7 +72,7 @@ public class FeedFactory {
 	
 	private Note getNote(final DynaBean object){
 		String id = object.get("id").toString();
-		String created_time = object.get("created_time").toString();
+		String created_time = getCreationDateInUnixTimestamp(object);
 		String message = object.get("message").toString();
 		String from_id = ((DynaBean)(object.get("from"))).get("id").toString();
 		String subject = object.get("subject").toString();
@@ -76,6 +81,7 @@ public class FeedFactory {
 		feed.setType(type);
 		this.setCommentNumber(feed,object);
 		this.setLikeNumber(feed, object);
+		feed.setComments_(this.getComments(object));
 
 		/*List<Comment> comments=getComments(object,feed);
 		if(comments!=null){
@@ -86,7 +92,7 @@ public class FeedFactory {
 	
 	private Link getLink(final DynaBean object){
 		String id = object.get("id").toString();
-		String created_time = object.get("created_time").toString();
+		String created_time = getCreationDateInUnixTimestamp(object);
 		String from_id = ((DynaBean)(object.get("from"))).get("id").toString();
 		String name="";
 		Link link = new Link(name,id,from_id);
@@ -135,6 +141,7 @@ public class FeedFactory {
 		link.setType(type);
 		this.setCommentNumber(link,object);
 		this.setLikeNumber(link, object);
+		link.setComments_(this.getComments(object));
 
 		
 		return link;
@@ -142,7 +149,7 @@ public class FeedFactory {
 	
 	private Picture getPicture(final DynaBean object){
 		String id = object.get("id").toString();
-		String created_time = object.get("created_time").toString();
+		String created_time = getCreationDateInUnixTimestamp(object);
 		String from_id = ((DynaBean)(object.get("from"))).get("id").toString();
 		String caption = "";
 		String url="";
@@ -167,6 +174,7 @@ public class FeedFactory {
 		picture.setUrl(url);
 		picture.setMessage(message);
 		picture.setType(type);
+		picture.setComments_(this.getComments(object));
 
 		this.setCommentNumber(picture,object);
 		this.setLikeNumber(picture, object);
@@ -176,7 +184,7 @@ public class FeedFactory {
 	
 	private Video getVideo(final DynaBean object){
 		String id = object.get("id").toString();
-		String created_time = object.get("created_time").toString();
+		String created_time = getCreationDateInUnixTimestamp(object);
 		String from_id = ((DynaBean)(object.get("from"))).get("id").toString();
 		String caption = object.get("caption").toString();
 		
@@ -186,6 +194,7 @@ public class FeedFactory {
 
 		this.setCommentNumber(video,object);
 		this.setLikeNumber(video, object);
+		video.setComments_(this.getComments(object));
 		
 		return video;
 	}
@@ -210,19 +219,40 @@ public class FeedFactory {
 		}
 	}
 	
+	/**
+	 * Creates a simple feed which contains 
+	 * feedID ,
+	 * creatorID ,
+	 * createdTime in unix timestamp,
+	 * number of comments,
+	 * number of likes
+	 * 
+	 * @param object
+	 * @return Feed with id, creator id, creation time, number of comments and number of likes
+	 */
 	public Feed getSimpleFeed(final DynaBean object){
-		
-	
 		String id = object.get("id").toString();
-		String created_time = object.get("created_time").toString();
+		String created_time = getCreationDateInUnixTimestamp(object);
 		String from_id = ((DynaBean)(object.get("from"))).get("id").toString();
 		Feed feed = new Feed(id,from_id);
 		setCommentNumber(feed,object);
 		this.setLikeNumber(feed, object);
 		feed.setCreatedTime_(created_time);
-		feed.setComments_(this.getComments(object));
+		//feed.setComments_(this.getComments(object));
 		return feed;
 	}
+	
+	/**
+	 * Return the creation date of a feed in unix time stamp.
+	 * @param object 
+	 * @return unix time stamp
+	 */
+	public String getCreationDateInUnixTimestamp(final DynaBean object){
+		String created_time = object.get("created_time").toString();
+		long date = dateConverter.getUnixTimestamp(created_time);
+		return String.valueOf(date);
+	}
+	
 	
 	public CommentList getComments(final DynaBean object){
 		CommentList comments = new CommentList();

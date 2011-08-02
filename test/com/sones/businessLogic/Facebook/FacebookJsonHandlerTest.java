@@ -6,6 +6,11 @@ import java.util.Vector;
 
 import org.junit.Test;
 
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
+import com.sones.businessLogic.Facebook.Source.FacebookFriend;
+import com.sones.businessLogic.Facebook.Source.FacebookFriendList;
+import com.sones.businessLogic.Facebook.Source.FacebookGroupList;
+
 import testingUtilities.FeedReader;
 
 
@@ -152,7 +157,7 @@ public class FacebookJsonHandlerTest {
 	@Test
 	public void getFeeds_FeedsContainConcreteComments_Test(){
 		FacebookJsonHandler handler = new FacebookJsonHandler();
-		FeedList feeds=new FeedList();
+		FacebookFeedList feeds=new FacebookFeedList();
 		feeds.setFeeds(handler.getFeeds(new FeedReader().getFacebookWall()));
 		assertNotNull(feeds.getFeed(1).getComments_().getComment(0).getId_());
 	}

@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sones.businessLogic.Facebook.FacebookUser;
+import com.sones.businessLogic.Facebook.Source.FacebookUser;
 
 import static org.junit.Assert.*;
 

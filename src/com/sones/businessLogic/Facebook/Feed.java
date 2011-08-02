@@ -34,6 +34,15 @@ public class Feed {
 		comments_=new CommentList();
 	}
 	
+	public Feed(final String feedId,final String userId,final int numOfCom,final String creationTime){
+		id_ = feedId;
+		fromId_ = userId;
+		numberOfComments_ = numOfCom;
+		createdTime_=creationTime;
+		type_=new String();
+		comments_=new CommentList();
+	}
+	
 	public Feed(final String feedId,final String userId){
 		id_ = feedId;
 		fromId_ = userId;
@@ -164,5 +173,12 @@ public class Feed {
 	}
 	public String getType() {
 		return type_;
+	}
+	
+	public boolean isEmpty(){
+		if(this.id_.isEmpty()){
+			return true;
+		}
+		return false;
 	}
 }
