@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.sones.businessLogic.Facebook.FacebookUser;
+import com.sones.businessLogic.Facebook.Source.FacebookUser;
 import com.sones.businessLogic.Facebook.Feed;
 import com.sones.businessLogic.KeywordManager.Keyword;
 import com.sones.businessLogic.KeywordManager.Keyword_old;

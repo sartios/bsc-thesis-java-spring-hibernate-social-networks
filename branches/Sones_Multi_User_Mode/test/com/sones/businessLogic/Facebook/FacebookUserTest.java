@@ -3,6 +3,10 @@ package com.sones.businessLogic.Facebook;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.sones.businessLogic.Facebook.Source.FacebookUser;
+import com.sones.businessLogic.KeywordManager.KeywordList;
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
 import static org.junit.Assert.*;
 
 public class FacebookUserTest {
@@ -35,7 +39,7 @@ public class FacebookUserTest {
 	
 	@Test
 	public void setFeedList_FeedsNotNull_ReturnsUserFeeds_Test(){
-		FeedList feeds = new  FeedList();
+		FacebookFeedList feeds = new  FacebookFeedList();
 		feeds.setUserID(facebookUserID);
 		user.setFacebookUserID_(facebookUserID);
 		user.setFeeds_(feeds);
@@ -50,7 +54,7 @@ public class FacebookUserTest {
 	
 	@Test
 	public void setUserFeeds_FeedsFromDiffirentUser_ReturnsEmptyFeeds_Test(){
-		FeedList feeds = new  FeedList();
+		FacebookFeedList feeds = new  FacebookFeedList();
 		feeds.setUserID("123456");
 		feeds.setFeed(new Feed());
 		user.setFeeds_(feeds);
@@ -68,5 +72,34 @@ public class FacebookUserTest {
 	public void setApplicationUserID_IDNull_ReturnsEmptyApplicationUserID_Test(){
 		user.setApplicationUserID_(null);
 		assertEquals(user.getApplicationUserID_(), "");
+	}
+	
+	@Test
+	public void setKeywordList_KeywordListIsNotNull_Test(){
+		KeywordList keywords = new KeywordList();
+		keywords.setApplicationUserID_(applicationUserID);
+		user.setKeywords_(keywords);
+		assertEquals(user.getKeywords_().getSize(), 0);
+	}
+	
+	@Test
+	public void setKeywordList_KeywordListIsNull_Test(){
+		user.setKeywords_(null);
+		assertEquals(user.getKeywords_().getSize(), 0);
+	}
+	
+	@Test
+	public void setKeywordList_KeywordsBelongToSomebodyElse_Test(){
+		KeywordList keywords = new KeywordList();
+		keywords.setApplicationUserID_("xxxxx");
+		user.setKeywords_(keywords);
+		assertEquals(user.getKeywords_().getSize(), 0);
+	}
+	
+	@Test
+	public void setKeywordList_KeywordsBelongToNobody_Test(){
+		KeywordList keywords = new KeywordList();
+		user.setKeywords_(keywords);
+		assertEquals(user.getKeywords_().getSize(), 0);
 	}
 }

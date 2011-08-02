@@ -6,6 +6,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.sones.businessLogic.Facebook.Rest.FacebookRestHandler;
+import com.sones.businessLogic.Facebook.Source.FacebookFriend;
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
+
+
 
 import static org.junit.Assert.*;
 
@@ -38,7 +43,7 @@ public class FacebookRestHandlerTest {
 	 * At this moment, we cannot test for different users if returns different results.
 	 */
 	public void getFriendList_UsingDefaultAccessToken_Test(){
-		int size = rest_.getFriendList().getSize();
+		int size = rest_.getFriendList(this.token_.getToken()).getSize();
 		assertTrue(size>0);
 	}
 	
@@ -48,7 +53,7 @@ public class FacebookRestHandlerTest {
 	 * to the user to whom belongs the access token.
 	 */
 	public void getGroups_ExistingUserID_Test(){
-		int size = rest_.getGroups(this.ID_).getSize();
+		int size = rest_.getGroupList(this.ID_,this.token_.getToken()).getSize();
 		assertTrue(size>0);
 	}
 	
@@ -57,7 +62,7 @@ public class FacebookRestHandlerTest {
 	 * Test the method if returns groups of user who isn't friend with access token owner
 	 */
 	public void getGroups_FromUserWhoIsNotFriend_Test(){
-		int size = rest_.getGroups(notFriendID_).getSize();
+		int size = rest_.getGroupList(notFriendID_,this.token_.getToken()).getSize();
 		assertTrue(size==0);
 	}
 	
@@ -66,7 +71,7 @@ public class FacebookRestHandlerTest {
 	 * Test if returns groups from null user
 	 */
 	public void getGroups_NullAsUser_Test(){
-		int size = rest_.getGroups(null).getSize();
+		int size = rest_.getGroupList(null,this.token_.getToken()).getSize();
 		assertTrue(size==0);
 	}
 	
@@ -112,7 +117,7 @@ public class FacebookRestHandlerTest {
 	 */
 	public void getFeed_FeedExistsFromFriend_Test(){
 		String friendsFeed = "100000866964787_210918882280342";
-		Feed feed = rest_.getFeed(friendsFeed);
+		Feed feed = rest_.getFeed(friendsFeed,this.token_.getToken());
 		assertEquals(feed.getId_(), friendsFeed);
 	}
 	
@@ -122,7 +127,7 @@ public class FacebookRestHandlerTest {
 	 */
 	public void getFeed_UserIsNotFriend_Test(){
 		String friendsFeed = "1310204556_2124804082246";
-		Feed feed = rest_.getFeed(friendsFeed);
+		Feed feed = rest_.getFeed(friendsFeed,this.token_.getToken());
 		assertEquals(feed.getId_(), "");
 	}
 	
@@ -131,7 +136,7 @@ public class FacebookRestHandlerTest {
 	 * Get null as feed
 	 */
 	public void getFeed_NullAsFeed_Test(){
-		Feed feed = rest_.getFeed(null);
+		Feed feed = rest_.getFeed(null,this.token_.getToken());
 		assertEquals(feed.getId_(), "");
 	}
 	
@@ -140,7 +145,7 @@ public class FacebookRestHandlerTest {
 	 * Get facebook user who is a friend
 	 */
 	public void getFacebookUser_WhoIsFriend_Test(){
-		FacebookFriend friend = rest_.getFacebookUser(ID_);
+		FacebookFriend friend = rest_.getFacebookUser(ID_,this.token_.getToken());
 		assertEquals(friend.getId(), ID_);
 	}
 	
@@ -149,7 +154,7 @@ public class FacebookRestHandlerTest {
 	 * Get facebook user who isn't a friend
 	 */
 	public void getFacebookUser_WhoIsNotFriend_Test(){
-		FacebookFriend friend = rest_.getFacebookUser(notFriendID_);
+		FacebookFriend friend = rest_.getFacebookUser(notFriendID_,this.token_.getToken());
 		assertEquals(friend.getId(), notFriendID_);
 	}
 	
@@ -158,7 +163,7 @@ public class FacebookRestHandlerTest {
 	 * Null as user
 	 */
 	public void getFacebookUser_NullAsUser_Test(){
-		FacebookFriend friend = rest_.getFacebookUser(null);
+		FacebookFriend friend = rest_.getFacebookUser(null,this.token_.getToken());
 		assertEquals(friend.getId(), "");
 	}
 	
@@ -167,8 +172,8 @@ public class FacebookRestHandlerTest {
 	 * Since date is in the past
 	 */
 	public void getFeedsSinceDate_DateBelongsToPast_Test(){
-		long pastDate = 1276585715; //15 Jun 2010 07:08:35 GMT
-		FeedList feeds = rest_.getFeedsSinceDate(ID_, token_.getToken(),pastDate);
+		String pastDate = "1276585715"; //15 Jun 2010 07:08:35 GMT
+		FacebookFeedList feeds = rest_.getFeedsSinceDate(ID_, token_.getToken(),pastDate);
 		int size = feeds.getSize();
 		assertTrue(size>0);
 	}
@@ -178,8 +183,8 @@ public class FacebookRestHandlerTest {
 	 * Since date is in the future
 	 */
 	public void getFeedsSinceDate_DateBelongsToFuture_Test(){
-		long futureDate = 1339744115; //15 Jun 2012 07:08:35 GMT
-		FeedList feeds = rest_.getFeedsSinceDate(ID_, token_.getToken(),futureDate);
+		String futureDate = "1339744115"; //15 Jun 2012 07:08:35 GMT
+		FacebookFeedList feeds = rest_.getFeedsSinceDate(ID_, token_.getToken(),futureDate);
 		int size = feeds.getSize();
 		assertTrue(size==0);
 	}
@@ -189,8 +194,8 @@ public class FacebookRestHandlerTest {
 	 * Since date is a negative long number
 	 */
 	public void getFeedsSinceDate_NegativeLongNumber_Test(){
-		long pastDate = -1339744115;
-		FeedList feeds = rest_.getFeedsSinceDate(ID_, token_.getToken(),pastDate);
+		String pastDate = "-1339744115";
+		FacebookFeedList feeds = rest_.getFeedsSinceDate(ID_, token_.getToken(),pastDate);
 		int size = feeds.getSize();
 		assertTrue(size==0);
 	}
@@ -200,8 +205,8 @@ public class FacebookRestHandlerTest {
 	 * User ID isn't from friend
 	 */
 	public void getFeedsSinceDate_UserIsNotAFriend_Test(){
-		long pastDate = 1276585715; //15 Jun 2010 07:08:35 GMT
-		FeedList feeds = rest_.getFeedsSinceDate(notFriendID_, token_.getToken(),pastDate);
+		String pastDate = "1276585715"; //15 Jun 2010 07:08:35 GMT
+		FacebookFeedList feeds = rest_.getFeedsSinceDate(notFriendID_, token_.getToken(),pastDate);
 		int size = feeds.getSize();
 		assertTrue(size==0);
 	}
@@ -211,9 +216,9 @@ public class FacebookRestHandlerTest {
 	 * User's ID isn't a valid facebook id
 	 */
 	public void getFeedsSinceDate_UserIsNotValid_Test(){
-		long pastDate = 1276585715; //15 Jun 2010 07:08:35 GMT
+		String pastDate = "1276585715"; //15 Jun 2010 07:08:35 GMT
 		String notValidID = "notValidID";
-		FeedList feeds = rest_.getFeedsSinceDate(notValidID, token_.getToken(),pastDate);
+		FacebookFeedList feeds = rest_.getFeedsSinceDate(notValidID, token_.getToken(),pastDate);
 		int size = feeds.getSize();
 		assertTrue(size==0);
 	}
@@ -223,9 +228,9 @@ public class FacebookRestHandlerTest {
 	 * User's ID is null
 	 */
 	public void getFeedsSinceDate_NullUserID_Test(){
-		long pastDate = 1276585715; //15 Jun 2010 07:08:35 GMT
+		String pastDate = "1276585715"; //15 Jun 2010 07:08:35 GMT
 		String nullID = null;
-		FeedList feeds = rest_.getFeedsSinceDate(nullID, token_.getToken(),pastDate);
+		FacebookFeedList feeds = rest_.getFeedsSinceDate(nullID, token_.getToken(),pastDate);
 		int size = feeds.getSize();
 		assertTrue(size==0);
 	}
@@ -235,9 +240,9 @@ public class FacebookRestHandlerTest {
 	 * Not valid token
 	 */
 	public void getFeedsSinceDate_NotValidToken_Test(){
-		long pastDate = 1276585715; //15 Jun 2010 07:08:35 GMT
+		String pastDate = "1276585715"; //15 Jun 2010 07:08:35 GMT
 		String notValidToken="notValidToken";
-		FeedList feeds = rest_.getFeedsSinceDate(ID_,notValidToken,pastDate);
+		FacebookFeedList feeds = rest_.getFeedsSinceDate(ID_,notValidToken,pastDate);
 		int size = feeds.getSize();
 		assertTrue(size==0);
 	}
@@ -247,9 +252,9 @@ public class FacebookRestHandlerTest {
 	 * Null token
 	 */
 	public void getFeedsSinceDate_NullToken_Test(){
-		long pastDate = 1276585715; //15 Jun 2010 07:08:35 GMT
+		String pastDate = "1276585715"; //15 Jun 2010 07:08:35 GMT
 		String nullToken=null;
-		FeedList feeds = rest_.getFeedsSinceDate(ID_,nullToken,pastDate);
+		FacebookFeedList feeds = rest_.getFeedsSinceDate(ID_,nullToken,pastDate);
 		int size = feeds.getSize();
 		assertTrue(size==0);
 	}

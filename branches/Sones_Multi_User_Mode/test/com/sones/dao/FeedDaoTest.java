@@ -6,10 +6,10 @@ import testingUtilities.FeedReader;
 import static org.junit.Assert.*;
 
 import com.sones.businessLogic.Facebook.FacebookJsonHandler;
-import com.sones.businessLogic.Facebook.FacebookRestHandler;
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
+import com.sones.businessLogic.Facebook.Rest.FacebookRestHandler;
 import com.sones.businessLogic.Facebook.FacebookToken;
 import com.sones.businessLogic.Facebook.Feed;
-import com.sones.businessLogic.Facebook.FeedList;
 import com.sones.dao.FeedDao;
 import com.sones.dao.TokenDao;
 
@@ -20,7 +20,7 @@ public class FeedDaoTest {
 		FacebookRestHandler handler = new FacebookRestHandler();
 		TokenDao dao = new TokenDao();
 		FacebookToken token = (FacebookToken) dao.findAll().get(0);
-		FeedList feeds = handler.getFeeds("100000866964787", token.getToken());
+		FacebookFeedList feeds = handler.getFeeds("100000866964787", token.getToken());
 		
 		FeedDao feedDao = new FeedDao();
 		feedDao.saveUserFeeds(feeds);
@@ -32,7 +32,7 @@ public class FeedDaoTest {
 		TokenDao dao = new TokenDao();
 		FacebookToken token = (FacebookToken) dao.findAll().get(0);
 		FeedDao feedDao = new FeedDao();
-		FeedList feeds = feedDao.findUserFeeds("100000866964787");
+		FacebookFeedList feeds = feedDao.findUserFeeds("100000866964787");
 		//assertNotNull(feeds.getFeeds_());
 		assertNotSame(0, feeds.getFeeds_().size());
 	}
@@ -66,12 +66,12 @@ public class FeedDaoTest {
 		String endingDate = new String("2011-06-21T17:17:59+0000");
 		
 		FacebookJsonHandler handler = new FacebookJsonHandler();
-		FeedList feeds = new FeedList();
+		FacebookFeedList feeds = new FacebookFeedList();
 		feeds.setFeeds(handler.getFeeds(new FeedReader().getFacebookWall()));
 		FeedDao  dao = new FeedDao();
 		dao.saveUserFeeds(feeds);
 		
-		FeedList feedsFromDB = new FeedList();
+		FacebookFeedList feedsFromDB = new FacebookFeedList();
 		feedsFromDB = dao.findFeedsBetween(startingDate, endingDate);
 		int notZero = feedsFromDB.getFeeds_().size();
 		dao.deleteFeedList(feedsFromDB);
@@ -83,7 +83,7 @@ public class FeedDaoTest {
 		String startingDate = new String("2050-05-24T16:20:27+0000");
 		String endingDate = new String("2050-06-21T17:17:59+0000");	
 		FeedDao dao = new FeedDao();
-		FeedList feedsFromDB = new FeedList();
+		FacebookFeedList feedsFromDB = new FacebookFeedList();
 		feedsFromDB = dao.findFeedsBetween(startingDate, endingDate);
 		int zero = feedsFromDB.getFeeds_().size();
 		assertEquals(zero, 0);
@@ -94,7 +94,7 @@ public class FeedDaoTest {
 		String startingDate = null;
 		String endingDate =null;	
 		FeedDao dao = new FeedDao();
-		FeedList feedsFromDB = new FeedList();
+		FacebookFeedList feedsFromDB = new FacebookFeedList();
 		feedsFromDB = dao.findFeedsBetween(startingDate, endingDate);
 		int zero = feedsFromDB.getFeeds_().size();
 		assertEquals(zero, 0);
@@ -105,7 +105,7 @@ public class FeedDaoTest {
 		String startingDate = new String("Zavarakatranemia");
 		String endingDate =new String("Ileos");;	
 		FeedDao dao = new FeedDao();
-		FeedList feedsFromDB = new FeedList();
+		FacebookFeedList feedsFromDB = new FacebookFeedList();
 		feedsFromDB = dao.findFeedsBetween(startingDate, endingDate);
 		int zero = feedsFromDB.getFeeds_().size();
 		assertEquals(zero, 0);
@@ -116,7 +116,7 @@ public class FeedDaoTest {
 		String startingDate = new String("2011-05-24T16:20:27+0000");
 		String endingDate =new String("2011-05-24T16:20:27+0000");;	
 		FeedDao dao = new FeedDao();
-		FeedList feedsFromDB = new FeedList();
+		FacebookFeedList feedsFromDB = new FacebookFeedList();
 		feedsFromDB = dao.findFeedsBetween(startingDate, endingDate);
 		int zero = feedsFromDB.getFeeds_().size();
 		assertEquals(zero, 0);

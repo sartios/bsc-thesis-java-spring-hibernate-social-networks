@@ -9,7 +9,7 @@ import org.hibernate.cfg.FkSecondPass;
 
 import com.persistance.HibernateUtil;
 import com.sones.businessLogic.Facebook.Feed;
-import com.sones.businessLogic.Facebook.FeedList;
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
 
 /**
  * This class saves the feeds of a user with their comments in current time.
@@ -31,7 +31,7 @@ public class FeedListDao extends AbstractDao{
 	 * @param feeds of the user
 	 * @return true if the feeds have saved
 	 */
-	public boolean saveUserFeeds(final FeedList feeds){
+	public boolean saveUserFeeds(final FacebookFeedList feeds){
 		boolean areSaved = false;
 		String facebookUserID = feeds.getUserID();
 		if(null!=feeds){
@@ -82,7 +82,7 @@ public class FeedListDao extends AbstractDao{
 	 * @param feeds
 	 * @return true if the deletion was ok
 	 */
-		public boolean deleteUserFeeds(final FeedList feeds){
+		public boolean deleteUserFeeds(final FacebookFeedList feeds){
 			boolean areDeleted = false;
 			String facebookUserID = feeds.getUserID();
 			if(null!=feeds){
@@ -122,8 +122,8 @@ public class FeedListDao extends AbstractDao{
 	 * @param userID of facebook user
 	 * @return feedList of the user
 	 */
-	public FeedList findUserFeeds(final String userID){
-		FeedList feeds = null;
+	public FacebookFeedList findUserFeeds(final String userID){
+		FacebookFeedList feeds = null;
 		if(null!=userID){
 			try{
 				feeds=executeFindFeedListQuery(userID);
@@ -145,7 +145,7 @@ public class FeedListDao extends AbstractDao{
 	 * @param facebookUserID
 	 * @param feed to be deleted
 	 */
-	private FeedList executeFindFeedListQuery(String facebookUserID){
+	private FacebookFeedList executeFindFeedListQuery(String facebookUserID){
 		startOperation();
 		Query query=session.createSQLQuery("SELECT "+
 												"F.FACEBOOK_FEED_ID     	as      FACEBOOK_FEED_ID,"+
@@ -170,8 +170,8 @@ public class FeedListDao extends AbstractDao{
 	 * @param feeds
 	 * @return
 	 */
-	private FeedList getFeedList(final List feeds){
-		FeedList feedList = new FeedList();
+	private FacebookFeedList getFeedList(final List feeds){
+		FacebookFeedList feedList = new FacebookFeedList();
 		if(null!=feeds){
 			String feedID=new String();
 			String creatorID=new String();

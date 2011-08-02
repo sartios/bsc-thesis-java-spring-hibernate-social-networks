@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.exceptions.DataAccessLayerException;
-import com.sones.businessLogic.Facebook.FacebookFriend;
-import com.sones.businessLogic.Facebook.FacebookGroup;
 import com.sones.businessLogic.Facebook.FacebookSearchingList;
+import com.sones.businessLogic.Facebook.Source.FacebookFriend;
+import com.sones.businessLogic.Facebook.Source.FacebookGroup;
 
 public class FacebookSearchingListDao extends AbstractDao{
 

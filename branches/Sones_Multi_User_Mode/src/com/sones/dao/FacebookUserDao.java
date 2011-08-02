@@ -1,7 +1,7 @@
 package com.sones.dao;
 
 import com.exceptions.DataAccessLayerException;
-import com.sones.businessLogic.Facebook.FacebookUser;
+import com.sones.businessLogic.Facebook.Source.FacebookUser;
 import com.sones.businessLogic.Facebook.Feed;
 
 /**

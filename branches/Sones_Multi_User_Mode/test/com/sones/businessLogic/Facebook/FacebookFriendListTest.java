@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.sones.businessLogic.Facebook.FacebookFriend;
-import com.sones.businessLogic.Facebook.FacebookFriendList;
+import com.sones.businessLogic.Facebook.Source.FacebookFriend;
+import com.sones.businessLogic.Facebook.Source.FacebookFriendList;
 
 import static org.junit.Assert.*;
 

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	
+<hibernate-mapping package="com.sones.businessLogic.Facebook.Source">
+
+	<class name="FacebookGroup" table="FACEBOOK_GROUPS">
+		
+		<id name="id" type="string">
+			<column name="IDS"/>
+			<generator class="assigned"/>	
+		</id>
+		
+		<property name="name" column="NAMES" type="string" not-null="true" />
+		
+	</class>
+
+</hibernate-mapping>

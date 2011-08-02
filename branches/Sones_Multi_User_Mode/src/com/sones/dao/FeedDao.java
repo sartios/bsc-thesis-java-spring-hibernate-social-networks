@@ -12,7 +12,7 @@ import org.hibernate.Session;
 import com.exceptions.DataAccessLayerException;
 import com.persistance.HibernateUtil;
 import com.sones.businessLogic.Facebook.Feed;
-import com.sones.businessLogic.Facebook.FeedList;
+import com.sones.businessLogic.Facebook.Feeds.FacebookFeedList;
 
 public class FeedDao extends AbstractDao{
 	
@@ -88,9 +88,9 @@ public class FeedDao extends AbstractDao{
 	/**
 	 * Find the feeds from a specific user
 	 */
-	public FeedList findUserFeeds(final String userID){
+	public FacebookFeedList findUserFeeds(final String userID){
 		
-		FeedList userFeeds = new FeedList();
+		FacebookFeedList userFeeds = new FacebookFeedList();
 		try{
 			startOperation();
 			Query query = session.createQuery("from Feed where fromId_>=:user");
@@ -114,12 +114,12 @@ public class FeedDao extends AbstractDao{
 	/**
 	 * Saves feed list
 	 */
-	public void saveUserFeeds(final FeedList userFeeds){
+	public void saveUserFeeds(final FacebookFeedList feeds){
 		
 		
-		int size = userFeeds.getFeeds_().size();
+		int size = feeds.getFeeds_().size();
 		for(int i=0;i<size;i++){
-			saveOrUpdate(userFeeds.getFeed(i));
+			saveOrUpdate(feeds.getFeed(i));
 		}
 		
 	}
@@ -148,7 +148,7 @@ public class FeedDao extends AbstractDao{
 	 * Deletes the given feed list and handles the exceptions
 	 * @param feeds
 	 */
-	public void deleteFeedList(final FeedList feeds){
+	public void deleteFeedList(final FacebookFeedList feeds){
 		if(null!=feeds){
 			try{
 				for(int feedIndex=0;feedIndex<feeds.getSize();feedIndex++){
@@ -167,8 +167,8 @@ public class FeedDao extends AbstractDao{
 	 * @param endingDate
 	 * @return feed list
 	 */
-	public FeedList findFeedsBetween(final String startingDate,final String endingDate){
-		FeedList feeds = new FeedList();
+	public FacebookFeedList findFeedsBetween(final String startingDate,final String endingDate){
+		FacebookFeedList feeds = new FacebookFeedList();
 		if((null!=startingDate)&&(null!=endingDate)){
 			try{
 				startOperation();

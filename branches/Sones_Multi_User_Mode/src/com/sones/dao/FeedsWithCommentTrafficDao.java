@@ -10,7 +10,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 
 import com.persistance.HibernateUtil;
-import com.sones.businessLogic.FeedsWithCommentTraffic;
+import com.sones.businessLogic.Facebook.FeedsWithCommentTraffic;
 
 public class FeedsWithCommentTrafficDao extends AbstractDao{
 	

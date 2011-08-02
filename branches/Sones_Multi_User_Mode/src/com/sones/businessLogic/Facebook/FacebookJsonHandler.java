@@ -7,6 +7,13 @@ import java.util.Set;
 
 import org.apache.commons.beanutils.DynaBean;
 
+
+import com.sones.businessLogic.Facebook.JSON.IFacebookJsonHandler;
+import com.sones.businessLogic.Facebook.Source.FacebookFriend;
+import com.sones.businessLogic.Facebook.Source.FacebookFriendList;
+import com.sones.businessLogic.Facebook.Source.FacebookGroupFactory;
+import com.sones.businessLogic.Facebook.Source.FacebookGroupList;
+
 import net.sf.ezmorph.MorphException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
@@ -29,7 +36,7 @@ import net.sf.json.JSONObject;
  * and XML to JSON and back again to beans and DynaBeans
  * @see <a href src="http://json-lib.sourceforge.net/apidocs/net/sf/json/JSON.html">JSON Library</a>
  */
-public class FacebookJsonHandler {
+public class FacebookJsonHandler implements IFacebookJsonHandler{
 	
 	/**
 	 * JsonArray, the external form is a string wrapped in square brackets

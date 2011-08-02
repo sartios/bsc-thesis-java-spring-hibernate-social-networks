@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
 
-import com.sones.businessLogic.Facebook.FacebookFriend;
-import com.sones.businessLogic.Facebook.FacebookFriendList;
+import com.sones.businessLogic.Facebook.Source.FacebookFriend;
+import com.sones.businessLogic.Facebook.Source.FacebookFriendList;
 
 import static org.junit.Assert.*;
 

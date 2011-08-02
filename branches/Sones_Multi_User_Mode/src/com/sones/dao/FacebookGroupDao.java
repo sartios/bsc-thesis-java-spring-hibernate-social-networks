@@ -7,10 +7,9 @@ import org.hibernate.Query;
 
 import com.exceptions.DataAccessLayerException;
 import com.persistance.HibernateUtil;
-import com.sones.businessLogic.Facebook.FacebookFriend;
-import com.sones.businessLogic.Facebook.FacebookGroup;
-import com.sones.businessLogic.Facebook.FacebookGroupList;
 import com.sones.businessLogic.Facebook.Feed;
+import com.sones.businessLogic.Facebook.Source.FacebookGroup;
+import com.sones.businessLogic.Facebook.Source.FacebookGroupList;
 
 public class FacebookGroupDao extends AbstractDao {
 	

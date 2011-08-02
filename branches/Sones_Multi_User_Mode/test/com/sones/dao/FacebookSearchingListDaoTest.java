@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.sones.businessLogic.Facebook.FacebookFriend;
-import com.sones.businessLogic.Facebook.FacebookGroup;
+import com.sones.businessLogic.Facebook.Source.FacebookFriend;
+import com.sones.businessLogic.Facebook.Source.FacebookGroup;
 import com.sones.businessLogic.Facebook.FacebookSearchingList;
 
 public class FacebookSearchingListDaoTest {
