@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 20 ??? 2011 11:45:46 ?? by Hibernate Tools 3.3.0.GA -->
+
+<hibernate-mapping package="com.sones.businessLogic.Searcher.Results">
+
+    <class name="PersistableResult" table="facebook_feeds_has_keywords" lazy="false">
+    
+            <id name="_feedID" column="FACEBOOK_FEEDS_PK_FEED_ID">
+        	<generator class="assigned"/>
+        </id>
+    <!--
+     	
+        <id name="_feedID" column="FACEBOOK_FEEDS_PK_FEED_ID">
+        	<generator class="assigned"/>
+        </id>
+        
+		<id name="_keyword" column="KEYWORDS_PK_KEYWORD_ID">
+        	<generator class="assigned"/>
+        </id>
+        
+		<id name="_userID" column="APPLICATION_USERS_PK_USER_ID">
+        	<generator class="assigned"/>
+        </id>
+        
+        --><!--<property name="_keyword" type="string" access="field">
+            <column name="KEYWORDS_PK_KEYWORD_ID" />
+        </property>
+        
+        <property name="_userID" >
+        	<column name="APPLICATION_USERS_PK_USER_ID"/>
+        </property>
+
+        
+    --></class>
+</hibernate-mapping>
