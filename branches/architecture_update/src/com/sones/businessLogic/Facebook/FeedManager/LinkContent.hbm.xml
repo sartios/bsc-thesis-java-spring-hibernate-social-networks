@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 9 ??? 2011 2:54:12 ?? by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="com.sones.businessLogic.Facebook.FeedManager">
+
+	<class name="LinkContent" table="FACEBOOK_LINKS" lazy="false">
+	
+		<id name="_feedID" column="FACEBOOK_FEEDS_PK_FEED_ID" type="string" access="field">
+			<generator class="assigned"/>
+		</id>
+
+		<property  name="_name" type="string" access="field" generated="never" lazy="false">
+			<column name="NAME"/>
+		</property>
+		
+		<property 	name="_caption" type="string" access="field" generated="never" lazy="false">
+			<column name="CAPTION"/>
+		</property>
+	
+		<property name="_description" type="string" access="field" generated="never" lazy="false">
+			<column name="DESCRIPTION"/>
+		</property>
+	
+		<property	name="_message" type="string" access="field" generated="never" lazy="false">
+			<column name="MESSAGE"/>
+		</property>
+		
+		<property	name="_photoURL" type="string" access="field" generated="never" lazy="false">
+			<column name="PHOTO_URL"/>
+		</property>
+		
+		<property	name="_linkURL" type="string" access="field" generated="never" lazy="false">
+			<column name="LINK_URL"/>
+		</property>
+	
+	</class>
+</hibernate-mapping>

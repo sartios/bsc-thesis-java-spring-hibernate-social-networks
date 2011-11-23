@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- Generated 16 ??? 2011 4:12:56 ?? by Hibernate Tools 3.3.0.GA -->
+
+<hibernate-mapping package="com.sones.buisinessLogic.Facebook.UserManager">
+    <class name="FacebookToken" table="FACEBOOK_TOKENS" lazy="false">
+    
+    	<id name="_userID" column="APPLICATION_USERS_PK_USER_ID">
+    		<generator class="assigned"/>
+    	</id>
+    
+        <property name="_token" type="string" access="field">
+            <column name="TOKEN_VALUE" />
+        </property>
+        
+    </class>
+</hibernate-mapping>
