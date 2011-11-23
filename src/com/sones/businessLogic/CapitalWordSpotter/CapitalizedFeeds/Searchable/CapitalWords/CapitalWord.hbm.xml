@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 10 ??? 2011 10:55:26 ?? by Hibernate Tools 3.3.0.GA -->
+<hibernate-mapping package="com.sones.businessLogic.CapitalWordSpotter">
+
+    <class name="CapitalWord"	table="CAPITAL_WORDS"	lazy="false">
+    
+        <property name="_wordValue" type="string" access="field">
+            <column name="CAPITAL_WORD_VALUE" />
+        </property>
+        
+    </class>
+</hibernate-mapping>
