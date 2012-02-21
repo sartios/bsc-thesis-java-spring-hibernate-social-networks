@@ -14,31 +14,31 @@ import org.springframework.context.annotation.Lazy;
 
 import com.sones.dao.DatabaseConstants;
 import com.sones.facebook.model.feed.comment.Comment;
-import com.sones.facebook.model.source.Event;
-import com.sones.facebook.model.source.EventConstants;
+import com.sones.facebook.model.source.Page;
+import com.sones.facebook.model.source.PageConstants;
 import com.sones.facebook.model.source.User;
 
 /**
  * <b>Table:</b> FCBK.EVENT_POSTS <br/><br/>
- * Represents a post that was published on an {@link Event}.
+ * Represents a post that was published on an {@link Page}.
  * @author sartios.sones@gmail.com.
  *
  */
 @Entity
-@Table(name = EventPostConstants.TABLE_NAME, schema = DatabaseConstants.FACEBOOK_SCHEMA)
+@Table(name = PagePostConstants.TABLE_NAME, schema = DatabaseConstants.FACEBOOK_SCHEMA)
 @PrimaryKeyJoinColumn(name=FacebookPostConstants.PROPERTY_ID)
 @Lazy(value=false)
-public class EventPost extends FacebookPost
+public class PagePost extends FacebookPost
 {
 	
-	@ManyToOne(fetch=FetchType.EAGER,targetEntity=Event.class)
-	@JoinColumn(name=EventConstants.PROPERTY_ID)
-	private Event event;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name=PageConstants.PROPERTY_ID)
+	private Page page;
 	
 	/**
 	 * Initializes the object.
 	 */
-	public EventPost()
+	public PagePost()
 	{
 		super();
 	}
@@ -49,22 +49,22 @@ public class EventPost extends FacebookPost
 	 * @param user
 	 * @param comments
 	 */
-	public EventPost(Date createdDate, User user, Set<Comment> comments)
+	public PagePost(Date createdDate, User user, Set<Comment> comments)
 	{
 		super(createdDate,user,comments);
 	}
 
 	/**
-	 * @param event the event to set
+	 * @param page the page to set
 	 */
-	public void setEvent(Event event) {
-		this.event = event;
+	public void setPage(Page page) {
+		this.page = page;
 	}
 
 	/**
-	 * @return the event
+	 * @return the page
 	 */
-	public Event getEvent() {
-		return event;
+	public Page getPage() {
+		return page;
 	} 
 }
