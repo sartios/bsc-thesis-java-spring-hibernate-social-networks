@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<import resource="spring-facebook-dao.xml"/>
+	
+	<bean id="userSaver" class="com.sones.facebook.post.saver.source.UserSaver">
+		<property name="userDao" ref="userDao"/>
+	</bean>
+
+	<bean id="sourceFacebookPostSaver" class="com.sones.facebook.post.saver.source.SourceFacebookPostSaver">
+		<property name="sourceFacebookPostDao" ref="sourceFacebookPostDao"/>
+	</bean>
+	
+	<bean id="sourceSaver" class="com.sones.facebook.post.saver.source.SourceSaver">
+		<property name="sourceDao" ref="sourceDao"/>
+		<property name="sourceTypeDao" ref="sourceTypeDao"/>
+	</bean>
+	
+	<bean id="statusSaver" class="com.sones.facebook.post.saver.wall.feed.StatusMessageSaver">
+		<property name="statusDao" ref="statusMessageDao"/>
+	</bean>
+	
+	<bean id="saverLogic" class="com.sones.facebook.post.saver.FacebookPostSaverLogic"></bean>
+	
+		<bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>Dozer/facebook/GraphApi/Wall/CreateWallMapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

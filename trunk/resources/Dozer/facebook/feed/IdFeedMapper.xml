@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+<mapping><class-a>com.sones.sharedDto.facebook.feed.FacebookPostIdDto</class-a><class-b>com.sones.facebook.model.feed.FacebookPost</class-b><field><a>id</a><b>id</b></field></mapping><mapping><class-a>com.sones.sharedDto.facebook.feed.CommentIdDto</class-a><class-b>com.sones.facebook.model.feed.comment.Comment</class-b><field><a>id</a><b>id</b></field></mapping></mappings>

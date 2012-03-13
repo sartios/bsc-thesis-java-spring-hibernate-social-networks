@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<import resource="spring-wall-sharedDto-nu.xml"/>
+
+	<bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>Dozer/facebook/GraphApi/Wall/CreateWallMapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="sourceStatusIdDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostIdDto">
+		<property name="post" ref="statusCreateDto"/>
+		<property name="source" ref="sourceDto"/>
+	</bean>
+	
+	<bean id="sourceStatusCreateDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostCreateDto">
+		<property name="id" ref="sourceStatusIdDto"/>
+	</bean>
+	
+	<bean id="saverLogic" class="com.sones.facebook.post.saver.FacebookPostSaverLogic"/>
+</beans>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="statusSaver" class="com.sones.facebook.post.saver.wall.feed.StatusMessageSaver" scope="prototype">
+		<property name="statusDao" ref="statusDao"/>
+		<property name="commentSaver" ref="commentSaver"/>
+	</bean>
+	
+	<bean id="statusDao" class="com.sones.facebook.dao.hibernate.feed.HibernateStatusMessageDao" scope="prototype"/>
+	
+	<bean id="videoSaver" class="com.sones.facebook.post.saver.wall.feed.VideoSaver" scope="prototype">
+		<property name="videoDao" ref="videoDao"/>
+				<property name="commentSaver" ref="commentSaver"/>
+		
+	</bean>
+	
+	<bean id="videoDao" class="com.sones.facebook.dao.hibernate.feed.HibernateVideoDao" scope="prototype"/>
+	
+	<bean id="photoSaver" class="com.sones.facebook.post.saver.wall.feed.PhotoSaver" scope="prototype">
+		<property name="photoDao" ref="photoDao"/>
+		<property name="commentSaver" ref="commentSaver"/>
+	</bean>
+	
+	<bean id="photoDao" class="com.sones.facebook.dao.hibernate.feed.HibernatePhotoDao" scope="prototype"/>
+	
+	<bean id="noteSaver" class="com.sones.facebook.post.saver.wall.feed.NoteSaver" scope="prototype">
+		<property name="noteDao" ref="noteDao"/>
+		<property name="commentSaver" ref="commentSaver"/>
+	</bean>
+	
+	<bean id="noteDao" class="com.sones.facebook.dao.hibernate.feed.HibernateNoteDao" scope="prototype"/>
+	
+	<bean id="linkSaver" class="com.sones.facebook.post.saver.wall.feed.LinkSaver" scope="prototype">
+		<property name="linkDao" ref="linkDao"/>
+		<property name="commentSaver" ref="commentSaver"/>
+	</bean>
+	
+	<bean id="linkDao" class="com.sones.facebook.dao.hibernate.feed.HibernateLinkDao" scope="prototype"/>
+		<bean id="commentSaver" class="com.sones.facebook.post.saver.wall.feed.CommentSaver">
+		<property name="userSaver" ref="userSaver"/>
+		<property name="commentDao" ref="commentDao"/>
+		<property name="postSaver" ref="facebookPostSaver"/>
+	</bean> 
+
+	<bean id="userSaver" class="com.sones.facebook.post.saver.source.UserSaver">
+		<property name="userDao" ref="userDao"/>
+	</bean>
+	
+	<bean id="userDao" class="com.sones.facebook.dao.hibernate.source.HibernateUserDao">
+	</bean>
+	
+	<bean id="commentDao" class="com.sones.facebook.dao.hibernate.feed.comment.HibernateCommentDao">
+	</bean>
+	
+	<bean id="facebookPostSaver" class="com.sones.facebook.post.saver.wall.feed.FacebookPostSaver">
+		<property name="postDao" ref="postDao"/>
+	</bean>
+	
+	<bean id="postDao" class="com.sones.facebook.dao.hibernate.feed.HibernateFacebookPostDao">
+	</bean>
+	
+	<bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>Dozer/facebook/GraphApi/Wall/CreateWallMapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+</beans>
