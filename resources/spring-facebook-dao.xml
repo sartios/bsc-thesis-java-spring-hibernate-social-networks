@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+<import resource="spring-hibernate.xml"/>
+
+<bean id="checkinDao" class="com.sones.facebook.dao.hibernate.feed.HibernateCheckinDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="userDao" class="com.sones.facebook.dao.hibernate.source.HibernateUserDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="commentDao" class="com.sones.facebook.dao.hibernate.feed.comment.HibernateCommentDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="placeDao" class="com.sones.facebook.dao.hibernate.place.HibernatePlaceDao">
+</bean>
+
+<bean id="eventPostDao" class="com.sones.facebook.dao.hibernate.feed.HibernateEventPostDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="eventDao" class="com.sones.facebook.dao.hibernate.source.HibernateEventDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="facebookPostDao" class="com.sones.facebook.dao.hibernate.feed.HibernateFacebookPostDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="groupPostDao" class="com.sones.facebook.dao.hibernate.feed.HibernateGroupPostDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="groupDao" class="com.sones.facebook.dao.hibernate.source.HibernateGroupDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="linkDao" class="com.sones.facebook.dao.hibernate.feed.HibernateLinkDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="noteDao" class="com.sones.facebook.dao.hibernate.feed.HibernateNoteDao">	
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="pageDao" class="com.sones.facebook.dao.hibernate.source.HibernatePageDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="pagePostDao" class="com.sones.facebook.dao.hibernate.feed.HibernatePagePostDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="photoDao" class="com.sones.facebook.dao.hibernate.feed.HibernatePhotoDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="statusMessageDao" class="com.sones.facebook.dao.hibernate.feed.HibernateStatusMessageDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="videoDao" class="com.sones.facebook.dao.hibernate.feed.HibernateVideoDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="sourceFacebookPostDao" class="com.sones.facebook.dao.hibernate.feed.HibernateSourceFacebookPostDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="sourceDao" class="com.sones.facebook.dao.hibernate.source.HibernateSourceDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+<bean id="sourceTypeDao" class="com.sones.facebook.dao.hibernate.source.HibernateSourceTypeDao">
+	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+</bean>
+
+</beans>
