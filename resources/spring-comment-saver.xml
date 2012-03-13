@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="commentSaver" class="com.sones.facebook.post.saver.wall.feed.CommentSaver">
+		<property name="userSaver" ref="userSaver"/>
+		<property name="commentDao" ref="commentDao"/>
+	</bean>
+
+	<bean id="userSaver" class="com.sones.facebook.post.saver.source.UserSaver">
+		<property name="userDao" ref="userDao"/>
+	</bean>
+	
+	<bean id="userDao" class="com.sones.facebook.dao.hibernate.source.HibernateUserDao">
+	</bean>
+	
+	<bean id="commentDao" class="com.sones.facebook.dao.hibernate.feed.comment.HibernateCommentDao">
+	</bean>
+
+</beans>
