@@ -6,22 +6,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sones.facebook.dao.feed.IFacebookPostDao;
+import com.sones.facebook.dao.feed.INoteDao;
 import com.sones.facebook.dao.feed.comment.ICommentDao;
 import com.sones.facebook.dao.hibernate.HibernateDaoTesterUtil;
 import com.sones.facebook.dao.hibernate.feed.comment.HibernateCommentDao;
 import com.sones.facebook.dao.hibernate.source.HibernateUserDao;
 import com.sones.facebook.dao.source.IUserDao;
-import com.sones.facebook.model.feed.FacebookPost;
+import com.sones.facebook.model.feed.Note;
 
-public class HibernateFacebookPostDaoTester extends HibernateDaoTesterUtil
+public class HibernateNoteDaoTester extends HibernateDaoTesterUtil
 {
 	private IUserDao userDao;
 	private ICommentDao commentDao;
-	private IFacebookPostDao facebookPostDao;
-	private FacebookPost post;
+	private INoteDao noteDao;
+	private Note post;
 	
-	public HibernateFacebookPostDaoTester()
+	public HibernateNoteDaoTester()
 	{
 		super();
 	}
@@ -31,12 +31,12 @@ public class HibernateFacebookPostDaoTester extends HibernateDaoTesterUtil
 	{
 		userDao = (HibernateUserDao) getDAOContext().getBean("userDao");
 		commentDao = (HibernateCommentDao) getDAOContext().getBean("commentDao");
-		facebookPostDao = (HibernateFacebookPostDao) getDAOContext().getBean("facebookPostDao");
-		post = (FacebookPost) getModelContext().getBean("facebookPost");
+		noteDao = (HibernateNoteDao) getDAOContext().getBean("noteDao");
+		post = (Note) getModelContext().getBean("note");
 		
 		userDao.Save(post.getUser());
 		commentDao.Save(post.getComments().iterator().next());
-		facebookPostDao.Save(post);
+		noteDao.Save(post);
 	}
 
 	@After
@@ -44,20 +44,20 @@ public class HibernateFacebookPostDaoTester extends HibernateDaoTesterUtil
 	{
 		commentDao.Delete(post.getComments().iterator().next());
 		userDao.Delete(post.getUser());
-		facebookPostDao.Delete(post);
+		noteDao.Delete(post);
 	}
 	
 	@Test
-	public void TestSaveFacebookPostUser()
+	public void TestSaveGroupPostUser()
 	{
-		FacebookPost dbPost = facebookPostDao.GetById(post.getId());
+		Note dbPost = noteDao.GetById(post.getId());
 		assertEquals(post.getUser(), dbPost.getUser());
 	}
 	
 	@Test
-	public void TestSaveFacebookPostComment()
+	public void TestSaveGroupPostComment()
 	{
-		FacebookPost dbPost = facebookPostDao.GetById(post.getId());
+		Note dbPost = noteDao.GetById(post.getId());
 		assertEquals(post.getComments().iterator().next(), dbPost.getComments().iterator().next());
 	}
 }
