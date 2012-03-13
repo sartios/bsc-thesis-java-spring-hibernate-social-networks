@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="user" class="com.sones.facebook.model.source.User">
+		<property name="id" value="1"/>
+		<property name="name" value="Sartios"/>
+		<property name="middleName" value="Savramis"/>
+		<property name="lastName" value="Savramis"/>
+		<property name="username" value="Sartios Savramis"/>
+		<property name="hometown" value="Sarti"/>
+		<property name="location" value="Chalkidiki"/>
+	</bean>
+	
+	<bean id="eventPost" class="com.sones.facebook.model.feed.EventPost">
+		<property name="id" value="1"/>
+		<property name="user" ref="user"/>
+		<property name="createdDate" ref="date"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+		<property name="event" ref="event"/>
+	</bean>
+	
+	<bean id="event" class="com.sones.facebook.model.source.Event">
+		<property name="id" value="1"/>
+	</bean>
+
+	<bean id="comment" class="com.sones.facebook.model.feed.comment.Comment">
+		<property name="id" value="1"/>
+		<property name="createdDate" ref="date"/>
+		<property name="message" value="comment message"/>
+		<property name="user" ref="user"/>
+	</bean>
+	
+	<bean id="date" class="java.util.Date">
+		<property name="month" value="1"/>
+		<property name="year" value="2001"/>
+		<property name="date" value="21"/>
+		<property name="hours" value="20"/>
+		<property name="minutes" value="15"/>
+		<property name="seconds" value="32"/>
+	</bean>
+	
+	<bean id="link" class="com.sones.facebook.model.feed.Link">
+		<property name="id" value="1"/>
+		<property name="message" value="message"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+		<property name="createdDate" ref="date"/>
+		<property name="description" value="Description"/>
+		<property name="icon" value="icon"/>
+		<property name="link" value="link"/>
+		<property name="name" value="name"/>
+		<property name="picture" value="picture"/>
+		<property name="user" ref="user"/>
+	</bean>
+	
+	<bean id="facebookPost" class="com.sones.facebook.model.feed.FacebookPost">
+		<property name="id" value="1"/>
+		<property name="user" ref="user"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+		<property name="createdDate" ref="date"/>
+	</bean>
+	
+	<bean id="group" class="com.sones.facebook.model.source.Group">
+		<property name="id" value="1"/>
+		<property name="description" value="Group Description"/>
+		<property name="link" value="Group link"/>
+		<property name="name" value="Group name"/>
+		<property name="updatedTime" ref="date"/>
+	</bean>
+	
+	<bean id="groupPost" class="com.sones.facebook.model.feed.GroupPost">
+		<property name="id" value="1"/>
+		<property name="user" ref="user"/>
+		<property name="createdDate" ref="date"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+		<property name="group" ref="group"/>
+	</bean>
+
+	<bean id="note" class="com.sones.facebook.model.feed.Note">
+		<property name="id" value="1"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+		<property name="createdDate" ref="date"/>
+		<property name="message" value="Message"/>
+		<property name="subject" value="Subject"/>
+		<property name="user" ref="user"/>
+	</bean>
+	
+	<bean id="pagePost" class="com.sones.facebook.model.feed.PagePost">
+		<property name="id" value="1"/>
+		<property name="user" ref="user"/>
+		<property name="createdDate" ref="date"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+		<property name="page" ref="page"/>
+	</bean>
+	
+	<bean id="page" class="com.sones.facebook.model.source.Page">
+		<property name="id" value="1"/>
+		<property name="category" value="category"/>
+		<property name="link" value="link"/>
+		<property name="location" ref="location"/>
+		<property name="name" value="location"/>
+	</bean>
+	
+	<bean id="location" class="com.sones.facebook.model.source.Location">
+		<property name="city" value="Sarti"/>
+		<property name="country" value="Greece"/>
+		<property name="street" value="something"/>
+		<property name="zip" value="1023456"/>
+	</bean>
+	
+	<bean id="photo" class="com.sones.facebook.model.feed.Photo">
+		<property name="id" value="1"/>
+		<property name="user" ref="user"/>
+		<property name="createdDate" ref="date"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+	</bean>
+	
+		<bean id="statusMessage" class="com.sones.facebook.model.feed.StatusMessage">
+		<property name="id" value="1"/>
+		<property name="user" ref="user"/>
+		<property name="createdDate" ref="date"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+	</bean>
+
+		<bean id="video" class="com.sones.facebook.model.feed.Video">
+		<property name="id" value="1"/>
+		<property name="user" ref="user"/>
+		<property name="createdDate" ref="date"/>
+		<property name="comments">
+			<set>
+				<ref local="comment"/>
+			</set>
+		</property>
+		</bean>
+		
+		<bean id="source" class="com.sones.facebook.model.source.Source">
+			<property name="id" value="1"/>
+			<property name="type" ref="sourceType"/>
+		</bean>
+		
+		<bean id="sourceType" class="com.sones.facebook.model.source.SourceType">
+			<property name="id" value="1"/>
+			<property name="type" value="A Type"/>
+		</bean>
+		
+		<bean id="sourceFacebookPost" class="com.sones.facebook.model.feed.SourceFacebookPost">
+			<property name="id" ref="sourceFacebookPostId"/>
+		</bean>
+		
+		<bean id="sourceFacebookPostId" class="com.sones.facebook.model.feed.SourceFacebookPostId">
+			<property name="post" ref="facebookPost"/>
+			<property name="source" ref="source"/>
+		</bean>
+</beans>
