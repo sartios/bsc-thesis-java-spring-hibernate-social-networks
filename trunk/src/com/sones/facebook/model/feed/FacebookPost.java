@@ -15,18 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-import org.hibernate.mapping.Value;
 import org.springframework.context.annotation.Lazy;
 
 import com.sones.dao.DatabaseConstants;
 import com.sones.facebook.model.feed.comment.Comment;
 import com.sones.facebook.model.feed.comment.CommentConstants;
 import com.sones.facebook.model.source.User;
-import com.sones.facebook.model.source.UserConstants;
 
 /**
  * <b>Table:</b> FCBK.FACEBOOK_POSTS <br/><br/>
@@ -153,5 +147,29 @@ public class FacebookPost	implements	Serializable
 	{
 		return comments;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if( obj == null )
+		{
+			return	false;
+		}
+		if( (obj instanceof FacebookPost) == false )
+		{
+			return false;
+		}
+		FacebookPost post = (FacebookPost)obj;
+		if(post.getId().equals(id))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() 
+	{
+		return this.id.hashCode() ^ 5;
+	}
 }
