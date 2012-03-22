@@ -78,4 +78,31 @@ public class Keyword  implements Serializable
 	public String getId() {
 		return id;
 	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if( obj == null )
+		{
+			return	false;
+		}
+		if( (obj instanceof Keyword) == false )
+		{
+			return false;
+		}
+		Keyword keyword = (Keyword)obj;
+		if(keyword.getId().equals(id))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() 
+	{
+		return this.id.hashCode() ^ 5;
+	}
+	
+	
 }

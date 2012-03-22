@@ -54,7 +54,7 @@ public class FacebookPostKeywordResult implements Serializable
 	 * <b>Column:</b> FKRE_KESE_ID <br/><br/>
 	 * The id of the keyword search that the result found.
 	 */
-	@ManyToOne(targetEntity=KeywordSearch.class)
+	@OneToOne(targetEntity=KeywordSearch.class)
 	@JoinColumn(name=FacebookPostKeywordResultConstants.PROPERTY_KEYWORD_SEARCH)
 	private	KeywordSearch	search;
 	
@@ -148,5 +148,30 @@ public class FacebookPostKeywordResult implements Serializable
 	 */
 	public FacebookPost getPost() {
 		return post;
+	}
+
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if( obj == null )
+		{
+			return false;
+		}
+		if(( obj instanceof FacebookPostKeywordResult) == false )
+		{
+			return false;
+		}
+		FacebookPostKeywordResult result = (FacebookPostKeywordResult)obj;
+		if( result.getId().equals(this.id) )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() 
+	{
+		return	this.id.hashCode()^5;
 	}
 }
