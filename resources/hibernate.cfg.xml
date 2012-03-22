@@ -38,6 +38,6 @@
   <mapping class="com.sones.facebook.keywordSearcher.model.FacebookPostKeywordResult"/>
   <mapping class="com.sones.facebook.keywordSearcher.model.Keyword"/>
   <mapping class="com.sones.facebook.keywordSearcher.model.KeywordSearch"/>
-  <mapping class="com.sones.model.ApplicationUser"/>
+  <mapping class="com.sones.userManager.model.ApplicationUser"/>
  </session-factory>
 </hibernate-configuration>
