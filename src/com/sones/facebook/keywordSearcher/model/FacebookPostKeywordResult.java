@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import com.sones.dao.DatabaseConstants;
 import com.sones.facebook.model.feed.FacebookPost;
-import com.sones.model.ApplicationUser;
+import com.sones.userManager.model.ApplicationUser;
 
 /**
  * <b>Table:</b> FCBK.FACEBOOK_POST_KEYWORD_RESULTS<br/><br/>

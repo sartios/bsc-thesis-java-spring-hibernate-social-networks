@@ -1,4 +1,4 @@
-package com.sones.model;
+package com.sones.userManager.model;
 
 import java.io.Serializable;
 

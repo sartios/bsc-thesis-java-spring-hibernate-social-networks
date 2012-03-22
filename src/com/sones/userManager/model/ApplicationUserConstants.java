@@ -1,4 +1,4 @@
-package com.sones.model;
+package com.sones.userManager.model;
 
 /**
  * Contains the property names and lengths of {@link ApplicationUser} model.

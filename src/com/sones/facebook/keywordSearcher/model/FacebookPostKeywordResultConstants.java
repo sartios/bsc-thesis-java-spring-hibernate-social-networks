@@ -1,7 +1,7 @@
 package com.sones.facebook.keywordSearcher.model;
 
 import com.sones.facebook.model.feed.FacebookPostConstants;
-import com.sones.model.ApplicationUserConstants;
+import com.sones.userManager.model.ApplicationUserConstants;
 
 /**
  * Contains property names and lengths for {@link FacebookPostKeywordResult} model.
