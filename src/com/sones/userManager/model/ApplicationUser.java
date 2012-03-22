@@ -45,4 +45,31 @@ public class ApplicationUser implements Serializable
 	public String getId() {
 		return id;
 	}
+
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if( obj == null )
+		{
+			return false;
+		}
+		if(( obj instanceof ApplicationUser) == false )
+		{
+			return false;
+		}
+		ApplicationUser user = (ApplicationUser)obj;
+		if( user.getId().equals(this.id) )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() 
+	{
+		return	this.id.hashCode()^5;
+	}
+	
+	
 }
