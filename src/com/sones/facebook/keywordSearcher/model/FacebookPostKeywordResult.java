@@ -2,6 +2,9 @@ package com.sones.facebook.keywordSearcher.model;
 
 import java.io.Serializable;
 
+import javax.persistence.*;
+
+import com.sones.dao.DatabaseConstants;
 import com.sones.facebook.model.feed.FacebookPost;
 import com.sones.model.ApplicationUser;
 
@@ -11,36 +14,48 @@ import com.sones.model.ApplicationUser;
  * @author sartios.sones@gmail.com.
  *
  */
+@Entity
+@Table(name=FacebookPostKeywordResultConstants.TABLE_NAME,schema=DatabaseConstants.FACEBOOK_SCHEMA)
 public class FacebookPostKeywordResult implements Serializable
 {
 	/**
 	 * <b>Column:</b> FKRE_ID <br/><br/>
 	 * The id of a Facebook Keyword Result is an assigned string.
 	 */
+	@Id
+	@Column(name=FacebookPostKeywordResultConstants.PROPERTY_ID,length=FacebookPostKeywordResultConstants.LENGTH_ID)
 	private	String	id;
 	
 	/**
 	 * <b>Column:</b> FKRE_KEYW_ID <br/><br/>
 	 * The keyword that found in the feed.
 	 */
+	@ManyToOne(targetEntity=Keyword.class)
+	@JoinColumn(name=FacebookPostKeywordResultConstants.PROPERTY_KEYWORD)
 	private	Keyword	keyword;
 
 	/**
 	 * <b>Column:</b> FKRE_FAPO_ID <br/><br/>
 	 * The facebook post into which the keyword found.
 	 */
+	@ManyToOne(targetEntity=FacebookPost.class)
+	@JoinColumn(name=FacebookPostKeywordResultConstants.PROPERTY_FACEBOOK_POST)
 	private	FacebookPost	post;
 	
 	/**
 	 * <b>Column:</b> FKRE_APUS_ID <br/><br/>
 	 * The application user id from who the search run.
 	 */
+	@ManyToOne(targetEntity=ApplicationUser.class)
+	@JoinColumn(name=FacebookPostKeywordResultConstants.PROPERTY_APPLICATION_USER)
 	private	ApplicationUser	user;
 	
 	/**
 	 * <b>Column:</b> FKRE_KESE_ID <br/><br/>
 	 * The id of the keyword search that the result found.
 	 */
+	@ManyToOne(targetEntity=KeywordSearch.class)
+	@JoinColumn(name=FacebookPostKeywordResultConstants.PROPERTY_KEYWORD_SEARCH)
 	private	KeywordSearch	search;
 	
 	/**

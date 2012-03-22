@@ -2,24 +2,36 @@ package com.sones.facebook.keywordSearcher.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.sones.dao.DatabaseConstants;
+
 /**
  * <b>Table:</b> FCBK.KEYWORDS <br/><br/>
  * Represents a keyword.
  * @author sartios.sones@gmail.com.
  *
  */
+@Entity
+@Table(name=KeywordConstants.TABLE_NAME,schema=DatabaseConstants.FACEBOOK_SCHEMA)
 public class Keyword  implements Serializable
 {
 	/**
 	 * <b>Column:</b> KEYW_ID <br/><br/>
 	 * The id of keyword is an assigned number.
 	 */
+	@Id
+	@Column(name=KeywordConstants.PROPERTY_ID,length=KeywordConstants.LENGTH_ID)
 	private	String	id;
 	
 	/**
 	 * <b>Column:</b> KEYW_VALUE <br/><br/>
 	 * The value of the keyword is an assigned string.
 	 */
+	@Column(name=KeywordConstants.PROPERTY_VALUE,length=KeywordConstants.LENGTH_VALUE)
 	private	String	value;
 	
 	/**
