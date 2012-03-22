@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+
+	<bean id="keyword" class="com.sones.facebook.keywordSearcher.model.Keyword">
+		<property name="id" value="1"/>
+		<property name="value" value="keyword"/>
+	</bean>
+	
+	<bean id="keywordSearch" class="com.sones.facebook.keywordSearcher.model.KeywordSearch">
+		<property name="id" value="1"/>
+		<property name="results">
+			<set>
+				<ref local="result"/>
+			</set>
+		</property>
+		<property name="user" ref="appUser"/>
+	</bean>
+	
+	<bean id="appUser" class="com.sones.userManager.model.ApplicationUser">
+		<property name="id" value="1"/>	
+	</bean>
+	
+	<bean id="result" class="com.sones.facebook.keywordSearcher.model.FacebookPostKeywordResult">
+		<property name="id" value="1"/>
+		<property name="keyword" ref="keyword"/>
+		<property name="search" ref="keywordSearch"/>
+		<property name="post" ref="facebookPost"/>
+		<property name="user" ref="appUser"/>
+	</bean>
+	
+	<bean id="facebookPost" class="com.sones.facebook.model.feed.FacebookPost">
+		<property name="id" value="1"/>
+		<property name="user" ref="fcbkUser"/>
+	</bean>
+	
+	<bean id="fcbkUser" class="com.sones.facebook.model.source.User">
+		<property name="id" value="1"/>
+	</bean>
+	
+	<bean id="facebookPostDao" class="com.sones.facebook.dao.hibernate.feed.HibernateFacebookPostDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="facebookUserDao" class="com.sones.facebook.dao.hibernate.source.HibernateUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+</beans>
