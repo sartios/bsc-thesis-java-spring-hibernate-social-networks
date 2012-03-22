@@ -1,5 +1,7 @@
 package com.sones.facebook.keywordSearcher.model;
 
+import com.sones.model.ApplicationUserConstants;
+
 /**
  * Contains property names and lengths of {@link KeywordSearch} model.
  * 
@@ -26,12 +28,12 @@ public class KeywordSearchConstants
 	/**
 	 * The result property name.
 	 */
-	public	static	final	String	PROPERTY_RESULT	=	"";
+	public	static	final	String	PROPERTY_RESULT	=	FacebookPostKeywordResultConstants.PROPERTY_ID;
 	
 	/**
 	 * The application user property name.
 	 */
-	public	static	final	String	PROPERTY_APPLICATION_USER	=	"KESE_APUS_ID";
+	public	static	final	String	PROPERTY_APPLICATION_USER	=	ApplicationUserConstants.PROPERTY_ID;
 
 	/**
 	 * The id property length.

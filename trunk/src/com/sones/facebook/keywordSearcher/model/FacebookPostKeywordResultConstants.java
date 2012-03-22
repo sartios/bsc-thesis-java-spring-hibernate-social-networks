@@ -1,5 +1,8 @@
 package com.sones.facebook.keywordSearcher.model;
 
+import com.sones.facebook.model.feed.FacebookPostConstants;
+import com.sones.model.ApplicationUserConstants;
+
 /**
  * Contains property names and lengths for {@link FacebookPostKeywordResult} model.
  * 
@@ -21,22 +24,22 @@ public final class FacebookPostKeywordResultConstants
 	/**
 	 * The keyword property name.
 	 */
-	public	static	final	String	PROPERTY_KEYWORD	=	"";
+	public	static	final	String	PROPERTY_KEYWORD	=	KeywordConstants.PROPERTY_ID;
 	
 	/**
 	 * The facebook post property name.
 	 */
-	public	static	final	String	PROPERTY_FACEBOOK_POST	=	"";
+	public	static	final	String	PROPERTY_FACEBOOK_POST	=	FacebookPostConstants.PROPERTY_ID;
 	
 	/**
 	 * The keyword search property name.
 	 */
-	public	static	final	String	PROPERTY_KEYWORD_SEARCH	=	"";
+	public	static	final	String	PROPERTY_KEYWORD_SEARCH	=	KeywordSearchConstants.PROPERTY_ID;
 	
 	/**
 	 * The application user property name.
 	 */
-	public	static	final	String	PROPERTY_APPLICATION_USER	=	"";
+	public	static	final	String	PROPERTY_APPLICATION_USER	=	ApplicationUserConstants.PROPERTY_ID;
 	
 	/**
 	 * The id property length.

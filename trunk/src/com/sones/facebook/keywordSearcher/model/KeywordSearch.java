@@ -4,6 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.sones.dao.DatabaseConstants;
 import com.sones.model.ApplicationUser;
 
 /**
@@ -12,30 +22,39 @@ import com.sones.model.ApplicationUser;
  * @author sartios.sones@gmail.com.
  *
  */
+@Entity
+@Table(name=KeywordSearchConstants.TABLE_NAME,schema=DatabaseConstants.FACEBOOK_SCHEMA)
 public class KeywordSearch  implements Serializable
 {
 	/**
 	 * <b>Column:</b> KESE_ID <br/><br/>
 	 * The keyword search id is an assigned number.
 	 */
+	@Id
+	@Column(name=KeywordSearchConstants.PROPERTY_ID,length=KeywordSearchConstants.LENGTH_ID)
 	private	String	id;
 	
 	/**
 	 * <b>Column:</b> KESE_APUS_ID <br/><br/>
 	 * The application user id for who the search run.
 	 */
+	@ManyToOne(targetEntity=ApplicationUser.class)
+	@JoinColumn(name=KeywordSearchConstants.PROPERTY_APPLICATION_USER)
 	private	ApplicationUser	user;
 	
 	/**
 	 * <b>Column:</b> FKRE_KESE_ID <br/><br/>
 	 * The results that found in the current search.
 	 */
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name=KeywordSearchConstants.PROPERTY_RESULT)
 	private	Set<FacebookPostKeywordResult>	results;
 
 	/**
 	 * <b>Column:</b> KESE_DATE <br/><br/>
 	 * The date of the search.
 	 */
+	@Column(name=KeywordSearchConstants.PROPERTY_DATE)
 	private	Date	date;
 	
 	/**
