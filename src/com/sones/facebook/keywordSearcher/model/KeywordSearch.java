@@ -46,8 +46,8 @@ public class KeywordSearch  implements Serializable
 	 * <b>Column:</b> FKRE_KESE_ID <br/><br/>
 	 * The results that found in the current search.
 	 */
-	@OneToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name=KeywordSearchConstants.PROPERTY_RESULT)
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name=FacebookPostKeywordResultConstants.PROPERTY_KEYWORD_SEARCH)
 	private	Set<FacebookPostKeywordResult>	results;
 
 	/**
@@ -132,5 +132,30 @@ public class KeywordSearch  implements Serializable
 	 */
 	public Set<FacebookPostKeywordResult> getResults() {
 		return results;
+	}
+	
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if( obj == null )
+		{
+			return false;
+		}
+		if(( obj instanceof KeywordSearch) == false )
+		{
+			return false;
+		}
+		KeywordSearch search = (KeywordSearch)obj;
+		if( search.getId().equals(this.id) )
+		{
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int hashCode() 
+	{
+		return	this.id.hashCode()^5;
 	}
 }
