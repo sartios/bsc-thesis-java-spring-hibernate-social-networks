@@ -39,5 +39,7 @@
   <mapping class="com.sones.facebook.keywordSearcher.model.Keyword"/>
   <mapping class="com.sones.facebook.keywordSearcher.model.KeywordSearch"/>
   <mapping class="com.sones.userManager.model.ApplicationUser"/>
+  <mapping class="com.sones.facebook.keywordSearcher.model.ApplicationUserKeyword"/>
+  <mapping class="com.sones.facebook.keywordSearcher.model.ApplicationUserKeywordId"/>
  </session-factory>
 </hibernate-configuration>

@@ -49,4 +49,13 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
+	<bean id="appUserKeyId" class="com.sones.facebook.keywordSearcher.model.ApplicationUserKeywordId">
+		<property name="appUser" ref="appUser"/>
+		<property name="keyword" ref="keyword"/>
+	</bean>
+	
+	<bean id="appUserKeyword" class="com.sones.facebook.keywordSearcher.model.ApplicationUserKeyword">
+		<property name="id" ref="appUserKeyId"/>
+	</bean>
+	
 </beans>
