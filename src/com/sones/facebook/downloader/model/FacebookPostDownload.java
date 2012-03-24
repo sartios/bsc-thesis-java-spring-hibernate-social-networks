@@ -3,7 +3,10 @@ package com.sones.facebook.downloader.model;
 import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+import com.sones.dao.DatabaseConstants;
 import com.sones.facebook.model.feed.FacebookPost;
 
 /**
@@ -12,6 +15,8 @@ import com.sones.facebook.model.feed.FacebookPost;
  * @author sartios.sones@gmail.com.
  *
  */
+@Entity
+@Table( name = FacebookPostDownloadConstants.TABLE_NAME, schema = DatabaseConstants.FACEBOOK_SCHEMA )
 public class FacebookPostDownload	implements	Serializable
 {
 	/**
@@ -23,14 +28,14 @@ public class FacebookPostDownload	implements	Serializable
 	private	FacebookPostDownloadId	id;
 	
 	/**
-	 * 
+	 * Initializes the object.
 	 */
 	public	FacebookPostDownload()
 	{
 	}
 	
 	/**
-	 * 
+	 * Initializes the object.
 	 * @param post
 	 * @param download
 	 */
