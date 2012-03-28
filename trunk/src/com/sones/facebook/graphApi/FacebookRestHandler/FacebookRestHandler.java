@@ -7,7 +7,7 @@ import com.sones.facebook.graphApi.FacebookRestHandler.PageHandler;
 public class FacebookRestHandler implements IFacebookRestHandler
 {
 
-	private	final	Logger _logger = Logger.getLogger(FacebookRestHandler.class);
+	private	final	Logger _LOGGER = Logger.getLogger(FacebookRestHandler.class);
 	
 	public FacebookRestHandler()
 	{
@@ -17,28 +17,61 @@ public class FacebookRestHandler implements IFacebookRestHandler
 	@Override
 	public String GetWall(String sourceId, String token)
 	{
-		String jsonString="";
+		CheckSourceIdAndThrow( sourceId );
+		CheckFacebookTokenAndThrow( token );
+		return doGet( "https://graph.facebook.com/" + sourceId + "/feed?" + token );
+	}
+
+	@Override
+	public String GetWall(String id, String value, String date)
+	{
+		CheckSourceIdAndThrow( id );
+		CheckFacebookTokenAndThrow( value );
+		CheckDateAndThrow( date );
+		return doGet( "https://graph.facebook.com/" + id + "/feed?" + value + "&since=" + date );
+	}
+	
+	private void CheckDateAndThrow( String date ) 
+	{
+		if( date == null )
+		{
+			_LOGGER.error( "Date can't be null" );
+			throw new IllegalArgumentException( "Date can't be null" );
+		}
+		if( date.isEmpty() )
+		{
+			_LOGGER.error( "Date can't be empty" );
+			throw new IllegalArgumentException( "Date can't be empty" );
+		}
+	}
+
+	private void CheckSourceIdAndThrow(String sourceId)
+	{
 		if(null == sourceId)
 		{
-			_logger.error("Source id can't be null");
+			_LOGGER.error("Source id can't be null");
 			throw new IllegalArgumentException("Source id is null");
 		}
 		if(sourceId.isEmpty())
 		{
-			_logger.error("Source id can't be empty");
+			_LOGGER.error("Source id can't be empty");
 			throw new IllegalArgumentException("Source id is empty");
 		}
+	}
+	
+
+	private void CheckFacebookTokenAndThrow(String token) 
+	{
 		if(null == token)
 		{
-			_logger.error("Token can't be null");
+			_LOGGER.error("Token can't be null");
 			throw new IllegalArgumentException("Token is null");
 		}
 		if(token.isEmpty())
 		{
-			_logger.error("Token can't be empty");
+			_LOGGER.error("Token can't be empty");
 			throw new IllegalArgumentException("Token is empty");
 		}
-		return doGet("https://graph.facebook.com/"+sourceId+"/feed?"+token);
 	}
 	
 	private String doGet(final String link){
@@ -47,5 +80,4 @@ public class FacebookRestHandler implements IFacebookRestHandler
 		handler.getPage(link,content);
 		return content.toString();
 	}
-
 }
