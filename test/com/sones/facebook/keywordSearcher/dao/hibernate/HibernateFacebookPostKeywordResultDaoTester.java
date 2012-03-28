@@ -163,4 +163,10 @@ public class HibernateFacebookPostKeywordResultDaoTester
 		
 	}
 	
+	@Test
+	public	void	testGetByApplicationUser()
+	{
+		fail( "Not implemented test" );
+	}
+	
 }

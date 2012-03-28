@@ -81,4 +81,12 @@ public class HibernateKeywordSearchDaoTester
 		keywordSearchDao.Delete(keywordSearch);
 		appUserDao.Delete(keywordSearch.getUser());
 	}
+	
+	@Test
+	public	void	getLastKeywordSearchByAppUser()
+	{
+		KeywordSearch search = keywordSearchDao.getLastKeywordSearchByAppUser( keywordSearch.getUser() );
+		assertNotNull(search);
+		assertEquals("2000-01-03 00:00:00.0", search.getDate().toString());
+	}
 }
