@@ -43,6 +43,7 @@
   <mapping class="com.sones.facebook.keywordSearcher.model.ApplicationUserKeywordId"/>
   <mapping class="com.sones.facebook.model.source.ApplicationUserSource"/>
   <mapping class="com.sones.facebook.model.source.ApplicationUserSourceId"/>
+  <mapping class="com.sones.facebook.downloader.model.FacebookDownload"/>
   <mapping class="com.sones.facebook.downloader.model.FacebookPostDownload"/>
   <mapping class="com.sones.facebook.downloader.model.FacebookPostDownloadId"/>
  </session-factory>
