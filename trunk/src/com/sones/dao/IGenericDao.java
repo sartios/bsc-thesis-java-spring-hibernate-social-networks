@@ -72,4 +72,14 @@ public interface IGenericDao<TModel,TId>
 	 * @param model The model to saveOrUpdate.
 	 */
 	public	void	SaveOrUpdate(TModel model);
+	
+	/**
+	 * @return the last inserted entity.
+	 */
+	public	TModel	GetLastInsertedEntity();
+	
+	/**
+	 * @return the row count number.
+	 */
+	public	Number	GetRowCount();
 }
