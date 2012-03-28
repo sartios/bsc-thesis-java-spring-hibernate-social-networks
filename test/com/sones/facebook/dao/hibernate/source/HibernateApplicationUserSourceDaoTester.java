@@ -1,5 +1,8 @@
 package com.sones.facebook.dao.hibernate.source;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -109,5 +112,50 @@ public class HibernateApplicationUserSourceDaoTester
 		appUserDao.Delete(appUser);
 		sourceDao.Delete(source);
 		sourceTypeDao.Delete(sourceType);
+	}
+	
+	@Test
+	public	void	testGetApplicationUserSourcesByUser()
+	{
+		appUser	=	appUserSource.getId().getAppUser();
+		source	=	appUserSource.getId().getSource();
+		sourceType	=	source.getType();
+		List<ApplicationUserSource> userSources = new ArrayList<ApplicationUserSource>();
+		userSources.add( appUserSource );
+		for( int index=2; index<5; index++ )
+		{
+			Source	genSource	=	new	Source();
+			genSource.setId( String.valueOf( index ) );
+			genSource.setType( sourceType );
+			ApplicationUserSource	genUserSource	=	new	ApplicationUserSource(genSource,appUser);
+			userSources.add( genUserSource );
+		}
+		appUserDao.Save( appUser );
+		sourceTypeDao.Save( sourceType );
+		for( int index = 0; index < userSources.size(); index++ )
+		{
+			ApplicationUserSource	genAppUserSource	=	userSources.get( index );
+			sourceDao.Save( genAppUserSource.getId().getSource() );
+			appUserSourceDao.Save( genAppUserSource );
+		}
+		Iterable<ApplicationUserSource>	dbUserSources	=	appUserSourceDao.getApplicationUserSourcesByUser( appUser );
+		assertNotNull( dbUserSources );
+		List	list	=	(List) dbUserSources;
+		assertEquals(userSources.size(), list.size());
+		
+		for( int index = 0; index < userSources.size(); index++ )
+		{
+			ApplicationUserSource	genAppUserSource	=	userSources.get( index );
+			appUserSourceDao.Delete( genAppUserSource );
+			sourceDao.Delete( genAppUserSource.getId().getSource() );
+		}
+		sourceTypeDao.Delete( sourceType );
+		appUserDao.Delete( appUser );
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public	void	testGetApplicationUserSourcesByUserThrowsException()
+	{
+		appUserSourceDao.getApplicationUserSourcesByUser(null);
 	}
 }
