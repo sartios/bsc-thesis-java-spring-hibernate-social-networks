@@ -1,5 +1,8 @@
 package com.sones.facebook.keywordSearcher.dao.hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,29 +20,14 @@ import com.sones.userManager.model.ApplicationUser;
 public class HibernateApplicationUserKeywordDaoTester 
 {
 	/**
-	 * The application user keyword combination that is under testing.
-	 */
-	private	ApplicationUserKeyword appUserKeyword;
-	
-	/**
 	 * The application user keyword dao.
 	 */
 	private	IApplicationUserKeywordDao appUserKeywordDao;
 	
 	/**
-	 * The application user who selected the keyword
-	 */
-	private	ApplicationUser appUser;
-	
-	/**
 	 * The application user dao.
 	 */
 	private	IApplicationUserDao appUserDao;
-	
-	/**
-	 * The keyword that was selected by the application user.
-	 */
-	private	Keyword keyword;
 	
 	/**
 	 * The keyword dao.
@@ -59,7 +47,6 @@ public class HibernateApplicationUserKeywordDaoTester
 	@Before
 	public	void	setUp()
 	{
-		appUserKeyword = (ApplicationUserKeyword)contextProvider.getModelContext().getBean("appUserKeyword");
 		appUserDao = (HibernateApplicationUserDao) contextProvider.getAppUserContext().getBean("applicationUserDao");
 		appUserKeywordDao	=	(HibernateApplicationUserKeywordDao)contextProvider.getDaoContext().getBean("appUserKeywordDao");
 		keywordDao	=	(HibernateKeywordDao)contextProvider.getDaoContext().getBean("keywordDao");
@@ -68,27 +55,102 @@ public class HibernateApplicationUserKeywordDaoTester
 	 @After
 	 public	void	tearDown()
 	 {
-		 
+			appUserDao = null;
+			appUserKeywordDao	=	null;
+			keywordDao	 =	null;
 	 }
 	 
 	 @Test
 	 public	void	testSaveApplicationUserKeyword()
 	 {
-		 appUser = appUserKeyword.getId().getAppUser();
-		 appUserDao.Save(appUser);
+		/* appUser = appUserKeyword.getId().getAppUser();
+		 appUserDao.Save(appUser);*/
 		 
-		 keyword = appUserKeyword.getId().getKeyword();
-		 keywordDao.Save(keyword);
+		 ApplicationUser	appUserModel	=	SaveUserAndReturn();
 		 
-		 appUserKeywordDao.Save(appUserKeyword);
+		/* keyword = appUserKeyword.getId().getKeyword();
+		 keywordDao.Save(keyword);*/
 		 
+		 Iterable< Keyword >	keywords	=	SaveKeywordsAndReturn();
+		 
+		 /*appUserKeywordDao.Save(appUserKeyword);*/
+		 
+		 Iterable< ApplicationUserKeyword >	appUserKeywords	=	SaveUserKeywordsAndReturn(keywords, appUserModel);
+		 ApplicationUserKeyword	appUserKeyword	=	appUserKeywords.iterator().next();
 		 ApplicationUserKeyword dbAppUserKey = appUserKeywordDao.GetById(appUserKeyword.getId());
 		 
 		 assertEquals(appUserKeyword.getId().getAppUser(), dbAppUserKey.getId().getAppUser());
 		 assertEquals(appUserKeyword.getId().getKeyword(), dbAppUserKey.getId().getKeyword());
 		 
-		 appUserKeywordDao.Delete(appUserKeyword);
-		 appUserDao.Delete(appUser);
-		 keywordDao.Delete(keyword);
+		 DeleteUserKeywords(appUserKeywords);
+		 DeleteKeywords(keywords);
+		 appUserDao.Delete(appUserModel);
+	}
+	 
+	 @Test
+	 public	void	testGetByApplicationUser()
+	 {
+		 ApplicationUser	userModel	=	SaveUserAndReturn();
+		 List< Keyword >	keywords	=	(List<Keyword>) SaveKeywordsAndReturn();
+		 List< ApplicationUserKeyword >	userKeywords	=	(List<ApplicationUserKeyword>) SaveUserKeywordsAndReturn( keywords, userModel );
+		 
+		 List< ApplicationUserKeyword >	dbResults	=	(List<ApplicationUserKeyword>) appUserKeywordDao.getByApplicationUser( userModel );
+	
+		 assertNotNull( dbResults );
+		 assertEquals( 4 , dbResults.size() );
+		 
+		 DeleteUserKeywords( userKeywords );
+		 DeleteKeywords( keywords );
+		 appUserDao.Delete( userModel );
 	 }
+	 
+		private	ApplicationUser	SaveUserAndReturn()
+		{
+			ApplicationUser	appUser	=	new	ApplicationUser();
+			appUser.setId( "1" );
+			appUserDao.Save( appUser );
+			return	appUser;
+		}
+		
+		private	Iterable< Keyword >	SaveKeywordsAndReturn()
+		{
+			List< Keyword >	keywords	=	new	ArrayList< Keyword >();
+			for( int keywordIndex = 1 ; keywordIndex < 5 ; keywordIndex++ )
+			{
+				Keyword	keyword	=	new	Keyword();
+				keyword.setId( String.valueOf( keywordIndex ) );
+				keyword.setValue( "KeywordValue " + keywordIndex );
+				keywordDao.Save( keyword );
+				keywords.add( keyword );
+			}
+			return	keywords;
+		}
+		
+		private	Iterable< ApplicationUserKeyword >	SaveUserKeywordsAndReturn( Iterable< Keyword > keywords, ApplicationUser appUser )
+		{
+			List< ApplicationUserKeyword >	appUserKeywords	=	new	ArrayList<ApplicationUserKeyword>();
+			for( Keyword keyword : keywords )
+			{
+				ApplicationUserKeyword	appUserKeyword	=	new	ApplicationUserKeyword( keyword, appUser );
+				appUserKeywords.add( appUserKeyword );
+				appUserKeywordDao.Save( appUserKeyword );
+			}
+			return	appUserKeywords;
+		}
+		
+		private	void	DeleteUserKeywords( Iterable< ApplicationUserKeyword > keywords )
+		{
+			for( ApplicationUserKeyword keyword : keywords )
+			{
+				appUserKeywordDao.Delete( keyword );
+			}
+		}
+		
+		private	void	DeleteKeywords( Iterable< Keyword > keywords )
+		{
+			for( Keyword keyword : keywords )
+			{
+				keywordDao.Delete( keyword );
+			}
+		}
 }
