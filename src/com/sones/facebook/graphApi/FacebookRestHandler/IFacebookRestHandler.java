@@ -15,4 +15,13 @@ public interface IFacebookRestHandler
 	 * @throws IllegalArgumentException when {@code sourceId} or {@code token} is null or empty.
 	 */
 	public	String	GetWall(String sourceId, String token);
+
+	/**
+	 * Gets the wall feeds of the source that were published after the specified date.
+	 * @param id
+	 * @param value
+	 * @param date
+	 * @return wall feeds
+	 */
+	public	String	GetWall(String id, String value, String date);
 }
