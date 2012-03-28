@@ -109,4 +109,40 @@ public class FacebookAccount	implements	Serializable
 	public String getEmail() {
 		return email;
 	}
+
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if( obj == null )
+		{
+			return	false;
+		}
+		if( ( obj instanceof FacebookAccount ) == false )
+		{
+			return	false;
+		}
+		FacebookAccount	account	=	( FacebookAccount )obj;
+		if( account.getId() == null )
+		{
+			return	false;
+		}
+		if( account.getId().equals( this.id ) )
+		{
+			return	true;
+		}
+		return	false;
+	}
+
+	@Override
+	public int hashCode() 
+	{
+		int	hashCode	=	super.hashCode();
+		if( this.id != null )
+		{
+			hashCode	=	this.id.hashCode() ^ 2;
+		}
+		return hashCode;
+	}
+	
+	
 }

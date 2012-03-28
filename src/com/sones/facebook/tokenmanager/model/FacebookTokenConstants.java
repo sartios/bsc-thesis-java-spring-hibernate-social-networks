@@ -35,5 +35,5 @@ public final class FacebookTokenConstants
 	/**
 	 * The value property length.
 	 */
-	public	static	final	int	LENGTH_VALUE	=	50;
+	public	static	final	int	LENGTH_VALUE	=	250;
 }

@@ -109,4 +109,38 @@ public class FacebookToken	implements	Serializable
 	public String getValue() {
 		return value;
 	}
+	
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if( obj == null )
+		{
+			return	false;
+		}
+		if( ( obj instanceof FacebookToken ) == false )
+		{
+			return	false;
+		}
+		FacebookToken	account	=	( FacebookToken )obj;
+		if( account.getId() == null )
+		{
+			return	false;
+		}
+		if( account.getId().equals( this.id ) )
+		{
+			return	true;
+		}
+		return	false;
+	}
+
+	@Override
+	public int hashCode() 
+	{
+		int	hashCode	=	super.hashCode();
+		if( this.id != null )
+		{
+			hashCode	=	this.id.hashCode() ^ 2;
+		}
+		return hashCode;
+	}
 }
