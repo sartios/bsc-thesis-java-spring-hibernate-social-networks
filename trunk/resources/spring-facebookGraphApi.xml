@@ -6,9 +6,11 @@
 	<bean id="graphApi" class="com.sones.facebook.graphApi.GraphApiHandler.FacebookGraphApiHandler">
 		<property name="jsonHandler" ref="jsonHandler"/>
 		<property name="restHandler" ref="restHandler"/>
+		<property name="dateManager" ref="dateManager"/>
 	</bean>
 
 	<bean id="restHandler" class="com.sones.facebook.graphApi.FacebookRestHandler.FacebookRestHandler"/>
 	<bean id="jsonHandler" class="com.sones.facebook.JsonHandler.FacebookJsonHandler"/>
+	<bean id="dateManager" class="com.sones.facebook.datemanager.logic.FacebookDateManager"/>
 
 </beans>
