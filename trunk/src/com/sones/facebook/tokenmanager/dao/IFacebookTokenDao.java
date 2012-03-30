@@ -2,7 +2,7 @@ package com.sones.facebook.tokenmanager.model.dao;
 
 import com.sones.dao.IGenericDao;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * Provides methods for accessing {@link FacebookToken} model.

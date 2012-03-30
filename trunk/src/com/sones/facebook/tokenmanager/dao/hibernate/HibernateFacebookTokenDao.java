@@ -10,7 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import com.sones.dao.hibernate.HibernateGenericDao;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.facebook.tokenmanager.model.dao.IFacebookTokenDao;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class HibernateFacebookTokenDao	extends	HibernateGenericDao< FacebookToken, String >	implements	IFacebookTokenDao
 {
