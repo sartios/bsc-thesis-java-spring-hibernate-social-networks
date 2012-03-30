@@ -1,6 +1,6 @@
 package com.sones.facebook.tokenmanager.model;
 
-import com.sones.userManager.model.ApplicationUserConstants;
+import com.sones.usermanager.model.ApplicationUserConstants;
 
 /**
  * Contains properties name and lengths for {@link FacebookAccount} model.
