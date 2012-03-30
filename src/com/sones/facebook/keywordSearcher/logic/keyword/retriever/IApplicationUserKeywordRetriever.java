@@ -2,7 +2,7 @@ package com.sones.facebook.keywordSearcher.logic.keyword.retriever;
 
 import com.sones.facebook.keywordSearcher.logic.exceptions.NoKeywordsException;
 import com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchDto;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public interface IApplicationUserKeywordRetriever 
 {

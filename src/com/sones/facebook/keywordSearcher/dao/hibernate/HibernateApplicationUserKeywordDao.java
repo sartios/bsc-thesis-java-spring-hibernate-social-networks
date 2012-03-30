@@ -11,7 +11,7 @@ import com.sones.dao.hibernate.HibernateGenericDao;
 import com.sones.facebook.keywordSearcher.dao.IApplicationUserKeywordDao;
 import com.sones.facebook.keywordSearcher.model.ApplicationUserKeyword;
 import com.sones.facebook.keywordSearcher.model.ApplicationUserKeywordId;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class HibernateApplicationUserKeywordDao extends HibernateGenericDao<ApplicationUserKeyword, ApplicationUserKeywordId> implements IApplicationUserKeywordDao
 {

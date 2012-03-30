@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import com.sones.dao.hibernate.HibernateGenericDao;
 import com.sones.facebook.keywordSearcher.dao.IKeywordSearchDao;
 import com.sones.facebook.keywordSearcher.model.KeywordSearch;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class HibernateKeywordSearchDao extends HibernateGenericDao<KeywordSearch, String> implements IKeywordSearchDao
 {

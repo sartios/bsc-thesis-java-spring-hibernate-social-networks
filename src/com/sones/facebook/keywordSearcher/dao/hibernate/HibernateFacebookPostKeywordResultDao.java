@@ -8,7 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import com.sones.dao.hibernate.HibernateGenericDao;
 import com.sones.facebook.keywordSearcher.dao.IFacebookPostKeywordResultDao;
 import com.sones.facebook.keywordSearcher.model.FacebookPostKeywordResult;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class HibernateFacebookPostKeywordResultDao extends HibernateGenericDao<FacebookPostKeywordResult, String> implements IFacebookPostKeywordResultDao
 {

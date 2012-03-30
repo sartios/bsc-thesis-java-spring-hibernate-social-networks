@@ -2,7 +2,7 @@ package com.sones.facebook.keywordSearcher.dao;
 
 import com.sones.dao.IGenericDao;
 import com.sones.facebook.keywordSearcher.model.KeywordSearch;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * Provides methods for accessing {@link KeywordSearch} model.

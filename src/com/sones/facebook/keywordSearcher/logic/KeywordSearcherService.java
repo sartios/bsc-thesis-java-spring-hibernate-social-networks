@@ -27,7 +27,7 @@ import com.sones.facebook.keywordSearcher.model.KeywordSearch;
 import com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchDto;
 import com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchResultCreateDto;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class KeywordSearcherService implements IKeywordSearcherService 
 {

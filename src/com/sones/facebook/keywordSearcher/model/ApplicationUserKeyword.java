@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.sones.dao.DatabaseConstants;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * <b>Table:</b> FCBK.APPLICATION_USER_KEYWORDS<br/><br/>

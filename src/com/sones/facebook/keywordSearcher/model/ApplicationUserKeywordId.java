@@ -7,7 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.sones.facebook.model.feed.SourceFacebookPostId;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * Composite id for {@link ApplicationUserKeyword} model.
