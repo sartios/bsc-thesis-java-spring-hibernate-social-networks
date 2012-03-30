@@ -32,7 +32,7 @@ public class HibernateFacebookTokenDaoTester
 	}
 	
 	@Test
-	public	void	SaveFacebookTokenTest()
+	public	void	TestSaveFacebookToken()
 	{
 		ApplicationUser	appUser	=	SaveUserAndReturn();
 		FacebookAccount	account	=	SaveAccountAndReturn( appUser );
@@ -48,6 +48,28 @@ public class HibernateFacebookTokenDaoTester
 		DelteFacebookToken( token );
 		DeleteAccount( account );
 		DeleteApplicationUser( appUser );
+	}
+	
+	@Test( expected = IllegalArgumentException.class )
+	public	void	TestGetByApplicationUserNullAppUser()
+	{
+		tokenDao.GetByApplicationUser( null );
+	}
+	
+	@Test( expected = IllegalArgumentException.class )
+	public	void	TestGetByApplicationUserNullAppUserId()
+	{
+		ApplicationUser	user	=	new	ApplicationUser();
+		tokenDao.GetByApplicationUser( user );
+	}
+	
+	@Test
+	public	void	TestGetByApplicationUserDoesNotExist()
+	{
+		ApplicationUser	user	=	new	ApplicationUser();
+		user.setId( "1" );
+		FacebookToken	token	=	tokenDao.GetByApplicationUser( user );
+		assertEquals( null, token );
 	}
 	
 	
@@ -81,6 +103,7 @@ public class HibernateFacebookTokenDaoTester
 	private	FacebookToken	SaveFacebookTokenAndReturn( FacebookAccount account )
 	{
 		FacebookToken	token	=	new	FacebookToken( "access_token=AAAAAAITEghMBAFRwyoVOtijfy6CxxSwzA9c05U8d3rRNr16bOE74hgMUklusP6HiVjZAHN8zpZCmnCDFyZC9snL2V4ZCimZCYspWDf6yjXEQR7w4JR" , account);
+		token.setId( "1" );
 		tokenDao.Save( token );
 		return	token;
 	}
