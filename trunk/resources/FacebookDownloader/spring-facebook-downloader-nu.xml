@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+
+	<bean id="facebookPostDownload" class="com.sones.facebook.downloader.model.FacebookPostDownload">
+		<property name="id" ref="facebookPostDownloadId"/>
+	</bean>
+	
+	<bean id="facebookPostDownloadDao" class="com.sones.facebook.downloader.dao.hibernate.HibernateFacebookPostDownloadDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="facebookPostDownloadId" class="com.sones.facebook.downloader.model.FacebookPostDownloadId">
+		<property name="download" ref="facebookDownload"/>
+		<property name="post" ref="facebookPost"/>
+	</bean>
+	
+	<bean id="facebookDownload" class="com.sones.facebook.downloader.model.FacebookDownload">
+		<property name="id" value="1"/>
+		<property name="appUser" ref="appUser"/>
+	</bean>
+	
+	<bean id="facebookDownloadDao" class="com.sones.facebook.downloader.dao.hibernate.HibernateFacebookDownloadDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="appUser" class="com.sones.usermanager.model.ApplicationUser">
+		<property name="id" value="1"/>
+	</bean>
+	
+	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="facebookPost" class="com.sones.facebook.model.feed.FacebookPost">
+		<property name="id" value="1"/>
+		<property name="user" ref="facebookUser"/>
+	</bean>
+	
+	<bean id="facebookPostDao" class="com.sones.facebook.dao.hibernate.feed.HibernateFacebookPostDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="facebookUser" class="com.sones.facebook.model.source.User">
+		<property name="id" value="1"/>
+	</bean>
+	
+	<bean id="facebookUserDao" class="com.sones.facebook.dao.hibernate.source.HibernateUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+
+</beans>

@@ -15,7 +15,7 @@
 		<property name="tokenDao" ref="tokenDao"/>
 	</bean>
 	
-	<bean id="appUserSourceDao" class="com.sones.facebook.dao.hibernate.source.HibernateApplicationUserSourceDao">
+	<bean id="appUserSourceDao" class="com.sones.facebook.usermanager.dao.hibernate.HibernateApplicationUserSourceDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	

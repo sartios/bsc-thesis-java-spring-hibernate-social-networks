@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<import resource="../spring-hibernate.xml"/>
+
+						<!-- Keyword searcher service dependencies -->
+<!-- =================================================================================================================== -->
+	<bean id="keywordSearcherService" class="com.sones.facebook.keywordSearcher.logic.KeywordSearcherService">
+		<property name="searcher" ref="searcher"/>
+		<property name="keywordRetriever" ref="keywordRetriever"/>
+		<property name="keywordSearchDao" ref="keywordSearchDao"/>
+		<property name="mapper" ref="dozerMapper"/>
+		<property name="keywordSearchResultDao" ref="keywordSearchResultDao"/>
+		<property name="idMaker" ref="idMaker"/>
+	</bean>
+	
+	<bean id="searcher" class="com.sones.facebook.keywordSearcher.logic.searcher.KeywordSearcher">
+	</bean>
+	
+	<bean id="keywordRetriever" class="com.sones.facebook.keywordSearcher.logic.keyword.retriever.KeywordRetriever">
+		<property name="appUserKeywordDao" ref="appUserKeywordDao"/>
+		<property name="mapper" ref="dozerMapper"/>
+	</bean>
+	
+	<bean id="keywordSearchDao"	class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateKeywordSearchDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>Dozer/facebook/keywordSearcher/SearchFeedMapper.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="keywordSearchResultDao" class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateFacebookPostKeywordResultDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="checkinDataRetriever" class="com.sones.facebook.keywordSearcher.logic.retriever.CheckinSearchDataManager">
+		<property name="checkinDao" ref="checkinDao"/>
+		<property name="manager" ref="manager"/>
+		<property name="mapper" ref="dozerMapper"/>
+	</bean>
+	
+	<bean id="statusMessageDataRetriever" class="com.sones.facebook.keywordSearcher.logic.retriever.StatusMessageSearchDataManager">
+		<property name="statusMessageDao" ref="statusMessageDao"/>
+		<property name="manager" ref="manager"/>
+		<property name="mapper" ref="dozerMapper"/>
+	</bean>
+	
+	<bean id="videoDataRetriever" class="com.sones.facebook.keywordSearcher.logic.retriever.VideoSearchDataManager">
+		<property name="videoDao" ref="videoDao"/>
+		<property name="manager" ref="manager"/>
+		<property name="mapper" ref="dozerMapper"/>
+	</bean>
+	
+	<bean id="linkDataRetriever" class="com.sones.facebook.keywordSearcher.logic.retriever.LinkSearchDataManager">
+		<property name="linkDao" ref="linkDao"/>
+		<property name="manager" ref="manager"/>
+		<property name="mapper" ref="dozerMapper"/>
+	</bean>
+	
+	<bean id="noteDataRetriever" class="com.sones.facebook.keywordSearcher.logic.retriever.NoteSearchDataManager">
+		<property name="noteDao" ref="noteDao"/>
+		<property name="manager" ref="manager"/>
+		<property name="mapper" ref="dozerMapper"/>
+	</bean>
+	
+	<bean id="photoDataRetriever" class="com.sones.facebook.keywordSearcher.logic.retriever.PhotoSearchDataManager">
+		<property name="photoDao" ref="photoDao"/>
+		<property name="manager" ref="manager"/>
+		<property name="mapper" ref="dozerMapper"/>
+	</bean>
+	
+							<!-- Keyword retriever dependencies -->
+<!-- =================================================================================================================== -->
+	<bean id="appUserKeywordDao" class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateApplicationUserKeywordDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+
+							<!-- Checkin data retriever dependencies -->
+<!-- =================================================================================================================== -->
+
+	<bean id="manager" class="com.sones.facebook.keywordSearcher.logic.retriever.FacebookPostDataManager">
+		<property name="facebookPostDownloadDao" ref="postDownloadDao"/>
+		<property name="keywordSearchDao" ref="keywordSearchDao"></property>
+	</bean>
+	
+	<bean id="postDownloadDao" class="com.sones.facebook.downloader.dao.hibernate.HibernateFacebookPostDownloadDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+							<!-- Checkin data retriever dependencies -->
+<!-- =================================================================================================================== -->
+
+	<bean id="checkinDao" class="com.sones.facebook.dao.hibernate.feed.HibernateCheckinDao">
+		<property name="hibernateTemplate"	ref="hibernateTemplate"/>
+	</bean>
+	
+								<!-- Status message data retriever dependencies -->
+<!-- =================================================================================================================== -->
+
+	<bean id="statusMessageDao" class="com.sones.facebook.dao.hibernate.feed.HibernateStatusMessageDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+									<!-- Video data retriever dependencies -->
+<!-- =================================================================================================================== -->
+
+	<bean id="videoDao" class="com.sones.facebook.dao.hibernate.feed.HibernateVideoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+										<!-- Link data retriever dependencies -->
+<!-- =================================================================================================================== -->
+
+	<bean id="linkDao" class="com.sones.facebook.dao.hibernate.feed.HibernateLinkDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+											<!-- Note data retriever dependencies -->
+<!-- =================================================================================================================== -->
+
+	<bean id="noteDao" class="com.sones.facebook.dao.hibernate.feed.HibernateNoteDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+												<!-- Photo data retriever dependencies -->
+<!-- =================================================================================================================== -->
+
+	<bean id="photoDao" class="com.sones.facebook.dao.hibernate.feed.HibernatePhotoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+								<!-- Id maker dependencies -->
+<!-- =================================================================================================================== -->
+	<bean id="idMaker" class="com.sones.facebook.keywordSearcher.logic.idmaker.IdMaker">
+		<property name="resultIdMaker" ref="resultIdMaker"/>
+		<property name="searchIdMaker" ref="searchIdMaker"/>
+	</bean>
+	
+	<bean id="resultIdMaker" class="com.sones.facebook.keywordSearcher.logic.idmaker.KeywordResultIdMaker">
+		<property name="keywordSearchResultDao" ref="keywordSearchResultDao"/>
+	</bean>
+	
+	<bean id="searchIdMaker" class="com.sones.facebook.keywordSearcher.logic.idmaker.KeywordSearchIdMaker">
+		<property name="keywordSearchDao" ref="keywordSearchDao"/>
+	</bean>
+</beans>

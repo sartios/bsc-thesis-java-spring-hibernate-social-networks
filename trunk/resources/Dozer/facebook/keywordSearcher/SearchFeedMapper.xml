@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+	
+	<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.feeds.StatusMessageSearchDto</class-a>
+		<class-b>com.sones.facebook.model.feed.StatusMessage</class-b>
+		<field>
+			<a>id.id</a>
+			<b>id</b>
+		</field>
+		
+		<field>
+			<a>message</a>
+			<b>message</b>
+		</field>	
+	</mapping>  
+	
+		<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.feeds.VideoSearchDto</class-a>
+		<class-b>com.sones.facebook.model.feed.Video</class-b>
+		<field>
+			<a>id.id</a>
+			<b>id</b>
+		</field>
+		
+		<field>
+			<a>description</a>
+			<b>description</b>
+		</field>	
+		
+		<field>
+			<a>name</a>
+			<b>name</b>
+		</field>	
+	</mapping>  
+	
+	<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.feeds.PhotoSearchDto</class-a>
+		<class-b>com.sones.facebook.model.feed.Photo</class-b>
+		<field>
+			<a>id.id</a>
+			<b>id</b>
+		</field>
+		
+		<field>
+			<a>name</a>
+			<b>name</b>
+		</field>	
+	</mapping>   
+	
+	<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.feeds.NoteSearchDto</class-a>
+		<class-b>com.sones.facebook.model.feed.Note</class-b>
+		<field>
+			<a>id.id</a>
+			<b>id</b>
+		</field>
+		
+		<field>
+			<a>message</a>
+			<b>message</b>
+		</field>	
+		
+		<field>
+			<a>subject</a>
+			<b>subject</b>
+		</field>
+	</mapping>  
+	
+	<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.feeds.LinkSearchDto</class-a>
+		<class-b>com.sones.facebook.model.feed.Link</class-b>
+		<field>
+			<a>id.id</a>
+			<b>id</b>
+		</field>
+		
+		<field>
+			<a>description</a>
+			<b>description</b>
+		</field>	
+		
+		<field>
+			<a>message</a>
+			<b>message</b>
+		</field>
+		
+		<field>
+			<a>name</a>
+			<b>name</b>
+		</field>
+	</mapping>  
+	
+	<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.feeds.CheckinSearchDto</class-a>
+		<class-b>com.sones.facebook.model.feed.Checkin</class-b>
+		<field>
+			<a>id.id</a>
+			<b>id</b>
+		</field>
+		
+		<field>
+			<a>message</a>
+			<b>message</b>
+		</field>	
+	</mapping>
+	
+	<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchResultCreateDto</class-a>
+		<class-b>com.sones.facebook.keywordSearcher.model.FacebookPostKeywordResult</class-b>
+		<field>
+			<a>post</a>
+			<b>post</b>
+		</field>
+		
+		<field>
+			<a>keyword</a>
+			<b>keyword</b>
+		</field>	
+	</mapping> 
+	
+	<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchDto</class-a>
+		<class-b>com.sones.facebook.keywordSearcher.model.Keyword</class-b>
+		<field>
+			<a>id</a>
+			<b>id</b>
+		</field>
+		
+		<field>
+			<a>value</a>
+			<b>value</b>
+		</field>	
+	</mapping> 
+	
+	<mapping>
+		<class-a>com.sones.sharedDto.facebook.keywordSearcher.feeds.FacebookPostSearchDto</class-a>
+		<class-b>com.sones.facebook.model.feed.FacebookPost</class-b>
+		<field>
+			<a>id.id</a>
+			<b>id</b>
+		</field>
+	</mapping> 
+      
+</mappings>
