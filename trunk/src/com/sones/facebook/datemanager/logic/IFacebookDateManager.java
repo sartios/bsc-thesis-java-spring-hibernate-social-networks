@@ -1,4 +1,4 @@
-package com.sones.facebook.datamanager.logic;
+package com.sones.facebook.datemanager.logic;
 
 import java.util.Date;
 
