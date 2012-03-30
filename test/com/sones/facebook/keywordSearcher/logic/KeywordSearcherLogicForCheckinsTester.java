@@ -20,7 +20,7 @@ import com.sones.facebook.keywordSearcher.model.Keyword;
 import com.sones.facebook.keywordSearcher.model.KeywordSearch;
 import com.sones.facebook.model.feed.Checkin;
 import com.sones.facebook.model.feed.FacebookPost;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class KeywordSearcherLogicForCheckinsTester	extends	AbstractKeywordSearcherLogicTester	implements	IKeywordSearcherServiceTester
 {
