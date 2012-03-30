@@ -5,16 +5,16 @@
 
 <import resource="../spring-hibernate.xml"/>
 
-	<bean id="appUserSource" class="com.sones.facebook.model.source.ApplicationUserSource">
+	<bean id="appUserSource" class="com.sones.facebook.usermanager.model.ApplicationUserSource">
 		<property name="id" ref="appUserSourceId"/>
 	</bean>
 	
-	<bean id="appUserSourceId" class="com.sones.facebook.model.source.ApplicationUserSourceId">
+	<bean id="appUserSourceId" class="com.sones.facebook.usermanager.model.ApplicationUserSourceId">
 		<property name="appUser" ref="appUser"/>
 		<property name="source" ref="source"/>
 	</bean>
 	
-	<bean id="appUser" class="com.sones.userManager.model.ApplicationUser">
+	<bean id="appUser" class="com.sones.usermanager.model.ApplicationUser">
 		<property name="id" value="1"/>
 	</bean>
 	
@@ -28,11 +28,11 @@
 		<property name="type" value="User"/>
 	</bean>
 	
-	<bean id="appUserSourceDao" class="com.sones.facebook.dao.hibernate.source.HibernateApplicationUserSourceDao">
+	<bean id="appUserSourceDao" class="com.sones.facebook.usermanager.dao.hibernate.HibernateApplicationUserSourceDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
-	<bean id="appUserDao" class="com.sones.userManager.dao.hibernate.HibernateApplicationUserDao">
+	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	

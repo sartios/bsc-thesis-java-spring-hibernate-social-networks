@@ -2,6 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<import resource="spring-wall-sharedDto-nu.xml"/>
+
+	<bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>Dozer/facebook/GraphApi/Wall/CreateWallMapper.xml</value>
+			</list>
+		</property>
+	</bean>
 	
 	<bean id="sourceStatusIdDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostIdDto">
 		<property name="post" ref="statusCreateDto"/>
@@ -12,88 +22,5 @@
 		<property name="id" ref="sourceStatusIdDto"/>
 	</bean>
 	
-		<bean id="userId" class="com.sones.sharedDto.facebook.source.UserIdDto">
-		<property name="id" value="1"/>
-	</bean>
-
-	<bean id="userDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallUserCreateDto">
-		<property name="id" ref="userId"/>
-		<property name="username" value="Sartios"/>
-	</bean>
-	
-	<bean id="postIdDto" class="com.sones.sharedDto.facebook.feed.FacebookPostIdDto">
-		<property name="id" value="1"/>	
-	</bean>
-	
-	<bean id="postDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto">
-	<property name="id" ref="postIdDto"/>
-	<property name="user" ref="userDto"/>
-	<property name="comments">
-		<set>
-			<ref local="commentDto"/>
-		</set>
-	</property>
-	</bean>
-	
-	<bean id="commentDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallCommentCreateDto">
-		<property name="id" ref="commentId"/>
-		<property name="message" value="Comment message"/>
-		<property name="user" ref="userDto"/>
-	</bean>
-	
-	<bean id="commentId" class="com.sones.sharedDto.facebook.feed.CommentIdDto">
-		<property name="id" value="1"/>
-	</bean>
-	
-	<bean id="linkDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallLinkCreateDto">
-	<property name="id" ref="postIdDto"/>
-		<property name="link" value="Link link url"/>
-		<property name="message" value="Link message"/>
-		<property name="name" value="Link name"/>
-		<property name="picture" value="Link picture"/>
-		<property name="user" ref="userDto"/>
-		<property name="comments">
-			<set>
-				<ref local="commentDto"/>
-			</set>
-		</property>
-	</bean>
-	
-	<bean id="statusCreateDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallStatusMessageCreateDto">
-		<property name="id" ref="postIdDto"/>
-		<property name="message" value="Status message"/>
-		<property name="user" ref="userDto"/>
-		<property name="comments">
-			<set>
-				<ref local="commentDto"/>
-			</set>
-		</property>
-		<property name="type" value="StatusMessage"/>
-	</bean>
-	
-	<bean id="noteDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallNoteCreateDto">
-		<property name="id" ref="postIdDto"/>
-		<property name="message" value="Note message"/>
-		<property name="subject" value="Note subject"/>
-		<property name="user" ref="userDto"/>
-		<property name="comments">
-			<set>
-				<ref local="commentDto"/>
-			</set>
-		</property>
-	</bean>
-	
-	<bean id="sourceDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceCreateDto">
-		<property name="id" value="1"/>
-		<property name="type" value="User"/>	
-	</bean>
-	
-	<bean id="sourceFacebookPostId" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostIdDto">
-		<property name="post" ref="postDto"/>
-		<property name="source" ref="sourceDto"/>
-	</bean>
-	
-	<bean id="sourceFacebookPostDto" class="com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostCreateDto">
-		<property name="id" ref="sourceFacebookPostId"/>
-	</bean>
+	<bean id="saverLogic" class="com.sones.facebook.post.saver.FacebookPostSaverLogic"/>
 </beans>

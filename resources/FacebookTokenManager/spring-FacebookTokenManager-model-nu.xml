@@ -3,22 +3,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<import resource="spring-facebook-downloader-service.xml"/>
-
-	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
+	<import resource="../spring-hibernate.xml"/>
 	
 	<bean id="accountDao" class="com.sones.facebook.tokenmanager.model.dao.hibernate.HibernateFacebookAccountDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
-	<bean id="sourceTypeDao" class="com.sones.facebook.dao.hibernate.source.HibernateSourceTypeDao">
-		<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	</bean>
-	
-	<bean id="sourceDao" class="com.sones.facebook.dao.hibernate.source.HibernateSourceDao">
+	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 
+	<bean id="tokenDao" class="com.sones.facebook.tokenmanager.model.dao.hibernate.HibernateFacebookTokenDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 </beans>
