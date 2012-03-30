@@ -31,7 +31,7 @@ public class StatusMessage extends FacebookPost
 	 * The status message content.
 	 */
 	@Column(name=StatusMessageConstants.PROPERTY_MESSAGE,length=StatusMessageConstants.LENGTH_MESSAGE)
-	private	String	_message;
+	private	String	message;
 	
 	/**
 	 * Initializes the object.
@@ -43,7 +43,7 @@ public class StatusMessage extends FacebookPost
 	
 	/**
 	 * Initializes the object.
-	 * @param message {@link StatusMessage#_message}
+	 * @param message {@link StatusMessage#message}
 	 * @param updatedTime
 	 * @param user
 	 * @param comments 
@@ -55,11 +55,11 @@ public class StatusMessage extends FacebookPost
 	}
 
 	/**
-	 * @param _message the _message to set
+	 * @param message the _message to set
 	 */
 	public void setMessage(String message) 
 	{
-		_message = message;
+		this.message = message;
 	}
 
 	/**
@@ -67,6 +67,6 @@ public class StatusMessage extends FacebookPost
 	 */
 	public String getMessage() 
 	{
-		return _message;
+		return this.message;
 	}
 }

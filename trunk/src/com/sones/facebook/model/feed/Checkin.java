@@ -30,14 +30,14 @@ public class Checkin extends FacebookPost
 	 */
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name=CheckinConstants.PROPERTY_PLACE)
-	private Place	_place;
+	private Place	place;
 	
 	/**
 	 * <b>Column:</b> CHEC_MESSAGE <br/><br/>
 	 * The message the user added to the checkin.
 	 */
 	@Column(name=CheckinConstants.PROPERTY_MESSAGE, length=CheckinConstants.LENGTH_MESSAGE,nullable=false)
-	private	String	_message;
+	private	String	message;
 
 	/**
 	 * Initializes the object.
@@ -49,8 +49,8 @@ public class Checkin extends FacebookPost
 	
 	/**
 	 * Initializes the object.
-	 * @param place - {@link Checkin#_place}
-	 * @param message - {@link Checkin#_message}
+	 * @param place - {@link Checkin#place}
+	 * @param message - {@link Checkin#message}
 	 * @param user
 	 * @param date
 	 * @param comments
@@ -63,11 +63,11 @@ public class Checkin extends FacebookPost
 	}
 
 	/**
-	 * @param _place the _place to set
+	 * @param place the _place to set
 	 */
 	public void setPlace(Place place) 
 	{
-		_place = place;
+		this.place = place;
 	}
 
 	/**
@@ -75,15 +75,15 @@ public class Checkin extends FacebookPost
 	 */
 	public Place getPlace() 
 	{
-		return _place;
+		return this.place;
 	}
 
 	/**
-	 * @param _message the _message to set
+	 * @param message the _message to set
 	 */
 	public void setMessage(String message) 
 	{
-		_message = message;
+		this.message = message;
 	}
 
 	/**
@@ -91,6 +91,6 @@ public class Checkin extends FacebookPost
 	 */
 	public String getMessage() 
 	{
-		return _message;
+		return this.message;
 	}
 }
