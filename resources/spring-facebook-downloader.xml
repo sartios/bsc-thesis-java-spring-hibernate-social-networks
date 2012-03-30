@@ -5,24 +5,24 @@
 	
 	<import resource="spring-facebook-dao.xml"/>
 	
-	<bean id="userSaver" class="com.sones.facebook.post.saver.source.UserSaver">
+	<bean id="userSaver" class="com.sones.facebook.saver.source.UserSaver">
 		<property name="userDao" ref="userDao"/>
 	</bean>
 
-	<bean id="sourceFacebookPostSaver" class="com.sones.facebook.post.saver.source.SourceFacebookPostSaver">
+	<bean id="sourceFacebookPostSaver" class="com.sones.facebook.saver.source.SourceFacebookPostSaver">
 		<property name="sourceFacebookPostDao" ref="sourceFacebookPostDao"/>
 	</bean>
 	
-	<bean id="sourceSaver" class="com.sones.facebook.post.saver.source.SourceSaver">
+	<bean id="sourceSaver" class="com.sones.facebook.saver.source.SourceSaver">
 		<property name="sourceDao" ref="sourceDao"/>
 		<property name="sourceTypeDao" ref="sourceTypeDao"/>
 	</bean>
 	
-	<bean id="statusSaver" class="com.sones.facebook.post.saver.wall.feed.StatusMessageSaver">
+	<bean id="statusSaver" class="com.sones.facebook.saver.wall.feed.StatusMessageSaver">
 		<property name="statusDao" ref="statusMessageDao"/>
 	</bean>
 	
-	<bean id="saverLogic" class="com.sones.facebook.post.saver.FacebookPostSaverLogic"></bean>
+	<bean id="saverLogic" class="com.sones.facebook.saver.FacebookPostSaverLogic"></bean>
 	
 		<bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
 		<property name="mappingFiles">

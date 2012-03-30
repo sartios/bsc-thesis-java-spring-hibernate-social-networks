@@ -46,5 +46,7 @@
   <mapping class="com.sones.facebook.downloader.model.FacebookDownload"/>
   <mapping class="com.sones.facebook.downloader.model.FacebookPostDownload"/>
   <mapping class="com.sones.facebook.downloader.model.FacebookPostDownloadId"/>
+  <mapping class="com.sones.facebook.tokenmanager.model.FacebookAccount"/>
+  <mapping class="com.sones.facebook.tokenmanager.model.FacebookToken"/>
  </session-factory>
 </hibernate-configuration>

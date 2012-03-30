@@ -3,12 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<bean id="commentSaver" class="com.sones.facebook.post.saver.wall.feed.CommentSaver">
+	<bean id="commentSaver" class="com.sones.facebook.saver.wall.feed.CommentSaver">
 		<property name="userSaver" ref="userSaver"/>
 		<property name="commentDao" ref="commentDao"/>
 	</bean>
 
-	<bean id="userSaver" class="com.sones.facebook.post.saver.source.UserSaver">
+	<bean id="userSaver" class="com.sones.facebook.saver.source.UserSaver">
 		<property name="userDao" ref="userDao"/>
 	</bean>
 	
