@@ -71,4 +71,10 @@ public class HibernateSourceFacebookPostDaoTester extends HibernateDaoTesterUtil
 		SourceFacebookPost dpPost = sourceFacebookPostDao.GetById(sourceFacebookPost.getId());
 		assertEquals(sourceFacebookPost.getId().getPost(), dpPost.getId().getPost());
 	}
+	
+	@Test
+	public	void	TestGetSourceFacebookPostsBySourceAndAfterDate()
+	{
+		fail( "Changes to model need to be made" );
+	}
 }

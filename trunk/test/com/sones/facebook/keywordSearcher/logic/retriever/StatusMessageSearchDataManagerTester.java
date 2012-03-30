@@ -33,9 +33,9 @@ import com.sones.facebook.model.feed.FacebookPost;
 import com.sones.facebook.model.feed.StatusMessage;
 import com.sones.facebook.model.source.User;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
-import com.sones.userManager.dao.IApplicationUserDao;
-import com.sones.userManager.dao.hibernate.HibernateApplicationUserDao;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao;
+import com.sones.usermanager.dao.IApplicationUserDao;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class StatusMessageSearchDataManagerTester 
 {

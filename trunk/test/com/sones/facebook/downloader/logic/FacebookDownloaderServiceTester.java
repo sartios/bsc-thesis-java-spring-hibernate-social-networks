@@ -7,14 +7,10 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.sones.facebook.dao.hibernate.source.HibernateApplicationUserSourceDao;
 import com.sones.facebook.dao.hibernate.source.HibernateSourceDao;
 import com.sones.facebook.dao.hibernate.source.HibernateSourceTypeDao;
-import com.sones.facebook.dao.source.IApplicationUserSourceDao;
 import com.sones.facebook.dao.source.ISourceDao;
 import com.sones.facebook.dao.source.ISourceTypeDao;
-import com.sones.facebook.model.source.ApplicationUserSource;
-import com.sones.facebook.model.source.ApplicationUserSourceId;
 import com.sones.facebook.model.source.Source;
 import com.sones.facebook.model.source.SourceType;
 import com.sones.facebook.tokenmanager.model.FacebookAccount;
@@ -23,9 +19,13 @@ import com.sones.facebook.tokenmanager.model.dao.IFacebookAccountDao;
 import com.sones.facebook.tokenmanager.model.dao.IFacebookTokenDao;
 import com.sones.facebook.tokenmanager.model.dao.hibernate.HibernateFacebookAccountDao;
 import com.sones.facebook.tokenmanager.model.dao.hibernate.HibernateFacebookTokenDao;
-import com.sones.userManager.dao.IApplicationUserDao;
-import com.sones.userManager.dao.hibernate.HibernateApplicationUserDao;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.facebook.usermanager.dao.IApplicationUserSourceDao;
+import com.sones.facebook.usermanager.dao.hibernate.HibernateApplicationUserSourceDao;
+import com.sones.facebook.usermanager.model.ApplicationUserSource;
+import com.sones.facebook.usermanager.model.ApplicationUserSourceId;
+import com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao;
+import com.sones.usermanager.dao.IApplicationUserDao;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class FacebookDownloaderServiceTester 
 {
