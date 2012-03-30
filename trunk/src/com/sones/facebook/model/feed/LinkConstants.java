@@ -55,7 +55,7 @@ public final class LinkConstants
 	/**
 	 * The length of the description property.
 	 */
-	public	static	final	int	LENGTH_DESCRIPTION	=	255;
+	public	static	final	int	LENGTH_DESCRIPTION	=	1000;
 	
 	/**
 	 * The length of the icon property.
@@ -70,5 +70,5 @@ public final class LinkConstants
 	/**
 	 * The length of the message property.
 	 */
-	public	static	final	int	LENGTH_MESSAGE	=	255;
+	public	static	final	int	LENGTH_MESSAGE	=	1000;
 }
