@@ -5,7 +5,7 @@ import java.util.Date;
 import com.sones.dao.IGenericDao;
 import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.downloader.model.FacebookPostDownloadId;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * Provides methods for accessing {@link FacebookPostDownload} model.

@@ -1,7 +1,7 @@
 package com.sones.facebook.downloader.logic;
 
 
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * Provides methods for downloading facebook posts.

@@ -15,7 +15,7 @@ import com.sones.facebook.downloader.dao.IFacebookPostDownloadDao;
 import com.sones.facebook.downloader.model.FacebookDownload;
 import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.downloader.model.FacebookPostDownloadId;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class HibernateFacebookPostDownloadDao	extends	HibernateGenericDao<FacebookPostDownload, FacebookPostDownloadId>	implements	IFacebookPostDownloadDao
 {

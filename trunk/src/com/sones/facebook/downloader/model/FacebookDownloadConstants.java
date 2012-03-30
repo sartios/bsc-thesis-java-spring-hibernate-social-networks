@@ -1,6 +1,6 @@
 package com.sones.facebook.downloader.model;
 
-import com.sones.userManager.model.ApplicationUserConstants;
+import com.sones.usermanager.model.ApplicationUserConstants;
 
 /**
  * Contains properties name and length for {@link FacebookDownload} model.

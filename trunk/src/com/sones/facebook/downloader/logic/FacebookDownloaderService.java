@@ -8,7 +8,6 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 
-import com.sones.facebook.dao.source.IApplicationUserSourceDao;
 import com.sones.facebook.downloader.dao.IFacebookDownloadDao;
 import com.sones.facebook.downloader.dao.IFacebookPostDownloadDao;
 import com.sones.facebook.downloader.logic.exceptions.NoFacebookAccessTokenException;
@@ -18,16 +17,17 @@ import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.downloader.model.FacebookPostDownloadId;
 import com.sones.facebook.graphApi.GraphApiHandler.IFacebookGraphApiHandler;
 import com.sones.facebook.model.feed.FacebookPost;
-import com.sones.facebook.model.source.ApplicationUserSource;
 import com.sones.facebook.model.source.Source;
 import com.sones.facebook.saver.IFacebookPostSaverLogic;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.facebook.tokenmanager.model.dao.IFacebookTokenDao;
+import com.sones.facebook.usermanager.dao.IApplicationUserSourceDao;
+import com.sones.facebook.usermanager.model.ApplicationUserSource;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostIdDto;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class FacebookDownloaderService	implements	IFacebookDownloaderService
 {
