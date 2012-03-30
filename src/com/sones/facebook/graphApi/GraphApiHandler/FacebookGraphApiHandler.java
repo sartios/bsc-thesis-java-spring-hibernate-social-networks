@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 
-import com.sones.facebook.datamanager.logic.IFacebookDateManager;
+import com.sones.facebook.datemanager.logic.IFacebookDateManager;
 import com.sones.facebook.graphApi.FacebookRestHandler.IFacebookRestHandler;
 import com.sones.facebook.model.source.Source;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
