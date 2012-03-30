@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.sones.dao.DatabaseConstants;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * <b>Table:</b> FCBK.FACEBOOK_DOWNLOADS <br/><br/>
@@ -51,6 +51,17 @@ public class FacebookDownload	implements	Serializable
 	 */
 	public	FacebookDownload()
 	{
+	}
+	
+	/**
+	 * Initiates the object.
+	 * @param appUser
+	 * @param date
+	 */
+	public	FacebookDownload( ApplicationUser appUser, Date date )
+	{
+		setAppUser(appUser);
+		setDate(date);
 	}
 
 	/**
@@ -94,6 +105,4 @@ public class FacebookDownload	implements	Serializable
 	public Date getDate() {
 		return date;
 	}
-	
-	
 }

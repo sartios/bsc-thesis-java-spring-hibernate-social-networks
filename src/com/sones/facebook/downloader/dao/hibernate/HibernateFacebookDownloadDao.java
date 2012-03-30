@@ -11,7 +11,7 @@ import org.hibernate.criterion.Restrictions;
 import com.sones.dao.hibernate.HibernateGenericDao;
 import com.sones.facebook.downloader.dao.IFacebookDownloadDao;
 import com.sones.facebook.downloader.model.FacebookDownload;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class HibernateFacebookDownloadDao	extends	HibernateGenericDao<FacebookDownload, String>	implements	IFacebookDownloadDao
 {
