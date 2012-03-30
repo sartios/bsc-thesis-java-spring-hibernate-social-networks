@@ -1,7 +1,7 @@
 package com.sones.facebook.keywordSearcher.logic.retriever;
 
 import com.sones.facebook.downloader.model.FacebookPostDownload;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * Provides methods for retrieving facebook feeds for search.

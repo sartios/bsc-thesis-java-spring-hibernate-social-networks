@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import com.sones.dao.DatabaseConstants;
 import com.sones.facebook.model.feed.FacebookPost;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * <b>Table:</b> FCBK.FACEBOOK_POST_KEYWORD_RESULTS<br/><br/>
@@ -172,6 +172,15 @@ public class FacebookPostKeywordResult implements Serializable
 	@Override
 	public int hashCode() 
 	{
-		return	this.id.hashCode()^5;
+		int	hastCode;
+		if( id == null )
+		{
+			hastCode	=	super.hashCode() ^ 2;
+		}
+		else
+		{
+			hastCode	=	this.id.hashCode()^5;
+		}
+		return	hastCode;
 	}
 }

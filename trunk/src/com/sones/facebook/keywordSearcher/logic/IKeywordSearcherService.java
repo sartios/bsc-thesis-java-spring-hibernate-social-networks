@@ -1,7 +1,7 @@
 package com.sones.facebook.keywordSearcher.logic;
 
 import com.sones.facebook.keywordSearcher.logic.retriever.IDataRetriever;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * Provides methods for the keyword searching.

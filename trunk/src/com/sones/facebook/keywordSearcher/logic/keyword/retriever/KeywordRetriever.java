@@ -11,7 +11,7 @@ import com.sones.facebook.keywordSearcher.logic.exceptions.NoKeywordsException;
 import com.sones.facebook.keywordSearcher.model.ApplicationUserKeyword;
 import com.sones.facebook.keywordSearcher.model.Keyword;
 import com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchDto;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class KeywordRetriever implements IApplicationUserKeywordRetriever 
 {

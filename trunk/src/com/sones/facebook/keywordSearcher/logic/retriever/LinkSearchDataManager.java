@@ -10,7 +10,7 @@ import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.model.feed.Link;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.LinkSearchDto;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class LinkSearchDataManager	extends	AbstractDataManager	implements	ILinkSearchDataManager
 {

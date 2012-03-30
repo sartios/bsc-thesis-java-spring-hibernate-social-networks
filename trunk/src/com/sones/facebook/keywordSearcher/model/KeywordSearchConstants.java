@@ -1,6 +1,6 @@
 package com.sones.facebook.keywordSearcher.model;
 
-import com.sones.userManager.model.ApplicationUserConstants;
+import com.sones.usermanager.model.ApplicationUserConstants;
 
 /**
  * Contains property names and lengths of {@link KeywordSearch} model.

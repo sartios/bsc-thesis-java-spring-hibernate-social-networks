@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.sones.dao.DatabaseConstants;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * <b>Table:</b> FCBK.KEYWORD_SEARCHES <br/><br/>

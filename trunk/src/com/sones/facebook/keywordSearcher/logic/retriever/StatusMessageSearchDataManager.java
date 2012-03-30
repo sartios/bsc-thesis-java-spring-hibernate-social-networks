@@ -12,7 +12,7 @@ import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.model.feed.StatusMessage;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.StatusMessageSearchDto;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * @see {@link IStatusMessageSearchDataManager}

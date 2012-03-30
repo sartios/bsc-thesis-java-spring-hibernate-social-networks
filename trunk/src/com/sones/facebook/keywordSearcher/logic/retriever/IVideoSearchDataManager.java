@@ -2,7 +2,7 @@ package com.sones.facebook.keywordSearcher.logic.retriever;
 
 import com.sones.facebook.model.feed.Video;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * Provides methods for retrieving {@link Video}s ready for search.

@@ -12,7 +12,7 @@ import com.sones.facebook.keywordSearcher.dao.IKeywordSearchDao;
 import com.sones.facebook.keywordSearcher.logic.exceptions.NullDateException;
 import com.sones.facebook.keywordSearcher.model.KeywordSearch;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.StatusMessageSearchDto;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class FacebookPostDataManager implements	IFacebookPostDataManager
 {

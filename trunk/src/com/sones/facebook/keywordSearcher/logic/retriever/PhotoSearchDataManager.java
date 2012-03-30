@@ -8,7 +8,7 @@ import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.model.feed.Photo;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.PhotoSearchDto;
-import com.sones.userManager.model.ApplicationUser;
+import com.sones.usermanager.model.ApplicationUser;
 
 /**
  * ...
