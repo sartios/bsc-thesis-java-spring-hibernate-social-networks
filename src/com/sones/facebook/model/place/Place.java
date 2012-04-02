@@ -5,16 +5,11 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.context.annotation.Lazy;
 
 import com.sones.dao.DatabaseConstants;
-import com.sones.facebook.model.feed.Checkin;
-import com.sones.facebook.model.feed.CheckinConstants;
 
 
 /**
@@ -28,6 +23,11 @@ import com.sones.facebook.model.feed.CheckinConstants;
 @Lazy(value=false)
 public class Place	implements	Serializable
 {
+	/**
+	 * The serial version.
+	 */
+	private static final long serialVersionUID = -6627954326631095152L;
+
 	/**
 	 * <b>Column:</b> PLAC_ID <br/><br/>
 	 * The place ID.
@@ -57,20 +57,17 @@ public class Place	implements	Serializable
 	@Column(name=PlaceConstants.PROPERTY_LONGITUDE,length=PlaceConstants.LENGTH_LONGITUDE)
 	private	String	longitude;
 	
-	/**
-	 * 
-	 */
-	@ManyToOne(targetEntity=Checkin.class)
-	@JoinColumn(name=CheckinConstants.PROPERTY_PLACE)
-	private	Checkin	checkin;
+	@Column( name = PlaceConstants.PROPERTY_CATEGORY )
+	private	PlaceCategory	category;
+	
+	@Column( name = PlaceConstants.PROPERTY_NUMBER_OF_CHECKINS )
+	private	int	numberOfCheckins;
 	
 	/**
 	 * Initializes the object.
 	 */
 	public Place()
-	{
-		
-	}
+	{}
 	
 	/**
 	 * Initializes the object.
@@ -150,19 +147,31 @@ public class Place	implements	Serializable
 	}
 
 	/**
-	 * @param checkin the checkin to set
+	 * @param category the category to set
 	 */
-	public void SetCheckin(Checkin checkin)
-	{
-		this.checkin = checkin;
+	public void setCategory(PlaceCategory category) {
+		this.category = category;
 	}
 
 	/**
-	 * @return the checkin
+	 * @return the category
 	 */
-	public Checkin GetCheckin() 
-	{
-		return checkin;
+	public PlaceCategory getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param numberOfCheckins the numberOfCheckins to set
+	 */
+	public void setNumberOfCheckins(int numberOfCheckins) {
+		this.numberOfCheckins = numberOfCheckins;
+	}
+
+	/**
+	 * @return the numberOfCheckins
+	 */
+	public int getNumberOfCheckins() {
+		return numberOfCheckins;
 	}
 
 	@Override

@@ -33,6 +33,16 @@ public final class PlaceConstants
 	public	static	final	String	PROPERTY_LONGITUDE	=	"PLAC_LONGITUDE";
 	
 	/**
+	 * The name of category property.
+	 */
+	public	static	final	String	PROPERTY_CATEGORY	=	"PLAC_PCAT_ID";
+	
+	/**
+	 * The name of checkins number property.
+	 */
+	public	static	final	String	PROPERTY_NUMBER_OF_CHECKINS	=	"PLAC_NUMBER_0F_CHECKINS";
+	
+	/**
 	 * The length of the property.
 	 */
 	public	static	final	int	LENGTH_ID	=	20;
