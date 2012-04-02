@@ -16,12 +16,12 @@ import com.sones.facebook.dao.feed.ICheckinDao;
 import com.sones.facebook.dao.feed.comment.ICommentDao;
 import com.sones.facebook.dao.hibernate.feed.comment.HibernateCommentDao;
 import com.sones.facebook.dao.hibernate.source.HibernateUserDao;
-import com.sones.facebook.dao.place.IPlaceDao;
 import com.sones.facebook.dao.source.IUserDao;
 import com.sones.facebook.model.feed.Checkin;
 import com.sones.facebook.model.feed.comment.Comment;
-import com.sones.facebook.model.place.Place;
 import com.sones.facebook.model.source.User;
+import com.sones.facebook.placemanager.dao.IPlaceDao;
+import com.sones.facebook.placemanager.model.Place;
 
 public class HibernateCheckinDaoTester 
 {

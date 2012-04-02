@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Lazy;
 
 import com.sones.dao.DatabaseConstants;
 import com.sones.facebook.model.feed.comment.Comment;
-import com.sones.facebook.model.place.Place;
 import com.sones.facebook.model.source.User;
+import com.sones.facebook.placemanager.model.Place;
 
 /**
  * <b>Table:</b> FCBK.CHECKINS <br/><br/>
