@@ -12,5 +12,13 @@
 	<bean id="placeDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
+	
+	<bean id="criteriaDao" class="com.sones.facebook.publicsource.dao.hibernate.HibernateCriteriaDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="placeCriteriaDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceCriteriaDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 
 </beans>
