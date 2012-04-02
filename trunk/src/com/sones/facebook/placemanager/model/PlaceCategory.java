@@ -1,4 +1,4 @@
-package com.sones.facebook.model.place;
+package com.sones.facebook.placemanager.model;
 
 import java.io.Serializable;
 
@@ -81,6 +81,48 @@ public class PlaceCategory	implements	Serializable
 	 */
 	public String getDescription() {
 		return description;
+	}
+	
+	/**
+	 * Returns true if id and description are equal.
+	 */
+	@Override
+	public boolean equals(Object obj) 
+	{
+		if( obj == null )
+		{
+			return	false;
+		}
+		if( ( obj instanceof PlaceCategory ) == false )
+		{
+			return	false;
+		}
+		PlaceCategory	category	=	( PlaceCategory )	obj;
+		if( category.getId().equals( id ) && category.getDescription().equals( description ) )
+		{
+			return	true;
+		}
+		return	false;
+	}
+
+	/**
+	 * Returns the hash code of the object.
+	 */
+	@Override
+	public int hashCode() 
+	{
+		int	idHashCode	=	2;
+		int	descriptionHashCode	=	super.hashCode();
+		
+		if( id != null )
+		{
+			idHashCode	=	id.hashCode();
+		}
+		if( description != null )
+		{
+			descriptionHashCode	=	description.hashCode();
+		}
+		return	descriptionHashCode	^	idHashCode;
 	}
 	
 }

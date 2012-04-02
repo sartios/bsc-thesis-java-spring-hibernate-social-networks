@@ -1,4 +1,4 @@
-package com.sones.facebook.model.place;
+package com.sones.facebook.placemanager.model;
 
 /**
  * Contains property names and lengths of the {@link Place} entity.

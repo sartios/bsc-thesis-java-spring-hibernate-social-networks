@@ -1,4 +1,4 @@
-package com.sones.facebook.model.place;
+package com.sones.facebook.placemanager.model;
 
 import java.io.Serializable;
 
