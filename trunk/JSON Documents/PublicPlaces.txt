@@ -1,0 +1,323 @@
+{
+   "data": [
+      {
+         "name": "Starbucks Coffee",
+         "category": "Local business",
+         "location": {
+            "street": "290 Orchard Road",
+            "city": "Singapore",
+            "country": "Singapore",
+            "zip": "238859",
+            "latitude": 1.2931295076118,
+            "longitude": 103.85386229878
+         },
+         "id": "157245674316570"
+      },
+      {
+         "name": "Starbucks Coffee",
+         "category": "Local business",
+         "location": {
+            "street": "Hefnersplatz 10",
+            "city": "N\u00fcrnberg",
+            "country": "Germany",
+            "zip": "90402",
+            "latitude": 49.45083576064,
+            "longitude": 11.075493206393
+         },
+         "id": "163907246958731"
+      },
+      {
+         "name": "Siam Paragon | \u0e2a\u0e22\u0e32\u0e21\u0e1e\u0e32\u0e23\u0e32\u0e01\u0e2d\u0e19",
+         "category": "Local business",
+         "location": {
+            "street": "Siam paragon",
+            "city": "Bangkok",
+            "country": "Thailand",
+            "zip": "10330",
+            "latitude": 13.746048576546,
+            "longitude": 100.5341905547
+         },
+         "id": "137096719666941"
+      },
+      {
+         "name": "Toronto Pearson International Airport",
+         "category": "Airport",
+         "location": {
+            "city": "Toronto",
+            "state": "ON",
+            "country": "Canada",
+            "zip": "L5P 1B2",
+            "latitude": 43.682159985309,
+            "longitude": -79.615715253894
+         },
+         "id": "94131184662"
+      },
+      {
+         "name": "Q Square \u4eac\u7ad9\u6642\u5c1a\u5ee3\u5834",
+         "category": "Local business",
+         "location": {
+            "street": "\u53f0\u5317\u5e02\u5927\u540c\u5340\u627f\u5fb7\u8def\u4e00\u6bb5\u4e00\u865f",
+            "city": "Taipei",
+            "country": "Taiwan",
+            "zip": "103",
+            "latitude": 25.049230908176,
+            "longitude": 121.51719644493
+         },
+         "id": "168037979911152"
+      },
+      {
+         "name": "Central Plaza Ladprao | \u0e40\u0e0b\u0e47\u0e19\u0e17\u0e23\u0e31\u0e25\u0e25\u0e32\u0e14\u0e1e\u0e23\u0e49\u0e32\u0e27",
+         "category": "Local business",
+         "location": {
+            "city": "Bangkok",
+            "country": "Thailand",
+            "zip": "10900",
+            "latitude": 13.816248817562,
+            "longitude": 100.56083767368
+         },
+         "id": "118708781523047"
+      },
+      {
+         "name": "Terminal 5 London Heathrow Airport (LHR)",
+         "category": "Airport",
+         "location": {
+            "street": "Terminal Five",
+            "city": "Heathrow",
+            "country": "United Kingdom",
+            "zip": "TW6 2GA Heathrow",
+            "latitude": 51.472099903763,
+            "longitude": -0.48827158969432
+         },
+         "id": "216293635103902"
+      },
+      {
+         "name": "Prince Coffee House",
+         "category": "Local business",
+         "location": {
+            "street": "Pallati i Mediave, Prishtine / Elkos Trade Center, Peje ",
+            "latitude": 42.659866892338,
+            "longitude": 21.156698956817
+         },
+         "id": "204353946269163"
+      },
+      {
+         "name": "\u53f0\u7063\u9ad8\u9435\u53f0\u5317\u7ad9 THSR Taipei Station",
+         "category": "Transportation",
+         "location": {
+            "street": "\u53f0\u5317\u5e02\u5317\u5e73\u897f\u8def3\u865f",
+            "city": "Taipei",
+            "country": "Taiwan",
+            "zip": "100",
+            "latitude": 25.04787410653,
+            "longitude": 121.51710281185
+         },
+         "id": "229007160454106"
+      },
+      {
+         "name": "MBK Center",
+         "category": "Local business",
+         "location": {
+            "street": "444 Phayathai Rd., Patumwan, Bangkok ",
+            "city": "Bangkok",
+            "country": "Thailand",
+            "zip": "10330",
+            "latitude": 13.744882567453,
+            "longitude": 100.5302428876
+         },
+         "id": "125965400792003"
+      },
+      {
+         "name": "\u592a\u5e73\u6d0b SOGO \u5fe0\u5b5d\u9928",
+         "category": "Local business",
+         "location": {
+            "street": "\u5927\u5b89\u5340\u5fe0\u5b5d\u6771\u8def\u56db\u6bb545\u865f",
+            "city": "Taipei",
+            "country": "Taiwan",
+            "zip": "106",
+            "latitude": 25.041864924747,
+            "longitude": 121.54479655656
+         },
+         "id": "163117260368426"
+      },
+      {
+         "name": "\u7c73\u6717\u742a\u5496\u5561\u9928",
+         "category": "Local business",
+         "location": {
+            "street": "\u4e2d\u5c71\u5317\u8def\u4e8c\u6bb516\u5df723\u865f1\u6a13",
+            "city": "Taipei",
+            "country": "Taiwan",
+            "zip": "104",
+            "latitude": 25.053095984776,
+            "longitude": 121.52084892053
+         },
+         "id": "190537134311778"
+      },
+      {
+         "name": "EVENT Cinemas George St",
+         "category": "Movie theater",
+         "location": {
+            "street": "505-525 George Street",
+            "city": "Sydney",
+            "state": "NSW",
+            "country": "Australia",
+            "zip": "2000",
+            "latitude": -33.875416167538,
+            "longitude": 151.20630960717
+         },
+         "id": "269759202035"
+      },
+      {
+         "name": "The Mall Bangkapi (\u0e40\u0e14\u0e2d\u0e30\u0e21\u0e2d\u0e25\u0e25\u0e4c \u0e1a\u0e32\u0e07\u0e01\u0e30\u0e1b\u0e34)",
+         "category": "Local business",
+         "location": {
+            "city": "Bangkok Metropolis",
+            "country": "Thailand",
+            "latitude": 13.767174955351,
+            "longitude": 100.64238847808
+         },
+         "id": "164152770276457"
+      },
+      {
+         "name": "The Coffee Club Knox",
+         "category": "Local business",
+         "location": {
+            "street": "Knox Ozone, Wantirna Sth",
+            "city": "Wantirna South",
+            "state": "VIC",
+            "country": "Australia",
+            "zip": "3152",
+            "latitude": -37.868838202954,
+            "longitude": 145.24281212607
+         },
+         "id": "102193309847486"
+      },
+      {
+         "name": "Terminal 4 London Heathrow Airport (LHR)",
+         "category": "Airport",
+         "location": {
+            "street": "Terminal 4",
+            "city": "Heathrow",
+            "country": "United Kingdom",
+            "zip": "TW6 3XA",
+            "latitude": 51.459374659722,
+            "longitude": -0.44692514791102
+         },
+         "id": "214008852004562"
+      },
+      {
+         "name": "Central Plaza Pinklao | \u0e40\u0e0b\u0e47\u0e19\u0e17\u0e23\u0e31\u0e25\u0e1b\u0e34\u0e48\u0e19\u0e40\u0e01\u0e25\u0e49\u0e32",
+         "category": "Local business",
+         "location": {
+            "street": "Borommaratchachonanni Road, Bangkok Noi district ",
+            "city": "Bangkok",
+            "country": "Thailand",
+            "zip": "10700",
+            "latitude": 13.777856764042,
+            "longitude": 100.47664523702
+         },
+         "id": "119595258099431"
+      },
+      {
+         "name": "\u5674\u6c34\u6c60Starbucks Coffee",
+         "category": "Local business",
+         "location": {
+            "city": "Macau",
+            "country": "Macau",
+            "latitude": 22.194284014762,
+            "longitude": 113.54040992433
+         },
+         "id": "137391016330652"
+      },
+      {
+         "name": "Wayne's Coffee",
+         "category": "Local business",
+         "location": {
+            "street": "V\u00e4stra Torggatan 10",
+            "city": "Karlstad",
+            "country": "Sweden",
+            "zip": "652 25",
+            "latitude": 59.379746804398,
+            "longitude": 13.501024009365
+         },
+         "id": "172472526125887"
+      },
+      {
+         "name": "Wayne's Coffee",
+         "category": "Local business",
+         "location": {
+            "street": "Smedsgr\u00e4nd 4",
+            "city": "Uppsala",
+            "country": "Sweden",
+            "zip": "753 20",
+            "latitude": 59.859839138087,
+            "longitude": 17.639022163314
+         },
+         "id": "172398976133317"
+      },
+      {
+         "name": "Mr.Brown\u4f2f\u6717\u982d\u57ce\u57ce\u5821\u5496\u5561\u9928",
+         "category": "Local business",
+         "location": {
+            "city": "Ilan",
+            "country": "Taiwan",
+            "latitude": 24.884632814138,
+            "longitude": 121.83895261606
+         },
+         "id": "192197677467135"
+      },
+      {
+         "name": "Las Ramblas, Barcelona",
+         "category": "Shopping/retail",
+         "location": {
+            "street": "Las Ramblas",
+            "city": "Barcelona",
+            "country": "Spain",
+            "zip": "08004",
+            "latitude": 41.382076928983,
+            "longitude": 2.1726719930017
+         },
+         "id": "140043089372913"
+      },
+      {
+         "name": "Perth International Airport - Arrivals",
+         "category": "Local business",
+         "location": {
+            "street": "Airport",
+            "city": "Guildford",
+            "state": "WA",
+            "country": "Australia",
+            "zip": "6105",
+            "latitude": -31.934256037537,
+            "longitude": 115.96105912491
+         },
+         "id": "111698262261095"
+      },
+      {
+         "name": "New Town Plaza, Shatin",
+         "category": "Local business",
+         "location": {
+            "street": "18, Sha Tin Centre Street",
+            "city": "Sha Tin",
+            "country": "Hong Kong",
+            "zip": "852",
+            "latitude": 22.381983963322,
+            "longitude": 114.18829337319
+         },
+         "id": "161643140520114"
+      },
+      {
+         "name": "Coffee Beans by Dao \u0040 Siam Paragon",
+         "category": "Local business",
+         "location": {
+            "city": "Bangkok",
+            "country": "Thailand",
+            "latitude": 13.746464747434,
+            "longitude": 100.53409750968
+         },
+         "id": "169583383059720"
+      }
+   ],
+   "paging": {
+      "next": "https://graph.facebook.com/search?q=coffee&type=place&access_token=AAAAAAITEghMBAHCxAzoGS5OBNPtaMvxgmAhnFPbsVAlhtJaZChdjKTNkMhwhXpXZBka8toZBcTi1BP4ePhfl8MBkiWpi9oQeu6NyB9Jkzh42LlpoGGw&limit=25&offset=25&__after_id=169583383059720"
+   }
+}

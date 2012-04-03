@@ -8,13 +8,13 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.sones.facebook.placemanager.dao.IPlaceCategory;
+import com.sones.facebook.placemanager.dao.IPlaceCategoryDao;
 import com.sones.facebook.placemanager.model.PlaceCategory;
 
 public class HibernatePlaceCategoryDaoTester 
 {
 	private	PlaceCategory	category;
-	private	IPlaceCategory	categoryDao;
+	private	IPlaceCategoryDao	categoryDao;
 	private	ApplicationContext	context;
 	
 	public	HibernatePlaceCategoryDaoTester()
@@ -42,6 +42,24 @@ public class HibernatePlaceCategoryDaoTester
 	{
 		categoryDao.Save( category );
 		PlaceCategory	dbCategory	=	categoryDao.GetById( category.getId() );
+		
+		assertNotNull( dbCategory );
+		assertEquals( category, dbCategory );
+		
+		categoryDao.Delete( category );
+	}
+	
+	@Test( expected = IllegalArgumentException.class )
+	public void testGetByDescriptionNullDescription()
+	{
+		PlaceCategory	dbCategory	=	categoryDao.GetByDescription( null );
+	}
+	
+	@Test
+	public	void	testGetByDescription()
+	{
+		categoryDao.Save( category );
+		PlaceCategory	dbCategory	=	categoryDao.GetByDescription( category.getDescription() );
 		
 		assertNotNull( dbCategory );
 		assertEquals( category, dbCategory );

@@ -3,6 +3,8 @@ package com.sones.facebook.graphApi.GraphApiHandler;
 import java.util.Date;
 
 import com.sones.facebook.model.source.Source;
+import com.sones.facebook.placemanager.model.Place;
+import com.sones.facebook.publicsource.model.Criteria;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 
@@ -29,5 +31,13 @@ public interface IFacebookGraphApiHandler
 	 * @param date
 	 * @return
 	 */
-	public	Iterable<WallFacebookPostCreateDto>	GetWallPostsAfterDate(Source source, FacebookToken token, Date date);	
+	public	Iterable<WallFacebookPostCreateDto>	GetWallPostsAfterDate(Source source, FacebookToken token, Date date);
+	
+	/**
+	 * Returns the public places that agree with criteria.
+	 * @param criteria the criteria of the places
+	 * @param token the facebook access token.
+	 * @throws IllegalArgumentException if any of the parameters is null.
+	 */
+	public	Iterable< Place >	GetPublicPlaces( Criteria criteria, FacebookToken token );
 }

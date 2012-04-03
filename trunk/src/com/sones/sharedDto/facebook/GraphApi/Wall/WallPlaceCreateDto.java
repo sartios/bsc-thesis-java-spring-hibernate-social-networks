@@ -1,6 +1,6 @@
 package com.sones.sharedDto.facebook.GraphApi.Wall;
 
-import com.sones.facebook.model.place.Place;
+import com.sones.facebook.placemanager.model.Place;
 import com.sones.sharedDto.facebook.place.PlaceIdDto;
 
 /**

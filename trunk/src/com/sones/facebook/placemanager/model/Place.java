@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.context.annotation.Lazy;
@@ -57,7 +59,8 @@ public class Place	implements	Serializable
 	@Column(name=PlaceConstants.PROPERTY_LONGITUDE,length=PlaceConstants.LENGTH_LONGITUDE)
 	private	String	longitude;
 	
-	@Column( name = PlaceConstants.PROPERTY_CATEGORY )
+	@ManyToOne( targetEntity = PlaceCategory.class )
+	@JoinColumn( name = PlaceConstants.PROPERTY_CATEGORY )
 	private	PlaceCategory	category;
 	
 	@Column( name = PlaceConstants.PROPERTY_NUMBER_OF_CHECKINS )

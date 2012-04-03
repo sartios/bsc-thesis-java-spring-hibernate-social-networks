@@ -9,7 +9,7 @@ public class FacebookRestHandlerTester
 {
 	private IFacebookRestHandler handler;
 	private	String sourceId = "100000866964787";
-	private	String token = "access_token=AAAAAAITEghMBACz1DuIOk2aTEbNlLO63snOV3J4NEe9nP2xPSj2U3LQK0GHq7OBCJTciDSTIkseUagRSUnCFaGXhK9fJOKRL9BieOFUubkRd9UUA";
+	private	String token = "access_token=AAAAAAITEghMBAKQyyM0xgEoLpy2WjA4v6Cd5OHwLf4OhV6o2ZBw2BN4ZCZC0KU9cyQEwIbWJIhiPyZAJkp02n1Q543ZCZBuUE0HZByp0eK6v7vJFH6QOve4";
 	
 	@Before
 	public	void	SetUp()
@@ -93,5 +93,24 @@ public class FacebookRestHandlerTester
 	public	void	TestGetWallWithDate()
 	{
 		assertFalse("Returned string is empty", handler.GetWall(sourceId, token,"0").isEmpty());
+	}
+	
+	@Test( expected = IllegalArgumentException.class )
+	public void TestGetPublicPlacesEmptyCriteria()
+	{
+		handler.GetPublicPlaces("", "token");
+	}
+	
+	@Test( expected = IllegalArgumentException.class )
+	public void TestGetPublicPlacesEmptyToke()
+	{
+		handler.GetPublicPlaces("Criteria", "");
+	}
+	
+	@Test
+	public void TestGetPublicPlaces()
+	{
+		String jsonString = handler.GetPublicPlaces("coffee", "access_token=AAAAAAITEghMBAKQyyM0xgEoLpy2WjA4v6Cd5OHwLf4OhV6o2ZBw2BN4ZCZC0KU9cyQEwIbWJIhiPyZAJkp02n1Q543ZCZBuUE0HZByp0eK6v7vJFH6QOve4");
+		assertFalse( jsonString.isEmpty() );
 	}
 }

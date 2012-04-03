@@ -2,6 +2,7 @@ package com.sones.facebook.graphApi.jsonhandler;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -11,6 +12,7 @@ import static org.junit.Assert.*;
 
 import com.sones.facebook.JsonHandler.FacebookJsonHandler;
 import com.sones.facebook.JsonHandler.IFacebookJsonHandler;
+import com.sones.facebook.placemanager.model.Place;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallCheckinCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallCommentCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
@@ -246,6 +248,14 @@ public class FacebookJsonHandlerTester
 			_LOGGER.warn( message );
 			
 		}
-		assertEquals( "Το sex είναι σαν την μπιρίμπα. Αν δεν έχεις καλό ταίρι πρέπει να έχεις καλό χέρι." , message );
+		assertEquals( "Το tabli είναι σαν την μπιρίμπα. Αν δεν έχεις καλό ταίρι πρέπει να έχεις καλό χέρι." , message );
+	}
+	
+	@Test
+	public void TestGetPublicPlaces()
+	{
+		Iterable< Place > places = handler.GetPublicPlaces( reader.GetPublicPlaces() );
+		assertFalse( ( ( Set ) places ).isEmpty() );
+		assertEquals( 25,  ( ( Set ) places).size() );	
 	}
 }
