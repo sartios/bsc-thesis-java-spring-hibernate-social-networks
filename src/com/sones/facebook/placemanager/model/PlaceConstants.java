@@ -50,7 +50,7 @@ public final class PlaceConstants
 	/**
 	 * The length of the name property.
 	 */
-	public	static	final	int	LENGTH_NAME	=	20;
+	public	static	final	int	LENGTH_NAME	=	255;
 	
 	/**
 	 * The length of the latitude property.

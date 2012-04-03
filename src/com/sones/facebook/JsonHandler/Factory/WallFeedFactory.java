@@ -327,7 +327,15 @@ public class WallFeedFactory implements IWallFeedFactory
 
 	private	String	GetMessage( final DynaBean object )
 	{
-		return	object.get( "message" ).toString();
+		String	message	=	"";
+		try
+		{
+			message	=	object.get( "message" ).toString();
+		}
+		catch( MorphException ex )
+		{
+		}
+		return	message;
 	}
 	
 	private Set<WallCommentCreateDto> getComments( final DynaBean object )
@@ -375,7 +383,15 @@ public class WallFeedFactory implements IWallFeedFactory
 	private FacebookPostIdDto getId( final DynaBean object )
 	{
 		FacebookPostIdDto id = new FacebookPostIdDto();
-		id.setId(object.get( "id" ).toString());
+		String idValue	=	null;
+		try
+		{
+			idValue	=	object.get( "id" ).toString();
+		}
+		catch(MorphException e)
+		{
+		}
+		id.setId( idValue );
 		return	id;
 	}
 	

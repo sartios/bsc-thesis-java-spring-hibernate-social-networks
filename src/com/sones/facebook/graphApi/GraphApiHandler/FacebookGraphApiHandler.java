@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import com.sones.facebook.datemanager.logic.IFacebookDateManager;
 import com.sones.facebook.graphApi.FacebookRestHandler.IFacebookRestHandler;
 import com.sones.facebook.model.source.Source;
+import com.sones.facebook.placemanager.model.Place;
+import com.sones.facebook.publicsource.model.Criteria;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.facebook.JsonHandler.IFacebookJsonHandler;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
@@ -40,20 +42,13 @@ public class FacebookGraphApiHandler implements IFacebookGraphApiHandler
 	public Iterable<WallFacebookPostCreateDto> GetWallPosts(String sourceId,
 			String token) {
 
-		if(null == sourceId)
-		{
-			_logger.error("Source id can't be null");
-			throw new IllegalArgumentException("The source id is null");
-		}
+		CheckNullability(sourceId,"Source id can't be null");
+		CheckNullability(token,"Token can't be null");
+		
 		if(sourceId.isEmpty())
 		{
 			_logger.error("Source id can't be empty");
 			throw new IllegalArgumentException("The source id is empty");
-		}
-		if(null==token)
-		{
-			_logger.error("Token can't be null");
-			throw new IllegalArgumentException("The token is null");
 		}
 		if(token.isEmpty())
 		{
@@ -67,24 +62,22 @@ public class FacebookGraphApiHandler implements IFacebookGraphApiHandler
 	@Override
 	public Iterable< WallFacebookPostCreateDto > GetWallPostsAfterDate(Source source, FacebookToken token, Date date) 
 	{
-		if( source == null )
-		{
-			_logger.error("Source can't be null");
-			throw new IllegalArgumentException("The source is null");
-		}
-		if(token == null )
-		{
-			_logger.error("Token can't be null");
-			throw new IllegalArgumentException("The token is null");
-		}
-		if( date == null )
-		{
-			_logger.error("Date can't be null");
-			throw new IllegalArgumentException("Date can't be null");
-		}
+		CheckNullability(source,"Source can't be null");
+		CheckNullability(token,"Token can't be null");
+		CheckNullability(date,"Date can't be null");
 		String	dateInGraphApiFormat	=	dateManager.getDateForGraphApiSearch(date);
 		String	jsonString	=	restHandler.GetWall(source.getId(), token.getValue(), dateInGraphApiFormat );
 		return	jsonHandler.GetWallPosts(jsonString);
+	}
+	
+	@Override
+	public Iterable<Place> GetPublicPlaces( Criteria criteria, FacebookToken token ) 
+	{
+		CheckNullability(criteria, "Criteria can't be null");
+		CheckNullability(token, "Facebook token can't be null");
+		String jsonString = restHandler.GetPublicPlaces( criteria.getValue() , token.getValue() );
+		Iterable<Place> places = jsonHandler.GetPublicPlaces( jsonString );
+		return places;
 	}
 
 	/**
@@ -127,6 +120,21 @@ public class FacebookGraphApiHandler implements IFacebookGraphApiHandler
 	 */
 	public void setDateManager(IFacebookDateManager dateManager) {
 		this.dateManager = dateManager;
+	}
+	
+	/**
+	 * Checks if the object is null.
+	 * @param object the object to check if it is null.
+	 * @param message the message to throw
+	 * @throws IllegalArgumentException if the object is null.
+	 */
+	private	void	CheckNullability( Object object, String message )
+	{
+		if( object == null )
+		{
+			_logger.error( message );
+			throw new IllegalArgumentException( message );
+		}
 	}
 
 }

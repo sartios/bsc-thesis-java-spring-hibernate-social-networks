@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+
+	<bean id="service" class="com.sones.facebook.publicsource.logic.PublicSourceService">
+		<property name="graphApiHandler" ref="graphApiHandler"/>
+		<property name="placeCategoryDao" ref="placeCategoryDao"/>
+		<property name="placeCriteriaDao" ref="placeCriteriaDao"/>
+		<property name="placeDao" ref="placeDao"/>
+		<property name="criteriaDao" ref="criteriaDao"/>
+	</bean>
+	
+	<bean id="graphApiHandler" class="com.sones.facebook.graphApi.GraphApiHandler.FacebookGraphApiHandler">
+		<property name="jsonHandler" ref="jsonHandler"/>
+		<property name="restHandler" ref="restHandler"/>
+	</bean>
+	
+	<bean id="jsonHandler" class="com.sones.facebook.JsonHandler.FacebookJsonHandler">
+	</bean>
+	
+	<bean id="restHandler" class="com.sones.facebook.graphApi.FacebookRestHandler.FacebookRestHandler">
+	</bean>
+	 
+	<bean id="placeCategoryDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceCategoryDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="placeCriteriaDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceCriteriaDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="placeDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="criteriaDao" class="com.sones.facebook.publicsource.dao.hibernate.HibernateCriteriaDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+</beans>

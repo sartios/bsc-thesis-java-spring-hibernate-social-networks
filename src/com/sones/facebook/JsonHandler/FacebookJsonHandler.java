@@ -4,18 +4,21 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.beanutils.DynaBean;
+import org.apache.log4j.Logger;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
+import com.sones.facebook.JsonHandler.Factory.IPublicPlaceFactory;
 import com.sones.facebook.JsonHandler.Factory.IWallFeedFactory;
+import com.sones.facebook.JsonHandler.Factory.PublicPlaceFactory;
 import com.sones.facebook.JsonHandler.Factory.WallFeedFactory;
+import com.sones.facebook.placemanager.model.Place;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 
 public class FacebookJsonHandler	implements	IFacebookJsonHandler
 {
-
 	/**
 	 * JsonArray, the external form is a string wrapped in square brackets
 	 * with commas between the values. The internal form is an object
@@ -38,11 +41,20 @@ public class FacebookJsonHandler	implements	IFacebookJsonHandler
      */
 	private JSONObject object_;
 	
+	private	IWallFeedFactory factory;
+	private	IPublicPlaceFactory placeFactory;
+	private final Logger _LOGGER; 
+	
+	public FacebookJsonHandler()
+	{
+		_LOGGER = Logger.getLogger( FacebookJsonHandler.class );
+		factory = new WallFeedFactory();
+		placeFactory = new PublicPlaceFactory();
+	}
+	
 	@Override
 	public Iterable<WallFacebookPostCreateDto> GetWallPosts(String jsonString)
 	{
-		IWallFeedFactory factory = new WallFeedFactory();
-		
 		Set<WallFacebookPostCreateDto>	posts	=	new	HashSet<WallFacebookPostCreateDto>();
 		try
 		{
@@ -59,9 +71,37 @@ public class FacebookJsonHandler	implements	IFacebookJsonHandler
 		}
 		catch (JSONException ex) 
 		{
+			_LOGGER.error( "An error occured while trying to extract places from json string" );
 		}
 		
 		return	posts;
+	}
+	
+	@Override
+	public Iterable<Place> GetPublicPlaces(String jsonString) 
+	{
+		Set< Place > places = new HashSet<Place>();
+		try
+		{
+			this.object_	=	JSONObject.fromObject(jsonString);
+			this.jsonArray_	=	this.object_.getJSONArray("data");
+			int	arrayDimensions[]	=	JSONArray.getDimensions(jsonArray_);
+			DynaBean	beanObject;
+		
+			for( int i = 0; i < arrayDimensions[0]; i++ )
+			{
+				beanObject	=	(DynaBean)	JSONObject.toBean( jsonArray_.getJSONObject(i) );
+				Place place = placeFactory.GetPublicPlace( beanObject );
+				if( place != null )
+				{
+					places.add( place );
+				}
+			}
+		}
+		catch (JSONException ex) 
+		{
+		}
+		return places;
 	}
 	
 		
@@ -75,5 +115,10 @@ public class FacebookJsonHandler	implements	IFacebookJsonHandler
             return aDynaBean;
 
     }
-
+    
+    private	void initializeObjectAndArray( String jsonString )
+    {
+		this.object_	=	JSONObject.fromObject(jsonString);
+		this.jsonArray_	=	this.object_.getJSONArray("data");
+    }
 }

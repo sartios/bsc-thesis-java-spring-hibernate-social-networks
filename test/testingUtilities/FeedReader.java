@@ -89,4 +89,9 @@ public class FeedReader {
 	{
 		return this.getFile("JSON Documents\\GreekStatusMessage.txt");
 	}
+	
+	public	String	GetPublicPlaces()
+	{
+		return this.getFile("JSON Documents\\PublicPlaces.txt");
+	}
 }

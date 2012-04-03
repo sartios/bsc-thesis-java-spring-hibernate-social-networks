@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.sones.facebook.placemanager.dao.IPlaceCategory;
+import com.sones.facebook.placemanager.dao.IPlaceCategoryDao;
 import com.sones.facebook.placemanager.dao.IPlaceDao;
 import com.sones.facebook.placemanager.model.Place;
 import com.sones.facebook.placemanager.model.PlaceCategory;
@@ -18,7 +18,7 @@ public class HibernatePlaceDaoTester
 	private	Place	place;
 	private	PlaceCategory	category;
 	private	IPlaceDao	placeDao;
-	private	IPlaceCategory	categoryDao;
+	private	IPlaceCategoryDao	categoryDao;
 	private	ApplicationContext	context;
 	
 	public	HibernatePlaceDaoTester()

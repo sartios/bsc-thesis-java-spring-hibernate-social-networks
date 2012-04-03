@@ -31,6 +31,15 @@ public class FacebookRestHandler implements IFacebookRestHandler
 		return doGet( "https://graph.facebook.com/" + id + "/feed?" + value + "&since=" + date );
 	}
 	
+	
+	@Override
+	public String GetPublicPlaces(String criteria, String token) 
+	{
+		CheckNullOrEmpty( criteria , "Criteria can't be null or empty." );
+		CheckNullOrEmpty( token , "Token can't be null or empty." );
+		return doGet( "https://graph.facebook.com/search?q=" + criteria + "&type=place&" + token );
+	}
+	
 	private void CheckDateAndThrow( String date ) 
 	{
 		if( date == null )
@@ -71,6 +80,20 @@ public class FacebookRestHandler implements IFacebookRestHandler
 		{
 			_LOGGER.error("Token can't be empty");
 			throw new IllegalArgumentException("Token is empty");
+		}
+	}
+	
+	private void CheckNullOrEmpty( String object, String message )
+	{
+		if( object == null )
+		{
+			_LOGGER.error( message );
+			throw new IllegalArgumentException( message );
+		}
+		if( object.isEmpty() == true )
+		{
+			_LOGGER.error( message );
+			throw new IllegalArgumentException( message );
 		}
 	}
 	

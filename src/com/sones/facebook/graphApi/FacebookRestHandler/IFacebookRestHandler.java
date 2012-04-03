@@ -24,4 +24,12 @@ public interface IFacebookRestHandler
 	 * @return wall feeds
 	 */
 	public	String	GetWall(String id, String value, String date);
+
+	/**
+	 * Returns a json string that contains the public places which agree on criteria.
+	 * @param criteria the value of criteria to search
+	 * @param token the value of the facebook token
+	 * @throws IllegalArgumentException if criteria or token is empty.
+	 */
+	public String GetPublicPlaces(String criteria, String token);
 }

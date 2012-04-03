@@ -30,5 +30,5 @@ public final class PlaceCategoryConstants
 	/**
 	 * The length of the description property.
 	 */
-	public	static	final	int	LENGTH_DESCRIPTION	=	20;
+	public	static	final	int	LENGTH_DESCRIPTION	=	255;
 }

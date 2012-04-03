@@ -11,6 +11,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import static org.junit.Assert.*;
 
 import com.sones.facebook.model.source.Source;
+import com.sones.facebook.placemanager.model.Place;
+import com.sones.facebook.publicsource.model.Criteria;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 
@@ -93,5 +95,28 @@ public class FacebookGraphApiHandlerTester
 		Date	date	=	Calendar.getInstance().getTime();
 		Iterable<WallFacebookPostCreateDto> posts = handler.GetWallPostsAfterDate( source, facebookToken, date  );
 		assertEquals("Error @ post number",25, ((Set<WallFacebookPostCreateDto>)posts).size());
+	}
+	
+	@Test( expected = IllegalArgumentException.class )
+	public void TestGetPublicPlacesNullCriteria()
+	{
+		handler.GetPublicPlaces(null, new FacebookToken());
+	}
+	
+	@Test( expected = IllegalArgumentException.class )
+	public void TestGetPublicPlacesNullToken()
+	{
+		handler.GetPublicPlaces(new Criteria(), null);
+	}
+	
+	@Test
+	public void TestGetPublicPlaces()
+	{
+		Criteria criteria = new Criteria( "party" );
+		FacebookToken facebookToken = new FacebookToken();
+		facebookToken.setValue( "access_token=AAAAAAITEghMBAHCxAzoGS5OBNPtaMvxgmAhnFPbsVAlhtJaZChdjKTNkMhwhXpXZBka8toZBcTi1BP4ePhfl8MBkiWpi9oQeu6NyB9Jkzh42LlpoGGw" );
+		Iterable< Place > places = handler.GetPublicPlaces(criteria, facebookToken);
+		assertNotNull( places );
+		assertTrue( ((Set)places).size() > 0 );
 	}
 }
