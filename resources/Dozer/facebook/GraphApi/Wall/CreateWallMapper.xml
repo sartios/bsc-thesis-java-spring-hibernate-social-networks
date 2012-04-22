@@ -53,7 +53,7 @@
       
       <mapping>
       	<class-a>com.sones.sharedDto.facebook.GraphApi.Wall.WallPlaceCreateDto</class-a>
-      	<class-b>com.sones.facebook.model.place.Place</class-b>
+      	<class-b>com.sones.facebook.placemanager.model.Place</class-b>
       	<field>
       		<a>id.id</a>
       		<b>id</b>

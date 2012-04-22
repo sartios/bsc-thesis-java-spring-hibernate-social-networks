@@ -24,6 +24,11 @@ import com.sones.usermanager.model.ApplicationUser;
 public class FacebookDownload	implements	Serializable
 {
 	/**
+	 * The serial version
+	 */
+	private static final long serialVersionUID = -3190561715529048066L;
+
+	/**
 	 * <b>Column:</b> FCDW_ID <br/><br/>
 	 * The facebook download id.
 	 */

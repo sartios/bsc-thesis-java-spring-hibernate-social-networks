@@ -1,8 +1,10 @@
 package com.sones.facebook.downloader.dao;
 
+import java.util.Collection;
 import java.util.Date;
 
 import com.sones.dao.IGenericDao;
+import com.sones.facebook.downloader.model.FacebookDownload;
 import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.downloader.model.FacebookPostDownloadId;
 import com.sones.usermanager.model.ApplicationUser;
@@ -22,4 +24,12 @@ public interface IFacebookPostDownloadDao	extends	IGenericDao<FacebookPostDownlo
 	 * @throws IllegalArgumentException when date or application user is null.
 	 */
 	public	Iterable<FacebookPostDownload>	getFacebookPostAfterDateByAppUser( Date date, ApplicationUser appUser );
+	
+	/**
+	 * Returns the facebook posts with the downloads for the downloads that exist into the collection
+	 * @param downloads the downloads which we want to retrieve
+	 * @return facebook post downloads
+	 * @throws IllegalArgumentException if downloads are null.
+	 */
+	public Iterable<FacebookPostDownload> GetInDownloads( Collection<FacebookDownload> downloads );
 }

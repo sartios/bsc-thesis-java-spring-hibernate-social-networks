@@ -15,6 +15,7 @@ import com.sones.usermanager.model.ApplicationUser;
 
 public class PublicSourceServiceTester 
 {
+	private	final String TOKEN_VALUE = "access_token=AAABhPDucCP8BAP5fSPElqyFwck6ig1ZAYUNwJih4iyHtzTNalAtpYXXSTacTFpaMhFZAXnk37veebRMP186RHdGmQnxLrK5MhTZAFWXSQZDZD";
 	private	IPublicSourceService service;
 	private	FacebookToken token;
 	private	List< Criteria > criterias;
@@ -33,7 +34,7 @@ public class PublicSourceServiceTester
 	public void setUp()
 	{
 		token = new FacebookToken();
-		token.setValue("access_token=AAAAAAITEghMBABt6NNnp0XwkoMEqHV8qmH6qBm6yo5HTUmaxmdeWdgOhcTC2UyqBpvN67ZBWmEDwPwev5BUchRZAIE9s58SFcA3j8LIZCrBfvtk3htK");
+		token.setValue(TOKEN_VALUE);
 		
 		criterias = getCriterias();
 		appUser = new ApplicationUser();

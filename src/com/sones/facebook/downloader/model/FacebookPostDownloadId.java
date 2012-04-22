@@ -17,6 +17,11 @@ import com.sones.facebook.model.feed.FacebookPost;
 public class FacebookPostDownloadId	implements	Serializable
 {
 	/**
+	 * The serial version.
+	 */
+	private static final long serialVersionUID = -246626440648326768L;
+
+	/**
 	 * <b>Column:</b> FCDW_ID<br/><br/>
 	 * The donwload id.
 	 */
