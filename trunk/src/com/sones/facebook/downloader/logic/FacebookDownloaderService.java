@@ -112,25 +112,48 @@ public class FacebookDownloaderService	implements	IFacebookDownloaderService
 	public void DownloadWallPosts(ApplicationUser appUser) 
 	{
 		ValidateApplicationUser( appUser );
-		FacebookToken	accessToken	=	tokenDao.GetByApplicationUser( appUser );
-		ValidateAccessToken( accessToken );
-		Iterable< ApplicationUserSource >	appUserSources	=	appUserSourceDao.getApplicationUserSourcesByUser( appUser );
-		ValidateApplicationUserSources( appUserSources );
+		FacebookToken	accessToken	=	GetFacebookToken( appUser );
+		Iterable< ApplicationUserSource >	appUserSources	=	GetApplicationUserSources( appUser );
 		Date	date	=	GetDownloadDate( appUser );
+		Set< WallSourceFacebookPostCreateDto >	sourcePostsDtos	=	GetSourcePosts(appUserSources , accessToken , date );
+		FacebookDownload	currentDownload	=	SaveCurrentDownloadAndReturn( appUser );
+		saverService.saveWallPosts( sourcePostsDtos );
+		Set< FacebookPostDownload >	postDownloads	=	SaveFacebookPostsPerDownloadAndReturn( sourcePostsDtos , currentDownload);
+	}
+	
+	private Set< WallSourceFacebookPostCreateDto > GetSourcePosts(Iterable<ApplicationUserSource> appUserSources , FacebookToken accessToken, Date date)
+	{
 		Set< WallSourceFacebookPostCreateDto >	sourcePostsDtos	=	new	HashSet< WallSourceFacebookPostCreateDto >();
 		for( ApplicationUserSource appUserSource : appUserSources )
 		{
 			Source	source	=	appUserSource.getId().getSource();
 			CheckSourceAndThrow( source );
-			WallSourceCreateDto	sourceDto	=	new	WallSourceCreateDto();
-			mapper.map(source ,  sourceDto );
+			WallSourceCreateDto	sourceDto	=	GetSourceDto(source);
 			Iterable<WallFacebookPostCreateDto> downloadedPostsDto	=	graphApiHandler.GetWallPostsAfterDate( source, accessToken, date);
 			AddPostsIntoSourcePostColletion(downloadedPostsDto, sourcePostsDtos, sourceDto);
 		}
-		FacebookDownload	currentDownload	=	SaveCurrentDownloadAndReturn( appUser );
-		saverService.saveWallPosts( sourcePostsDtos );
-		Set< FacebookPostDownload >	postDownloads	=	SaveFacebookPostsPerDownloadAndReturn( sourcePostsDtos , currentDownload);
-		
+		return sourcePostsDtos;
+	}
+	
+	private WallSourceCreateDto GetSourceDto(Source source)
+	{
+		WallSourceCreateDto	sourceDto	=	new	WallSourceCreateDto();
+		mapper.map(source ,  sourceDto );
+		return sourceDto;
+	}
+	
+	private FacebookToken GetFacebookToken( ApplicationUser appUser )
+	{
+		FacebookToken accessToken = tokenDao.GetByApplicationUser( appUser );
+		ValidateAccessToken( accessToken );
+		return accessToken;
+	}
+	
+	private Iterable< ApplicationUserSource > GetApplicationUserSources( ApplicationUser appUser )
+	{
+		Iterable< ApplicationUserSource >	appUserSources	=	appUserSourceDao.getApplicationUserSourcesByUser( appUser );
+		ValidateApplicationUserSources( appUserSources );
+		return appUserSources;
 	}
 
 	/**

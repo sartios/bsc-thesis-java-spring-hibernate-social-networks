@@ -29,8 +29,7 @@ import com.sones.usermanager.model.ApplicationUser;
 
 public class FacebookDownloaderServiceTester 
 {
-	private	final	String	TOKEN_VALUE	=	"access_token=AAAAAAITEghMBAHkKKZC0zLp70BQhJ8CtLSqprkvecl56KsGQgxEMZCGBZB1mL5l9HdzC9svTx0Yoti60Fuh6vZBNBM1Vlvixpx6nGcYawgblMj4K27Pn";
-	private	IFacebookDownloaderService	donwloaderService;
+	private	final String TOKEN_VALUE = "access_token=AAABhPDucCP8BAP5fSPElqyFwck6ig1ZAYUNwJih4iyHtzTNalAtpYXXSTacTFpaMhFZAXnk37veebRMP186RHdGmQnxLrK5MhTZAFWXSQZDZD";	private	IFacebookDownloaderService	donwloaderService;
 	private	ApplicationContext	context;
 	private	IApplicationUserDao	appUserDao;
 	private	IFacebookAccountDao	accountDao;
@@ -57,6 +56,15 @@ public class FacebookDownloaderServiceTester
 	public	void	TestDownloadWallPosts()
 	{
 		InitTestData();
+		donwloaderService.DownloadWallPosts( applicationUser );
+	}
+	
+	@Test
+	public void TestDownloadWallPostsPublicPlacesInSources()
+	{
+		InitTestData();
+		Iterable<Source> publicSources = SavePublicPlaceSourcesAndReturn();
+		SaveAppUserSourcesAndReturn( publicSources, applicationUser );
 		donwloaderService.DownloadWallPosts( applicationUser );
 	}
 	
@@ -120,6 +128,33 @@ public class FacebookDownloaderServiceTester
 		account.setAppUser( appUser );
 		accountDao.Save( account );
 		return	account;
+	}
+	
+	private Iterable< Source > SavePublicPlaceSourcesAndReturn()
+	{
+		SourceType	type	=	new	SourceType();
+		Number	rowCount	=	sourceTypeDao.GetRowCount();
+		String	id	=	new	String( String.valueOf( rowCount.longValue() + 5 ) );
+		type.setId( id );
+		type.setType( "Place" );
+		sourceTypeDao.Save( type );
+		List< Source >	sources	=	new	ArrayList< Source >();
+		sources.add( getSource( "102783179811332", type ) );
+		sources.add( getSource( "103012763095683", type ) );
+		sources.add( getSource( "104945772882209", type ) );
+		sources.add( getSource( "106721709395327", type ) );
+		sources.add( getSource( "107761595952623", type ) );
+		
+		for( Source source : sources )
+		{
+			Source	dbSource	=	sourceDao.GetById( source.getId() );
+			if( dbSource == null )
+			{
+				sourceDao.Save( source );
+			}
+		}
+		
+		return	sources;
 	}
 	
 	private	Iterable< Source > SaveSourcesAndReturn()

@@ -5,9 +5,7 @@ public class PlaceIdDto
 	private	String	id;
 	
 	public PlaceIdDto()
-	{
-		
-	}
+	{}
 	
 	public PlaceIdDto(String id)
 	{

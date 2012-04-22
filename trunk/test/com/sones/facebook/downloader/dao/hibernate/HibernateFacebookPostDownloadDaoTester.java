@@ -2,10 +2,12 @@ package com.sones.facebook.downloader.dao.hibernate;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
@@ -14,6 +16,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.sones.dao.IGenericDao;
 import com.sones.facebook.dao.feed.IFacebookPostDao;
 import com.sones.facebook.dao.hibernate.feed.HibernateFacebookPostDao;
 import com.sones.facebook.dao.hibernate.source.HibernateUserDao;
@@ -86,13 +89,6 @@ public class HibernateFacebookPostDownloadDaoTester
 	public	HibernateFacebookPostDownloadDaoTester()
 	{
 		context	=	new	ClassPathXmlApplicationContext("FacebookDownloader/spring-facebook-downloader-nu.xml");
-	}
-	
-	@Before
-	public	void	setUp()
-	{
-		facebookPostDownload	=	(FacebookPostDownload) context.getBean("facebookPostDownload");
-		
 		facebookPostDownloadDao	=	(HibernateFacebookPostDownloadDao)context.getBean("facebookPostDownloadDao");
 		downloadDao	=	(HibernateFacebookDownloadDao)context.getBean("facebookDownloadDao");
 		postDao	=	(HibernateFacebookPostDao)context.getBean("facebookPostDao");
@@ -100,38 +96,35 @@ public class HibernateFacebookPostDownloadDaoTester
 		appUserDao	=	(HibernateApplicationUserDao)context.getBean("appUserDao");
 	}
 	
-	@After
-	public	void	tearDown()
+	@Before
+	public	void	setUp()
 	{
-		
+		facebookPostDownload	=	(FacebookPostDownload) context.getBean("facebookPostDownload");
+		download	=	facebookPostDownload.getId().getDownload();
+		post	=	facebookPostDownload.getId().getPost();
+		post.setUser( null );
+		appUser	=	download.getAppUser();
+		saveIfNotExists(appUser, appUser.getId(), appUserDao);
+		saveIfNotExists(download, download.getId(), downloadDao);
+		saveIfNotExists(post, post.getId(), postDao);
+		saveIfNotExists(facebookPostDownload, facebookPostDownload.getId(), facebookPostDownloadDao);
+	}
+	
+	@After
+	public void tearDown()
+	{
+		deleteIfExists(facebookPostDownload, facebookPostDownload.getId(), facebookPostDownloadDao);
+		deleteIfExists(post, post.getId(), postDao);
+		deleteIfExists(download, download.getId(), downloadDao);
+		deleteIfExists(appUser, appUser.getId(), appUserDao);
 	}
 	
 	@Test
 	public	void	testSaveFacebookPostDownload()
-	{
-		download	=	facebookPostDownload.getId().getDownload();
-		post	=	facebookPostDownload.getId().getPost();
-		
-		appUser	=	download.getAppUser();
-		appUserDao.Save( appUser );
-		
-		downloadDao.Save( download );
-		
-		facebookUserDao.Save( post.getUser() );
-		postDao.Save( post );
-		
-		facebookPostDownloadDao.Save( facebookPostDownload );
-		
+	{				
 		FacebookPostDownload dbModel = facebookPostDownloadDao.GetById( facebookPostDownload.getId() );
-		
 		assertNotNull("Object is null",dbModel);
 		assertEquals(facebookPostDownload.getId(), dbModel.getId());
-		
-		facebookPostDownloadDao.Delete( facebookPostDownload );
-		postDao.Delete( post );
-		facebookUserDao.Delete( post.getUser() );
-		downloadDao.Delete( download );
-		appUserDao.Delete( appUser );
 	}
 	
 	@Test( expected=IllegalArgumentException.class )
@@ -149,67 +142,150 @@ public class HibernateFacebookPostDownloadDaoTester
 	@Test
 	public	void	getFacebookPostAfterDateByAppUser()
 	{
-		ApplicationUser	genAppUser	=	new	ApplicationUser();
-		genAppUser.setId( "1" );
-		appUserDao.Save( genAppUser );
-		Set<FacebookDownload> downloads	=	new	HashSet<FacebookDownload>();
-		for( int index = 1; index < 4 ; index++ )
-		{
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			FacebookDownload genDonwload = new FacebookDownload();
-			genDonwload.setId( String.valueOf( index ) );
-			genDonwload.setAppUser( genAppUser );
-			genDonwload.setDate( Calendar.getInstance().getTime() );
-			downloadDao.Save( genDonwload );
-			downloads.add( genDonwload );
-		}
-		User	genFacebookUser	=	new	User();
-		genFacebookUser.setId( "1" );
-		facebookUserDao.Save( genFacebookUser );
-		Set<FacebookPostDownload>	facebookPostDownloads	=	new	HashSet<FacebookPostDownload>();
-		Set<FacebookPost>	posts	=	new	HashSet<FacebookPost>();
-		for( int postIndex = 1; postIndex < 4; postIndex++ )
-		{
-			FacebookPost	post	=	new	FacebookPost();
-			post.setId( String.valueOf( postIndex ) );
-			post.setUser( genFacebookUser );
-			postDao.Save( post );
-			posts.add( post );
-		}
-		for( FacebookDownload download : downloads )
-		{
-			for( FacebookPost post : posts )
-			{
-				FacebookPostDownload	facebookPostDownload	=	new	FacebookPostDownload( post, download );
-				facebookPostDownloadDao.Save( facebookPostDownload );
-				facebookPostDownloads.add( facebookPostDownload );
-			}
-		}
+		Set<FacebookDownload> downloads	= (Set<FacebookDownload>) getDownloads(appUser);
+		Set<FacebookPost>	posts	=	(Set<FacebookPost>) getFacebookPosts();
+		Set<FacebookPostDownload>	facebookPostDownloads	=	(Set<FacebookPostDownload>) getFacebookPostDownloads(downloads, posts);
 		
 		Iterator< FacebookPostDownload >	iterator	=	facebookPostDownloads.iterator();
 		iterator.next();
 		Date	date	=	iterator.next().getId().getDownload().getDate();
 		
-		Set	resutls	=	(Set) facebookPostDownloadDao.getFacebookPostAfterDateByAppUser(date, genAppUser);
+		Set	resutls	=	(Set) facebookPostDownloadDao.getFacebookPostAfterDateByAppUser(date, appUser);
 		assertEquals(6, resutls.size());
 		
-		for( FacebookPostDownload facebookPostDownload : facebookPostDownloads )
+		deleteFacebookPostDownloads(facebookPostDownloads);
+		deleteFacebookDownloads(downloads);
+		deleteFacebookPosts(posts);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void GetInDownloadsNullDownloads()
+	{
+		facebookPostDownloadDao.GetInDownloads( null );
+	}
+	
+	@Test
+	public void GetInDownloadsCorrectly()
+	{
+		Set<FacebookDownload> downloads	= (Set<FacebookDownload>) getDownloads(appUser);
+		Set<FacebookPost>	posts	=	(Set<FacebookPost>) getFacebookPosts();
+		List<FacebookPostDownload>	facebookPostDownloads	=	(List<FacebookPostDownload>) getFacebookPostDownloads(downloads, posts);
+		Set<FacebookDownload> filterDownloads = (Set<FacebookDownload>) getMaxDownloadsFrom(2,downloads);
+
+		List	resutls	=	(List) facebookPostDownloadDao.GetInDownloads(filterDownloads);
+		assertEquals(6, resutls.size());
+		
+		deleteFacebookPostDownloads(facebookPostDownloads);
+		deleteFacebookDownloads(downloads);
+		deleteFacebookPosts(posts);
+	}
+	
+	private void deleteIfExists(Object object, Object id, IGenericDao dao)
+	{
+		if( dao.GetById(id) != null )
 		{
-			facebookPostDownloadDao.Delete( facebookPostDownload );
+			dao.Delete(object);
 		}
+	}
+	
+	private void saveIfNotExists(Object object, Object id, IGenericDao dao)
+	{
+		if( dao.GetById(id) == null )
+		{
+			dao.Save(object);
+		}
+	}
+	
+	private Iterable<FacebookDownload> getDownloads( ApplicationUser appUser )
+	{
+		Set<FacebookDownload> downloads	=	new	HashSet<FacebookDownload>();
+		for( int index = 1; index < 6 ; index++ )
+		{
+			sleep(1000);
+			FacebookDownload genDonwload = new FacebookDownload();
+			genDonwload.setId( String.valueOf( index ) );
+			genDonwload.setAppUser( appUser );
+			genDonwload.setDate( Calendar.getInstance().getTime() );
+			saveIfNotExists(genDonwload, genDonwload.getId(), downloadDao);
+			downloads.add( genDonwload );
+		}
+		return downloads;
+	}
+	
+	private void sleep( long milliseconds )
+	{
+		try {
+			Thread.sleep(milliseconds);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private Iterable<FacebookPostDownload> getFacebookPostDownloads(Iterable<FacebookDownload> downloads, Iterable<FacebookPost> posts)
+	{
+		List<FacebookPostDownload> facebookPostDownloads = new ArrayList<FacebookPostDownload>();
 		for( FacebookDownload download : downloads )
 		{
-			downloadDao.Delete( download );
+			for( FacebookPost post : posts )
+			{
+				FacebookPostDownload	facebookPostDownload	=	new	FacebookPostDownload( post, download );
+				saveIfNotExists(facebookPostDownload, facebookPostDownload.getId(), facebookPostDownloadDao);
+				facebookPostDownloads.add( facebookPostDownload );
+			}
 		}
+		return facebookPostDownloads;
+	}
+	
+	private Iterable<FacebookPost> getFacebookPosts()
+	{
+		Set<FacebookPost>	posts	=	new	HashSet<FacebookPost>();
+		for( int postIndex = 1; postIndex < 4; postIndex++ )
+		{
+			FacebookPost	post	=	new	FacebookPost();
+			post.setId( String.valueOf( postIndex ) );
+			saveIfNotExists(post, post.getId(), postDao);
+			posts.add( post );
+		}
+		return posts;
+	}
+	
+	private void deleteFacebookPosts( Iterable<FacebookPost> posts )
+	{
 		for( FacebookPost post : posts )
 		{
-			postDao.Delete( post );
+			deleteIfExists(post, post.getId(),postDao);
 		}
-		appUserDao.Delete( genAppUser );
-		facebookUserDao.Delete( genFacebookUser );
+	}
+	
+	private void deleteFacebookDownloads( Iterable<FacebookDownload> downloads )
+	{
+		for( FacebookDownload download : downloads )
+		{
+			deleteIfExists(download, download.getId(),downloadDao);
+		}
+	}
+	
+	private void deleteFacebookPostDownloads( Iterable<FacebookPostDownload> postDownloads )
+	{
+		for( FacebookPostDownload postDownload : postDownloads )
+		{
+			deleteIfExists(postDownload, postDownload.getId(),facebookPostDownloadDao);
+		}
+	}
+	
+	private Iterable<FacebookDownload> getMaxDownloadsFrom( int maxNum , Iterable<FacebookDownload> downloads )
+	{
+		int count = 0;
+		Set<FacebookDownload> filterDownloads = new HashSet<FacebookDownload>();
+		for( FacebookDownload download : downloads )
+		{
+			filterDownloads.add(download);
+			count++;
+			if(count == maxNum)
+			{
+				break;
+			}
+		}
+		return filterDownloads;
 	}
 }

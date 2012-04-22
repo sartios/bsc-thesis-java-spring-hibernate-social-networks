@@ -11,6 +11,8 @@ import testingUtilities.FeedReader;
 
 import com.sones.facebook.JsonHandler.FacebookJsonHandler;
 import com.sones.facebook.JsonHandler.IFacebookJsonHandler;
+import com.sones.facebook.saver.FacebookPostSaverLogic;
+import com.sones.facebook.saver.IFacebookPostSaverLogic;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostCreateDto;

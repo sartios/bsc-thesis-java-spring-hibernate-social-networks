@@ -1,5 +1,6 @@
 package com.sones.facebook.downloader.dao.hibernate;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -91,6 +92,22 @@ public class HibernateFacebookPostDownloadDao	extends	HibernateGenericDao<Facebo
 		Criteria	userCriteria	=	downloadCriteria.createCriteria("appUser");
 		userCriteria.add(Restrictions.eq("id", appUser.getId()));*/
 		
+		return results;
+	}
+
+	@Override
+	public Iterable<FacebookPostDownload> GetInDownloads(Collection<FacebookDownload> downloads) 
+	{
+		if(downloads == null)
+		{
+			_LOGGER.error("Downloads can't be null");
+			throw new IllegalArgumentException("Downloads can't be null.");
+		}
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = session.createCriteria( FacebookPostDownload.class )
+			.add( Restrictions.in("id.download", downloads) );
+		List<FacebookPostDownload> results = criteria.list();
+		session.close();
 		return results;
 	}
 }

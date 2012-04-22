@@ -20,7 +20,7 @@
 		<property name="user" ref="appUser"/>
 	</bean>
 	
-	<bean id="appUser" class="com.sones.userManager.model.ApplicationUser">
+	<bean id="appUser" class="com.sones.usermanager.model.ApplicationUser">
 		<property name="id" value="1"/>	
 	</bean>
 	
