@@ -1,5 +1,7 @@
 package com.sones.facebook.keywordSearcher.dao.hibernate;
 
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -58,5 +60,39 @@ public class HibernateKeywordSearchDao extends HibernateGenericDao<KeywordSearch
 		}
 		
 		return search;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Collection<KeywordSearch> getAfterDateByAppUser(Date date,
+			ApplicationUser appUser) 
+	{
+		checkNullability(date,"Date can't be null");
+		checkNullability(appUser, "Application user can't be null");
+		
+		Session session = getHibernateTemplate().getSessionFactory().openSession();
+		Criteria criteria = session.createCriteria(KeywordSearch.class)
+			.add( Restrictions.eq("user", appUser) )
+			.add( Restrictions.ge("date", date));
+		List<KeywordSearch> results = criteria.list();
+		session.close();
+		return results;
+	}
+	
+	/**
+	 * Checks if the object is null and throws if it is.
+	 * @param object
+	 * @param message
+	 * @throws IllegalArgumentException
+	 */
+	private void checkNullability(Object object, String message) throws IllegalArgumentException
+	{
+		if(object == null)
+		{
+			_LOGGER.error(message);
+			throw new IllegalArgumentException(message);
+		}
 	}
 }
