@@ -159,6 +159,51 @@ public class HibernateKeywordSearchDaoTester
 		deleteIfExists(appUser2, appUser2.getId(), appUserDao);
 	}
 	
+	@Test
+	public void getAfterDateByAppUserShouldWorkCorrectlyForPreviousDate()
+	{
+		Calendar gregCalendar = Calendar.getInstance();
+		gregCalendar.add(Calendar.MINUTE, -15);
+		Date dateToSearch = gregCalendar.getTime();
+		
+		ApplicationUser appUser = new ApplicationUser();
+		appUser.setId("15");
+		saveIfDoesNotExist(appUser,appUser.getId(),appUserDao);
+		
+		ApplicationUser appUser2 = new ApplicationUser();
+		appUser2.setId("16");
+		saveIfDoesNotExist(appUser2,appUser2.getId(),appUserDao);
+		
+		List<KeywordSearch> searches = new ArrayList<KeywordSearch>();
+		for(int searchIndex = 0 ; searchIndex < 5; searchIndex++)
+		{
+			KeywordSearch search = new KeywordSearch();
+			search.setId( String.valueOf(searchIndex) );
+			search.setDate( Calendar.getInstance().getTime() );
+			search.setUser(appUser);
+			saveIfDoesNotExist(search,search.getId(),keywordSearchDao);
+			searches.add(search);
+			sleep(1000);
+		}
+		KeywordSearch search = new KeywordSearch();
+		search.setId( String.valueOf(5) );
+		search.setDate( Calendar.getInstance().getTime() );
+		search.setUser(appUser2);
+		saveIfDoesNotExist(search,search.getId(),keywordSearchDao);
+		searches.add(search);
+		
+		Collection<KeywordSearch> results = keywordSearchDao.getAfterDateByAppUser(dateToSearch, appUser2);
+		
+		assertEquals(1, results.size());
+		
+		for(KeywordSearch keySearch : searches)
+		{
+			deleteIfExists(keySearch, keySearch.getId(), keywordSearchDao);
+		}
+		deleteIfExists(appUser, appUser.getId(), appUserDao);
+		deleteIfExists(appUser2, appUser2.getId(), appUserDao);
+	}
+	
 	private void sleep(long miliseconds)
 	{
 		try {
