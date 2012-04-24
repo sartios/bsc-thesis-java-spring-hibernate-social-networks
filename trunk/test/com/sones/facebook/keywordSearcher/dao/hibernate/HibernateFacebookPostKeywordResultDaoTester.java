@@ -1,11 +1,19 @@
 package com.sones.facebook.keywordSearcher.dao.hibernate;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.sones.dao.IGenericDao;
 import com.sones.facebook.dao.feed.IFacebookPostDao;
 import com.sones.facebook.dao.hibernate.feed.HibernateFacebookPostDao;
 import com.sones.facebook.dao.hibernate.source.HibernateUserDao;
@@ -169,4 +177,89 @@ public class HibernateFacebookPostKeywordResultDaoTester
 		fail( "Not implemented test" );
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void getByKeywordSearchShouldThrowWhenSearchIsNull()
+	{
+		resultDao.getByKeywordSearch(null);
+	}
+	
+	@Test
+	public void getByKeywordSearchShouldWorkIfSearchDoesNotExist()
+	{
+		KeywordSearch searchDoesNotExist = new KeywordSearch();
+		searchDoesNotExist.setId("aaa");
+		resultDao.getByKeywordSearch(searchDoesNotExist);
+	}
+	
+	@Test
+	public void getByKeywordSearchShouldWorkCorrectly()
+	{
+		ApplicationUser user = new ApplicationUser();
+		user.setId("10059");
+		saveIfDoesNotExist(user, user.getId(),appUserDao);
+		
+		List<KeywordSearch> searches = new ArrayList<KeywordSearch>();
+		for(int searchIndex = 0; searchIndex < 5; searchIndex++)
+		{
+			KeywordSearch search = new KeywordSearch();
+			search.setId( String.valueOf( searchIndex ) );
+			search.setDate( Calendar.getInstance().getTime() );
+			search.setUser(user);
+			saveIfDoesNotExist(search, search.getId(), keywordSearchDao);
+			searches.add(search);
+			sleep(1000);
+		}
+		List<FacebookPostKeywordResult> results = new ArrayList<FacebookPostKeywordResult>();
+		SecureRandom random = new SecureRandom();
+		for(KeywordSearch search : searches)
+		{
+			FacebookPostKeywordResult result = new FacebookPostKeywordResult();
+			for(int resultIndex = 0; resultIndex < 5; resultIndex++)
+			{
+				result.setId(String.valueOf( new BigInteger(8,random )));
+				result.setSearch(search);
+				saveIfDoesNotExist(result, result.getId(), resultDao);
+			}
+		}
+		KeywordSearch search = searches.get(0);
+		Collection<FacebookPostKeywordResult> dbResults = resultDao.getByKeywordSearch(search);
+		assertEquals(5, dbResults.size());
+		
+		for(FacebookPostKeywordResult result : results)
+		{
+			deleteIfExists(result, result.getId(), resultDao);
+		}
+		
+		for(KeywordSearch keySearch : searches)
+		{
+			deleteIfExists(keySearch, keySearch.getId(), keywordSearchDao);
+		}
+		
+		deleteIfExists(user, user.getId(), appUserDao);
+	}
+	
+	private void sleep(int miliseconds)
+	{
+		try {
+			Thread.sleep(miliseconds);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void saveIfDoesNotExist(Object model,Object id,IGenericDao dao)
+	{
+		if(dao.GetById(id) == null)
+		{
+			dao.Save(model);
+		}
+	}
+	
+	private void deleteIfExists(Object model,Object id,IGenericDao dao)
+	{
+		if(dao.GetById(id) != null)
+		{
+			dao.Delete(model);
+		}
+	}
 }
