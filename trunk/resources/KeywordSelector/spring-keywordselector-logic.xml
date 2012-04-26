@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+	
+	<bean id="appUserKeywordDao" class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateApplicationUserKeywordDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="keywordDao" class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateKeywordDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="keywordSelectorService" class="com.sones.keyword.selector.logic.KeywordSelectorService">
+		<constructor-arg name="appUserKeywordDao" ref="appUserKeywordDao"/>
+		<constructor-arg name="keywordDao" ref="keywordDao"/>
+	</bean>
+
+</beans>
