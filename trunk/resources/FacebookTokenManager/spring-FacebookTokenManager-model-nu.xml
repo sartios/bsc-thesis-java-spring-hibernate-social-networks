@@ -5,7 +5,7 @@
 
 	<import resource="../spring-hibernate.xml"/>
 	
-	<bean id="accountDao" class="com.sones.facebook.tokenmanager.model.dao.hibernate.HibernateFacebookAccountDao">
+	<bean id="accountDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookAccountDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
@@ -13,7 +13,7 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 
-	<bean id="tokenDao" class="com.sones.facebook.tokenmanager.model.dao.hibernate.HibernateFacebookTokenDao">
+	<bean id="tokenDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookTokenDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 </beans>

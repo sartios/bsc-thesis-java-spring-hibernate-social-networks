@@ -20,7 +20,7 @@ import com.sones.facebook.model.feed.FacebookPost;
 import com.sones.facebook.model.source.Source;
 import com.sones.facebook.saver.IFacebookPostSaverLogic;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
-import com.sones.facebook.tokenmanager.model.dao.IFacebookTokenDao;
+import com.sones.facebook.tokenmanager.dao.IFacebookTokenDao;
 import com.sones.facebook.usermanager.dao.IApplicationUserSourceDao;
 import com.sones.facebook.usermanager.model.ApplicationUserSource;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;

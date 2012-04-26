@@ -44,7 +44,7 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
-	<bean id="tokenDao" class="com.sones.facebook.tokenmanager.model.dao.hibernate.HibernateFacebookTokenDao">
+	<bean id="tokenDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookTokenDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	

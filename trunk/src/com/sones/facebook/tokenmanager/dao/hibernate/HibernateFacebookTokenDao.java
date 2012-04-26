@@ -1,4 +1,4 @@
-package com.sones.facebook.tokenmanager.model.dao.hibernate;
+package com.sones.facebook.tokenmanager.dao.hibernate;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.sones.dao.hibernate.HibernateGenericDao;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
-import com.sones.facebook.tokenmanager.model.dao.IFacebookTokenDao;
+import com.sones.facebook.tokenmanager.dao.IFacebookTokenDao;
 import com.sones.usermanager.model.ApplicationUser;
 
 public class HibernateFacebookTokenDao	extends	HibernateGenericDao< FacebookToken, String >	implements	IFacebookTokenDao
