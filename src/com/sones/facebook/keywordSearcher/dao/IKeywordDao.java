@@ -5,5 +5,5 @@ import com.sones.facebook.keywordSearcher.model.Keyword;
 
 public interface IKeywordDao extends IGenericDao<Keyword, String>
 {
-
+	public Keyword getByValue(Keyword keyword);
 }

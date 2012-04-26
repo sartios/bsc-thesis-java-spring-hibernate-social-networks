@@ -1,4 +1,4 @@
-package com.sones.facebook.tokenmanager.model.dao.hibernate;
+package com.sones.facebook.tokenmanager.dao.hibernate;
 
 import static org.junit.Assert.*;
 
@@ -6,8 +6,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.sones.facebook.tokenmanager.dao.IFacebookAccountDao;
+import com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookAccountDao;
 import com.sones.facebook.tokenmanager.model.FacebookAccount;
-import com.sones.facebook.tokenmanager.model.dao.IFacebookAccountDao;
 import com.sones.usermanager.dao.IApplicationUserDao;
 import com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao;
 import com.sones.usermanager.model.ApplicationUser;

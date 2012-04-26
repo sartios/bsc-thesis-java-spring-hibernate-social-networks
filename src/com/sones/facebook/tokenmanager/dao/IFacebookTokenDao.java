@@ -1,4 +1,4 @@
-package com.sones.facebook.tokenmanager.model.dao;
+package com.sones.facebook.tokenmanager.dao;
 
 import com.sones.dao.IGenericDao;
 import com.sones.facebook.tokenmanager.model.FacebookToken;

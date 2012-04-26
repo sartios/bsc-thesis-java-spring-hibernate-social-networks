@@ -1,10 +1,10 @@
-package com.sones.facebook.tokenmanager.model.dao.hibernate;
+package com.sones.facebook.tokenmanager.dao.hibernate;
 
 import org.apache.log4j.Logger;
 
 import com.sones.dao.hibernate.HibernateGenericDao;
 import com.sones.facebook.tokenmanager.model.FacebookAccount;
-import com.sones.facebook.tokenmanager.model.dao.IFacebookAccountDao;
+import com.sones.facebook.tokenmanager.dao.IFacebookAccountDao;
 
 /**
  * ...
