@@ -75,7 +75,8 @@ public class HibernateKeywordSearchDao extends HibernateGenericDao<KeywordSearch
 		Session session = getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(KeywordSearch.class)
 			.add( Restrictions.eq("user", appUser) )
-			.add( Restrictions.ge("date", date));
+			.add( Restrictions.ge("date", date))
+			.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<KeywordSearch> results = criteria.list();
 		session.close();
 		return results;

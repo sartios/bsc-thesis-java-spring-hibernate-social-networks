@@ -6,7 +6,6 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +72,37 @@ public class KeywordRetrieverServiceTester
 		Long value = keywordInfo.get(keyword);
 		assertEquals(5, keywordInfo.size());
 		assertEquals(new Long(3),value);
+	}
+	
+	@Test
+	public void testUpdateKeywordInfoIntervalBehavior()
+	{
+		service = new KeywordRetrieverService();
+		List<FacebookPostKeywordResult> results = new ArrayList<FacebookPostKeywordResult>();
+		for(int resultIndex = 0 ; resultIndex < 5 ; resultIndex++)
+		{
+			FacebookPostKeywordResult result = new FacebookPostKeywordResult();
+			result.setId( String.valueOf(resultIndex) );
+			Keyword keyword = new Keyword();
+			keyword.setId( String.valueOf( resultIndex ) );
+			result.setKeyword(keyword);
+			results.add(result);
+		}
+		Keyword keyword = results.iterator().next().getKeyword();
+		FacebookPostKeywordResult result1 = new FacebookPostKeywordResult();
+		result1.setKeyword(keyword);
+		results.add(result1);
+		FacebookPostKeywordResult result2 = new FacebookPostKeywordResult();
+		result2.setKeyword(keyword);
+		results.add(result2);
+		assertEquals(7, results.size());
+		service.updateKeywordInfo(results);
+		service.updateKeywordInfo(results);
+		service.updateKeywordInfo(results);
+		Map<Keyword,Long> keywordInfo = service.getKeywordInfo();
+		Long value = keywordInfo.get(keyword);
+		assertEquals(5, keywordInfo.size());
+		assertEquals(new Long(9),value);
 	}
 	
 	@Test
@@ -152,9 +182,10 @@ public class KeywordRetrieverServiceTester
 		}
 		
 		service = new KeywordRetrieverService(keywordSearchDao, resultDao, user);
-		Map<Keyword,Long> serviceResults = service.getKeywords(9, -15);
+		Map<Keyword,Long> serviceResults = service.getKeywords(9, -50);
 		
 		assertEquals(2, serviceResults.size());
+		assertEquals(16, serviceResults.get(keyword1).intValue());
 		
 		for(FacebookPostKeywordResult result : results)
 		{
