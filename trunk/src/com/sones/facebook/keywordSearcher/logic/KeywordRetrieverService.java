@@ -35,20 +35,21 @@ public class KeywordRetrieverService
 	public KeywordRetrieverService()
 	{
 		_LOGGER = Logger.getLogger( KeywordRetrieverService.class );
-		keywordInfo = new HashMap<Keyword, Long>();
+		initResults();
 	}
 	
 	public KeywordRetrieverService(IKeywordSearchDao keywordSearchDao, IFacebookPostKeywordResultDao resultDao, ApplicationUser appUser)
 	{
 		_LOGGER = Logger.getLogger( KeywordRetrieverService.class );
-		keywordInfo = new HashMap<Keyword, Long>();
 		this.keywordSearchDao = keywordSearchDao;
 		this.resultDao = resultDao;
 		this.appUser = appUser;
+		initResults();
 	}
 	
 	public Map<Keyword, Long> getKeywords(int timeOfFounds, int time)
 	{
+		initResults();
 		Date date = findDateBefore(time);
 		Collection<KeywordSearch> searches = keywordSearchDao.getAfterDateByAppUser(date, appUser);
 		for(KeywordSearch search : searches)
@@ -77,7 +78,7 @@ public class KeywordRetrieverService
 		return date;
 	}
 	
-	public void updateKeywordInfo(Collection<FacebookPostKeywordResult> results)
+	public void updateKeywordInfo(Iterable<FacebookPostKeywordResult> results)
 	{
 		for(FacebookPostKeywordResult result : results)
 		{
@@ -116,5 +117,10 @@ public class KeywordRetrieverService
 			_LOGGER.error(message);
 			throw new IllegalArgumentException(message);
 		}
+	}
+	
+	private void initResults()
+	{
+		keywordInfo = new HashMap<Keyword, Long>();
 	}
 }
