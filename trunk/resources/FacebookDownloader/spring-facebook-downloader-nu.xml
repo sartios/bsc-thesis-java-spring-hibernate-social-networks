@@ -51,5 +51,17 @@
 	<bean id="facebookUserDao" class="com.sones.facebook.dao.hibernate.source.HibernateUserDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
+	
+	<bean id="facebookAccountDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookAccountDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="facebookFriendDao" class="com.sones.facebook.downloader.dao.hibernate.HibarnateFacebookFriendDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="facebookAccountFriendDao" class="com.sones.facebook.downloader.dao.hibernate.HibernateFacebookAccountFriendDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 
 </beans>
