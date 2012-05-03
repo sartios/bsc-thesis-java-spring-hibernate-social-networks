@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<import resource="../spring-hibernate.xml"/>
+	
+	<bean id="graphApiHandler" class="com.sones.facebook.graphApi.GraphApiHandler.FacebookGraphApiHandler">
+		<property name="jsonHandler" ref="jsonHandler"/>
+		<property name="restHandler" ref="restHandler"/>
+		<property name="dateManager" ref="dateManager"/>
+	</bean>
+	
+	<bean id="dateManager" class="com.sones.facebook.datemanager.logic.FacebookDateManager">
+	</bean>
+	
+	<bean id="jsonHandler" class="com.sones.facebook.JsonHandler.FacebookJsonHandler">
+	</bean>
+	
+	<bean id="restHandler" class="com.sones.facebook.graphApi.FacebookRestHandler.FacebookRestHandler">
+	</bean>
+	
+	<bean id="tokenDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookTokenDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="accountDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookAccountDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="accountFriendDao" class="com.sones.facebook.downloader.dao.hibernate.HibernateFacebookAccountFriendDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="friendDao" class="com.sones.facebook.downloader.dao.hibernate.HibarnateFacebookFriendDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="friendDownloaderService" class="com.sones.facebook.downloader.logic.FacebookFriendDownloaderService">
+		<constructor-arg name="accountDao" ref="accountDao"/>
+		<constructor-arg name="accountFriendDao" ref="accountFriendDao"/>
+		<constructor-arg name="graphApiHandler" ref="graphApiHandler"/>
+		<constructor-arg name="tokenDao" ref="tokenDao"/>
+		<constructor-arg name="friendDao" ref="friendDao"/>
+	</bean>
+	
+</beans>
