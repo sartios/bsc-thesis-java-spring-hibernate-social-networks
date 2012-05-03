@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<import resource="../spring-hibernate.xml"/>
+	
+	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+	
+	<bean id="statusMessageDao" class="com.sones.facebook.dao.hibernate.feed.HibernateStatusMessageDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+	
+	<bean id="linkDao" class="com.sones.facebook.dao.hibernate.feed.HibernateLinkDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+	
+	<bean id="videoDao" class="com.sones.facebook.dao.hibernate.feed.HibernateVideoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+	
+	<bean id="photoDao" class="com.sones.facebook.dao.hibernate.feed.HibernatePhotoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+	
+	<bean id="postDao" class="com.sones.facebook.dao.hibernate.feed.HibernateFacebookPostDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="checkinDao" class="com.sones.facebook.dao.hibernate.feed.HibernateCheckinDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+
+	<bean id="noteDao" class="com.sones.facebook.dao.hibernate.feed.HibernateNoteDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+	
+	<bean id="keywordDao" class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateKeywordDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+	
+	<bean id="resultDao" class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateFacebookPostKeywordResultDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>	
+	
+	<bean id="service" class="com.sones.facebook.keyword.result.logic.FaceboookPostKeywordResultService">
+		<constructor-arg name="checkinDao" ref="checkinDao"/>
+		<constructor-arg name="linkDao" ref="linkDao"/>
+		<constructor-arg name="noteDao" ref="noteDao"/>
+		<constructor-arg name="photoDao" ref="photoDao"/>
+		<constructor-arg name="resultDao" ref="resultDao"/>
+		<constructor-arg name="statusDao" ref="statusMessageDao"/>
+		<constructor-arg name="videoDao" ref="videoDao"/>
+	</bean>	
+	
+	
+
+</beans>

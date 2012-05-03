@@ -25,6 +25,12 @@ public class KeywordCreatorService implements IKeywordCreatorService
 		}
 	}
 	
+	@Override
+	public Iterable<Keyword> getKeywords() 
+	{
+		return keywordDao.GetAll();
+	}
+	
 	private void checkNullability(Object object, String message) throws IllegalArgumentException
 	{
 		if(object == null)
@@ -32,5 +38,4 @@ public class KeywordCreatorService implements IKeywordCreatorService
 			throw new IllegalArgumentException(message);
 		}
 	}
-	
 }
