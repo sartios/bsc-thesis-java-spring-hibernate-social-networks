@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+	<mapping>
+		<class-a>com.sones.facebook.model.feed.FacebookPost</class-a>
+		<class-b>com.sones.sharedDto.facebook.view.posts.FacebookPostViewDto</class-b>
+		<field>
+			<a>user</a>
+			<b>user</b>
+		</field>
+		<field-exclude>
+			<a>comments</a>
+			<b>comments</b>
+		</field-exclude>
+	</mapping>
+
+	<mapping>
+		<class-a>com.sones.facebook.model.feed.StatusMessage</class-a>
+		<class-b>com.sones.sharedDto.facebook.view.posts.StatusMessageViewDto</class-b>
+	</mapping>
+
+	<mapping>
+		<class-a>com.sones.facebook.model.feed.Video</class-a>
+		<class-b>com.sones.sharedDto.facebook.view.posts.VideoViewDto</class-b>
+	</mapping>
+	
+	<mapping>
+		<class-a>com.sones.facebook.model.feed.Photo</class-a>
+		<class-b>com.sones.sharedDto.facebook.view.posts.PhotoViewDto</class-b>
+	</mapping>
+	
+	<mapping>
+		<class-a>com.sones.facebook.model.feed.Note</class-a>
+		<class-b>com.sones.sharedDto.facebook.view.posts.NoteViewDto</class-b>
+	</mapping>
+	
+	<mapping>
+		<class-a>com.sones.facebook.model.feed.comment.Comment</class-a>
+		<class-b>com.sones.sharedDto.facebook.view.posts.CommentViewDto</class-b>
+		<field>
+			<a>message</a>
+			<b>value</b>
+		</field>
+	</mapping>
+	
+	<mapping>
+		<class-a>com.sones.facebook.model.source.User</class-a>
+		<class-b>com.sones.sharedDto.facebook.view.posts.UserViewDto</class-b>
+		<field>
+			<a>username</a>
+			<b>username</b>
+		</field>
+	</mapping>
+
+</mappings>

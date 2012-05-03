@@ -1,0 +1,5 @@
+https://www.facebook.com/dialog/oauth?
+    client_id=164830413559108
+   &redirect_uri=https://www.facebook.com/connect/login_success.html
+   &scope=user_about_me,friends_about_me,user_checkins,friends_checkins,user_events,friends_events,user_groups,friends_groups,user_hometown,friends_hometown,user_notes,friends_notes,user_photos,friends_photos,user_status,friends_status,user_videos,friends_videos
+   &response_type=token
