@@ -1,6 +1,7 @@
 package com.sones.facebook.tokenmanager.dao;
 
 import com.sones.dao.IGenericDao;
+import com.sones.facebook.tokenmanager.model.FacebookAccount;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.usermanager.model.ApplicationUser;
 
@@ -18,5 +19,7 @@ public interface IFacebookTokenDao	extends	IGenericDao< FacebookToken, String >
 	 * @return access token.
 	 */
 	public FacebookToken GetByApplicationUser( ApplicationUser appUser );
+	
+	public FacebookToken GetByAccount( FacebookAccount account );
 
 }

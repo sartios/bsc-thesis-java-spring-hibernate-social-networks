@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import com.sones.dao.hibernate.HibernateGenericDao;
+import com.sones.facebook.tokenmanager.model.FacebookAccount;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.facebook.tokenmanager.dao.IFacebookTokenDao;
 import com.sones.usermanager.model.ApplicationUser;
@@ -55,6 +56,25 @@ public class HibernateFacebookTokenDao	extends	HibernateGenericDao< FacebookToke
 			token	=	(FacebookToken) results.get( 0 );
 		}
 		return	token;
+	}
+
+	@Override
+	public FacebookToken GetByAccount(FacebookAccount account)
+	{
+		if( account == null )
+		{
+			_LOGGER.error( "Account can't be null" );
+			throw	new	IllegalArgumentException( "Account can't be null" );
+		}		
+		
+		Session	session	=	getHibernateTemplate().getSessionFactory().openSession();
+
+		Criteria criteria = session.createCriteria(FacebookToken.class)
+							.add( Restrictions.eq("account", account) );
+		FacebookToken token = (FacebookToken) criteria.uniqueResult();
+		session.close();
+		
+		return token;
 	}
 	
 }
