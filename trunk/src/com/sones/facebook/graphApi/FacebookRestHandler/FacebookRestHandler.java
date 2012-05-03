@@ -40,6 +40,15 @@ public class FacebookRestHandler implements IFacebookRestHandler
 		return doGet( "https://graph.facebook.com/search?q=" + criteria + "&type=place&" + token );
 	}
 	
+	@Override
+	public String GetFriends(String accountId, String token) 
+	{
+		CheckNullOrEmpty( accountId , "Account id can't be null or empty." );
+		CheckNullOrEmpty( token , "Token can't be null or empty." );
+		String jsonString = doGet( "https://graph.facebook.com/" + accountId + "/friends?" + token );
+		return jsonString;
+	}
+	
 	private void CheckDateAndThrow( String date ) 
 	{
 		if( date == null )

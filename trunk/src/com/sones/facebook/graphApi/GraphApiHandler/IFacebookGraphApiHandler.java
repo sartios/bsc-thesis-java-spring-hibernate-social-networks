@@ -2,9 +2,11 @@ package com.sones.facebook.graphApi.GraphApiHandler;
 
 import java.util.Date;
 
+import com.sones.facebook.downloader.model.FacebookFriend;
 import com.sones.facebook.model.source.Source;
 import com.sones.facebook.placemanager.model.Place;
 import com.sones.facebook.publicsource.model.Criteria;
+import com.sones.facebook.tokenmanager.model.FacebookAccount;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 
@@ -40,4 +42,7 @@ public interface IFacebookGraphApiHandler
 	 * @throws IllegalArgumentException if any of the parameters is null.
 	 */
 	public	Iterable< Place >	GetPublicPlaces( Criteria criteria, FacebookToken token );
+	
+	public Iterable<FacebookFriend> GetFacebookFriends(FacebookAccount account, FacebookToken token);
+	
 }

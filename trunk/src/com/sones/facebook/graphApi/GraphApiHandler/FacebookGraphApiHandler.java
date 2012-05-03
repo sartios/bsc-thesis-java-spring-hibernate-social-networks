@@ -5,10 +5,12 @@ import java.util.Date;
 import org.apache.log4j.Logger;
 
 import com.sones.facebook.datemanager.logic.IFacebookDateManager;
+import com.sones.facebook.downloader.model.FacebookFriend;
 import com.sones.facebook.graphApi.FacebookRestHandler.IFacebookRestHandler;
 import com.sones.facebook.model.source.Source;
 import com.sones.facebook.placemanager.model.Place;
 import com.sones.facebook.publicsource.model.Criteria;
+import com.sones.facebook.tokenmanager.model.FacebookAccount;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.facebook.JsonHandler.IFacebookJsonHandler;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
@@ -79,6 +81,16 @@ public class FacebookGraphApiHandler implements IFacebookGraphApiHandler
 		Iterable<Place> places = jsonHandler.GetPublicPlaces( jsonString );
 		return places;
 	}
+	
+	@Override
+	public Iterable<FacebookFriend> GetFacebookFriends(FacebookAccount account, FacebookToken token) 
+	{
+		CheckNullability(account,"Account can't be null.");
+		String accountId = account.getId();
+		String tokenValue = token.getValue();
+		String jsonString = restHandler.GetFriends(accountId,tokenValue);
+		return  jsonHandler.GetFacebookFriends(jsonString);
+	}
 
 	/**
 	 * @param restHandler the restHandler to set
@@ -136,5 +148,4 @@ public class FacebookGraphApiHandler implements IFacebookGraphApiHandler
 			throw new IllegalArgumentException( message );
 		}
 	}
-
 }

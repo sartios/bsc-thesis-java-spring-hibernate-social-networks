@@ -1,5 +1,6 @@
 package com.sones.facebook.JsonHandler;
 
+import com.sones.facebook.downloader.model.FacebookFriend;
 import com.sones.facebook.placemanager.model.Place;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 
@@ -12,4 +13,6 @@ public interface IFacebookJsonHandler
 	 * @param jsonString the json string that contains the places.
 	 */
 	public	Iterable< Place >	GetPublicPlaces( String jsonString );
+	
+	public Iterable<FacebookFriend> GetFacebookFriends(String jsonString);
 }
