@@ -10,9 +10,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import static org.junit.Assert.*;
 
+import com.sones.facebook.downloader.model.FacebookFriend;
 import com.sones.facebook.model.source.Source;
 import com.sones.facebook.placemanager.model.Place;
 import com.sones.facebook.publicsource.model.Criteria;
+import com.sones.facebook.tokenmanager.model.FacebookAccount;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 
@@ -28,7 +30,7 @@ public class FacebookGraphApiHandlerTester
 		context = new ClassPathXmlApplicationContext("spring-facebookGraphApi.xml");
 		handler = (FacebookGraphApiHandler) context.getBean("graphApi");
 		sourceId = "100000866964787";
-		token = "access_token=AAAAAAITEghMBAKrh2Vw3V50N5zF0xjCvUK1gfjcoyBvZBdD1Ayj6nzTuBkbSVRO3BtZAPZBgeLVjymZCgcqT9ZCrF8mmWqPNev1Cz72rYl1ztQIdavI1d";
+		token = "access_token=AAACV6ZAIZClUQBAIUWj1gLZCZCFmkFugI4MLsBIv5MbBybzYTVTmFeWzd4LVQflYG9s50RA3GcOE771VVGe8HrMT7jHZBuNqCC0F4Ppc4CQZDZD";
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -114,9 +116,36 @@ public class FacebookGraphApiHandlerTester
 	{
 		Criteria criteria = new Criteria( "party" );
 		FacebookToken facebookToken = new FacebookToken();
-		facebookToken.setValue( "access_token=AAAAAAITEghMBAHCxAzoGS5OBNPtaMvxgmAhnFPbsVAlhtJaZChdjKTNkMhwhXpXZBka8toZBcTi1BP4ePhfl8MBkiWpi9oQeu6NyB9Jkzh42LlpoGGw" );
+		facebookToken.setValue( "access_token=AAACV6ZAIZClUQBAIUWj1gLZCZCFmkFugI4MLsBIv5MbBybzYTVTmFeWzd4LVQflYG9s50RA3GcOE771VVGe8HrMT7jHZBuNqCC0F4Ppc4CQZDZD" );
 		Iterable< Place > places = handler.GetPublicPlaces(criteria, facebookToken);
 		assertNotNull( places );
 		assertTrue( ((Set)places).size() > 0 );
+	}
+	
+	@Test
+	public void TestGetFacebookFriendsCorrectly()
+	{
+		FacebookToken token = new FacebookToken();
+		token.setValue("access_token=AAACV6ZAIZClUQBAIUWj1gLZCZCFmkFugI4MLsBIv5MbBybzYTVTmFeWzd4LVQflYG9s50RA3GcOE771VVGe8HrMT7jHZBuNqCC0F4Ppc4CQZDZD");
+		
+		FacebookAccount account = new FacebookAccount();
+		account.setId(sourceId);
+		
+		Iterable<FacebookFriend> friends = handler.GetFacebookFriends(account, token);
+		FacebookFriend friend = null;
+		for(FacebookFriend temp : friends)
+		{
+			friend = temp;
+			break;
+		}
+		
+		int count = 0;
+		for(FacebookFriend temp : friends)
+		{
+			count++;
+		}
+		assertEquals(538, count);
+		assertEquals("Chrysovalantis Nikolaou", friend.getName());
+		assertEquals("502894293", friend.getId());
 	}
 }

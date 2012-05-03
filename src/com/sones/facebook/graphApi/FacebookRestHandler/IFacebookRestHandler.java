@@ -32,4 +32,6 @@ public interface IFacebookRestHandler
 	 * @throws IllegalArgumentException if criteria or token is empty.
 	 */
 	public String GetPublicPlaces(String criteria, String token);
+	
+	public String GetFriends(String accountId, String token);
 }

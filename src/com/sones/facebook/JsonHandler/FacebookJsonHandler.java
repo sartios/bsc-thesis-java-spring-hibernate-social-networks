@@ -10,10 +10,13 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
+import com.sones.facebook.JsonHandler.Factory.FacebookFriendFactory;
+import com.sones.facebook.JsonHandler.Factory.IFacebookFriendFactory;
 import com.sones.facebook.JsonHandler.Factory.IPublicPlaceFactory;
 import com.sones.facebook.JsonHandler.Factory.IWallFeedFactory;
 import com.sones.facebook.JsonHandler.Factory.PublicPlaceFactory;
 import com.sones.facebook.JsonHandler.Factory.WallFeedFactory;
+import com.sones.facebook.downloader.model.FacebookFriend;
 import com.sones.facebook.placemanager.model.Place;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 
@@ -43,6 +46,7 @@ public class FacebookJsonHandler	implements	IFacebookJsonHandler
 	
 	private	IWallFeedFactory factory;
 	private	IPublicPlaceFactory placeFactory;
+	private IFacebookFriendFactory friendFactory;
 	private final Logger _LOGGER; 
 	
 	public FacebookJsonHandler()
@@ -50,6 +54,7 @@ public class FacebookJsonHandler	implements	IFacebookJsonHandler
 		_LOGGER = Logger.getLogger( FacebookJsonHandler.class );
 		factory = new WallFeedFactory();
 		placeFactory = new PublicPlaceFactory();
+		friendFactory = new FacebookFriendFactory();
 	}
 	
 	@Override
@@ -102,6 +107,33 @@ public class FacebookJsonHandler	implements	IFacebookJsonHandler
 		{
 		}
 		return places;
+	}
+	
+	@Override
+	public Iterable<FacebookFriend> GetFacebookFriends(String jsonString)
+	{
+		Set<FacebookFriend> friends = new HashSet<FacebookFriend>();
+		try
+		{
+			this.object_	=	JSONObject.fromObject(jsonString);
+			this.jsonArray_	=	this.object_.getJSONArray("data");
+			int	arrayDimensions[]	=	JSONArray.getDimensions(jsonArray_);
+			DynaBean	beanObject;
+		
+			for( int i = 0; i < arrayDimensions[0]; i++ )
+			{
+				beanObject	=	(DynaBean)	JSONObject.toBean( jsonArray_.getJSONObject(i) );
+				FacebookFriend friend = friendFactory.GetFriend( beanObject );
+				if( friend != null )
+				{
+					friends.add( friend );
+				}
+			}
+		}
+		catch (JSONException ex) 
+		{
+		}
+		return friends;
 	}
 	
 		
