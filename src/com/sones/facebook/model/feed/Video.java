@@ -27,6 +27,11 @@ import com.sones.facebook.model.source.User;
 public class Video extends FacebookPost
 {
 	/**
+	 * The serial version,
+	 */
+	private static final long serialVersionUID = 3473289702399162814L;
+
+	/**
 	 * <b>Column:</b> VIDE_NAME<br/><br/>
 	 * The video title or caption.
 	 */
@@ -46,6 +51,13 @@ public class Video extends FacebookPost
 	 */
 	@Column(name=VideoConstants.PROPERTY_PICTURE,length=VideoConstants.LENGTH_PICTURE)
 	private	String	picture;
+	
+	/**
+	 * <b>Column:</b> VIDE_SOURCE <br/><br/>
+	 * A URL to the raw playable video.
+	 */
+	@Column(name=VideoConstants.PROPERTY_SOURCE,length=VideoConstants.LENGTH_SOURCE)
+	private String source;
 	
 	/**
 	 * Initializes the object.
@@ -118,5 +130,19 @@ public class Video extends FacebookPost
 	public String getPicture() 
 	{
 		return picture;
+	}
+
+	/**
+	 * @param source the source to set
+	 */
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	/**
+	 * @return the source
+	 */
+	public String getSource() {
+		return source;
 	}
 }

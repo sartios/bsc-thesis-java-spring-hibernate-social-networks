@@ -31,6 +31,11 @@ import com.sones.facebook.model.source.User;
 public class PagePost extends FacebookPost
 {
 	
+	/**
+	 * The serial version.
+	 */
+	private static final long serialVersionUID = -7446127462175132466L;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name=PageConstants.PROPERTY_ID)
 	private Page page;

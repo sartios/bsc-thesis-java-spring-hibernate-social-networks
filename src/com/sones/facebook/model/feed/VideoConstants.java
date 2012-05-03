@@ -28,6 +28,11 @@ public class VideoConstants
 	public	static	final	String	PROPERTY_PICTURE	=	"VIDE_PICTURE";
 	
 	/**
+	 * The name of the video source property;
+	 */
+	public static final String PROPERTY_SOURCE = "VIDE_SOURCE";
+	
+	/**
 	 * The length of the name property.
 	 */
 	public	static	final	int	LENGTH_NAME	=	255;
@@ -42,4 +47,9 @@ public class VideoConstants
 	 * The length of the picture property.
 	 */
 	public	static	final	int	LENGTH_PICTURE	=	255;
+	
+	/**
+	 * The length of the source property.
+	 */
+	public	static	final	int	LENGTH_SOURCE	=	255;
 }
