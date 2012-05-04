@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+	
+	<bean id="graphApi" class="com.sones.facebook.graphApi.GraphApiHandler.FacebookGraphApiHandler">
+		<property name="jsonHandler" ref="jsonHandler"/>
+		<property name="restHandler" ref="restHandler"/>
+		<property name="dateManager" ref="dateManager"/>
+	</bean>
+
+	<bean id="restHandler" class="com.sones.facebook.graphApi.FacebookRestHandler.FacebookRestHandler"/>
+	<bean id="jsonHandler" class="com.sones.facebook.JsonHandler.FacebookJsonHandler"/>
+	<bean id="dateManager" class="com.sones.facebook.datemanager.logic.FacebookDateManager"/>
+
+	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+
+	<bean id="accountDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookAccountDao">
+			<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+
+	<bean id="tokenDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookTokenDao">
+			<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	
+	<bean id="facebookTokenSaverService" class="com.sones.facebook.tokenmanager.logic.FacebookTokenSaver">
+		<constructor-arg name="graphHandler" ref="graphApi"/>
+		<constructor-arg name="accountDao" ref="accountDao"/>
+		<constructor-arg name="appUserDao" ref="appUserDao"/>
+		<constructor-arg name="tokenDao" ref="tokenDao"/>
+	</bean>
+	
+</beans>

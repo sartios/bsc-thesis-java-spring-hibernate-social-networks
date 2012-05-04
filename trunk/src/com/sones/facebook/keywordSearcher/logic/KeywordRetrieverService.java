@@ -30,7 +30,6 @@ public class KeywordRetrieverService
 	private IKeywordSearchDao keywordSearchDao;
 	private IFacebookPostKeywordResultDao resultDao;
 	private final Logger _LOGGER;
-	private ApplicationUser appUser;
 	
 	public KeywordRetrieverService()
 	{
@@ -38,16 +37,15 @@ public class KeywordRetrieverService
 		initResults();
 	}
 	
-	public KeywordRetrieverService(IKeywordSearchDao keywordSearchDao, IFacebookPostKeywordResultDao resultDao, ApplicationUser appUser)
+	public KeywordRetrieverService(IKeywordSearchDao keywordSearchDao, IFacebookPostKeywordResultDao resultDao)
 	{
 		_LOGGER = Logger.getLogger( KeywordRetrieverService.class );
 		this.keywordSearchDao = keywordSearchDao;
 		this.resultDao = resultDao;
-		this.appUser = appUser;
 		initResults();
 	}
 	
-	public Map<Keyword, Long> getKeywords(int timeOfFounds, int time)
+	public Map<Keyword, Long> getKeywords(ApplicationUser appUser,int timeOfFounds, int time)
 	{
 		initResults();
 		Date date = findDateBefore(time);

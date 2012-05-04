@@ -55,6 +55,8 @@
 		<constructor-arg name="videoDao" ref="videoDao"/>
 	</bean>	
 	
-	
+	<bean id="userDao" class="com.sones.facebook.dao.hibernate.source.HibernateUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
 
 </beans>

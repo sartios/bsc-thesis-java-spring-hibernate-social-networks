@@ -49,6 +49,14 @@ public class FacebookRestHandler implements IFacebookRestHandler
 		return jsonString;
 	}
 	
+	@Override
+	public String GetFacebookAccount(String token)
+	{
+		CheckNullOrEmpty( token , "Token can't be null or empty." );
+		String jsonString = doGet( "https://graph.facebook.com/fql?q=SELECT+uid,email,name+FROM+user+WHERE+uid=me()&" + token );
+		return jsonString;
+	}
+	
 	private void CheckDateAndThrow( String date ) 
 	{
 		if( date == null )

@@ -1,6 +1,8 @@
 package com.sones.facebook.downloader.logic;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -78,10 +80,13 @@ public class FacebookFriendDownloaderService implements IFacebookFriendDownloade
 	{
 		FacebookAccount owner = accountDao.GetById(facebookUserId);
 		Iterable<FacebookAccountFriend> accountFriends = accountFriendDao.getByOwner(owner);
-		Set<FacebookFriend> friends = new HashSet<FacebookFriend>();
+		List<FacebookFriend> friends = new ArrayList<FacebookFriend>();
 		for(FacebookAccountFriend accountFriend : accountFriends )
 		{
 			FacebookFriend friend = accountFriend.getId().getFriend();
+			_LOGGER.warn("Friend id:" + friend.getId());
+			_LOGGER.warn("Friend name:" + friend.getName());
+
 			friends.add(friend);
 		}
 		return friends;

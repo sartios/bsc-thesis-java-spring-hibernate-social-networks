@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+	
+	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="sourceTypeDao" class="com.sones.facebook.dao.hibernate.source.HibernateSourceTypeDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="sourceDao" class="com.sones.facebook.dao.hibernate.source.HibernateSourceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="appUserSourceDao" class="com.sones.facebook.usermanager.dao.hibernate.HibernateApplicationUserSourceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="privateSourceSelectorService" class="com.sones.facebook.source.selector.logic.FacebookSourceSelectorService">
+		<constructor-arg name="appUserDao" ref="appUserDao"/>
+		<constructor-arg name="appUserSourceDao" ref="appUserSourceDao"/>
+		<constructor-arg name="sourceDao" ref="sourceDao"/>
+		<constructor-arg name="sourceTypeDao" ref="sourceTypeDao"/>
+	</bean>
+
+</beans>
