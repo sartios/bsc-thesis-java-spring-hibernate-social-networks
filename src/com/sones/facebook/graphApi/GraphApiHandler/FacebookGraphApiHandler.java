@@ -91,6 +91,16 @@ public class FacebookGraphApiHandler implements IFacebookGraphApiHandler
 		String jsonString = restHandler.GetFriends(accountId,tokenValue);
 		return  jsonHandler.GetFacebookFriends(jsonString);
 	}
+	
+	@Override
+	public FacebookAccount GetFacebookAccount(FacebookToken token)
+	{
+		CheckNullability(token,"Token can't be null.");
+		String tokenValue = token.getValue();
+		String jsonString = restHandler.GetFacebookAccount(tokenValue);
+		FacebookAccount account = jsonHandler.GetFacebookAccount(jsonString);
+		return account;
+	}
 
 	/**
 	 * @param restHandler the restHandler to set

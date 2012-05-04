@@ -45,4 +45,6 @@ public interface IFacebookGraphApiHandler
 	
 	public Iterable<FacebookFriend> GetFacebookFriends(FacebookAccount account, FacebookToken token);
 	
+	public FacebookAccount GetFacebookAccount(FacebookToken token);
+	
 }

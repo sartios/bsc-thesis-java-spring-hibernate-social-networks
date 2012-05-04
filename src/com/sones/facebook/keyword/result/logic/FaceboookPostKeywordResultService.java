@@ -64,6 +64,7 @@ public class FaceboookPostKeywordResultService implements IFaceboookPostKeywordR
 			_LOGGER.warn( "Result id: " + result.getId() );
 			FacebookPost post = result.getPost();
 			String id = post.getId();
+
 			if( results.containsKey( id ) == true )
 			{
 				_LOGGER.warn( "The result already exists." );
@@ -71,16 +72,13 @@ public class FaceboookPostKeywordResultService implements IFaceboookPostKeywordR
 				Keyword keyword = result.getKeyword();
 				String keywordValue = keyword.getValue();
 				resultDto.addKeywordValue(keywordValue);
-				_LOGGER.warn( "Update the result." );
+				_LOGGER.warn( "Update the result with id: " + resultDto.getId().getId() );
 				results.put(id,resultDto);
 			}
 			else
 			{
 				_LOGGER.warn( "New result." );
 				FacebookResultViewDto resultDto = new FacebookResultViewDto();
-				
-				FacebookPostIdDto idDto = new FacebookPostIdDto();
-				idDto.setId( id );
 				
 				Keyword keyword = result.getKeyword();
 				resultDto.addKeywordValue(keyword.getValue());
@@ -90,6 +88,10 @@ public class FaceboookPostKeywordResultService implements IFaceboookPostKeywordR
 				
 				String type = findType(post);
 				resultDto.setType(type);
+				
+				FacebookPostIdDto idDto = new FacebookPostIdDto();
+				idDto.setId( id );
+				resultDto.setId(idDto);
 				
 				results.put(id,resultDto);
 			}

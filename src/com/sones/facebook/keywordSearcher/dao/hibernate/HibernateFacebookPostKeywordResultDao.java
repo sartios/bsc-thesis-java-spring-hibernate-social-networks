@@ -42,8 +42,10 @@ public class HibernateFacebookPostKeywordResultDao extends HibernateGenericDao<F
 		Session	session	=	getHibernateTemplate().getSessionFactory().openSession();
 		Criteria	criteria	=	session.createCriteria( FacebookPostKeywordResult.class )
 			.add( Restrictions.eq( "user", appUser ) );
+		List<FacebookPostKeywordResult> results = criteria.list();
+		session.close();
 		
-		return	criteria.list();
+		return	results;
 	}
 
 	@Override

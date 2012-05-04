@@ -10,7 +10,9 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
+import com.sones.facebook.JsonHandler.Factory.FacebookAccountFactory;
 import com.sones.facebook.JsonHandler.Factory.FacebookFriendFactory;
+import com.sones.facebook.JsonHandler.Factory.IFacebookAccountFactory;
 import com.sones.facebook.JsonHandler.Factory.IFacebookFriendFactory;
 import com.sones.facebook.JsonHandler.Factory.IPublicPlaceFactory;
 import com.sones.facebook.JsonHandler.Factory.IWallFeedFactory;
@@ -18,6 +20,7 @@ import com.sones.facebook.JsonHandler.Factory.PublicPlaceFactory;
 import com.sones.facebook.JsonHandler.Factory.WallFeedFactory;
 import com.sones.facebook.downloader.model.FacebookFriend;
 import com.sones.facebook.placemanager.model.Place;
+import com.sones.facebook.tokenmanager.model.FacebookAccount;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 
 public class FacebookJsonHandler	implements	IFacebookJsonHandler
@@ -47,6 +50,8 @@ public class FacebookJsonHandler	implements	IFacebookJsonHandler
 	private	IWallFeedFactory factory;
 	private	IPublicPlaceFactory placeFactory;
 	private IFacebookFriendFactory friendFactory;
+	private IFacebookAccountFactory accountFactory = new FacebookAccountFactory();
+	
 	private final Logger _LOGGER; 
 	
 	public FacebookJsonHandler()
@@ -136,6 +141,29 @@ public class FacebookJsonHandler	implements	IFacebookJsonHandler
 		return friends;
 	}
 	
+	@Override
+	public FacebookAccount GetFacebookAccount(String jsonString) 
+	{
+		FacebookAccount account = null;
+		try
+		{
+			this.object_	=	JSONObject.fromObject(jsonString);
+			this.jsonArray_	=	this.object_.getJSONArray("data");
+			int	arrayDimensions[]	=	JSONArray.getDimensions(jsonArray_);
+			DynaBean	beanObject;
+		
+			for( int i = 0; i < arrayDimensions[0]; i++ )
+			{
+				beanObject	=	(DynaBean)	JSONObject.toBean( jsonArray_.getJSONObject(i) );
+				account = accountFactory.GetAccount( beanObject );
+				break;
+			}
+		}
+		catch (JSONException ex) 
+		{
+		}		
+		return account;
+	}
 		
     /**
      * Casts an Object to DynaBean

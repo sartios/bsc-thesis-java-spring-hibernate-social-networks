@@ -30,6 +30,11 @@ import com.sones.facebook.model.source.User;
 public class Comment implements Serializable
 {
 	/**
+	 * The serial version.
+	 */
+	private static final long serialVersionUID = 6459245667122902630L;
+
+	/**
 	 * <b>Column:</b> COMM_ID <br/><br/>
 	 * The Facebook ID of the comment.
 	 */

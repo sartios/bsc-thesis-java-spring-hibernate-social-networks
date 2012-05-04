@@ -34,4 +34,6 @@ public interface IFacebookRestHandler
 	public String GetPublicPlaces(String criteria, String token);
 	
 	public String GetFriends(String accountId, String token);
+	
+	public String GetFacebookAccount(String token);
 }

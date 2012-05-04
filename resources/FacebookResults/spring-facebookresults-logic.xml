@@ -5,7 +5,7 @@
 
 	<import resource="../spring-hibernate.xml"/>
 
-	<bean id="service" class="com.sones.facebook.keyword.result.logic.FaceboookPostKeywordResultService">
+	<bean id="facebookKeywordSearchResultService" class="com.sones.facebook.keyword.result.logic.FaceboookPostKeywordResultService">
 		<constructor-arg name="checkinDao" ref="checkinDao"/>
 		<constructor-arg name="linkDao" ref="linkDao"/>
 		<constructor-arg name="noteDao" ref="noteDao"/>

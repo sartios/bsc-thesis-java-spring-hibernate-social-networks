@@ -41,7 +41,7 @@ public class HibernateSourceTypeDao extends HibernateGenericDao<SourceType, Stri
 		}
 		catch(IndexOutOfBoundsException ex)
 		{
-			throw new NullPointerException("Source type from database is null");
+			dbSourceType = null;
 		}
 		return dbSourceType;
 	}
