@@ -48,6 +48,7 @@
   <mapping class="com.sones.facebook.tokenmanager.model.FacebookAccount"/>
   <mapping class="com.sones.facebook.tokenmanager.model.FacebookToken"/>
   <mapping class="com.sones.usermanager.model.ApplicationUser"/>
+  <mapping class="com.sones.usermanager.model.ApplicationUserCredential"/>
   <mapping class="com.sones.facebook.publicsource.model.Criteria"/>
   <mapping class="com.sones.facebook.placemanager.model.Place"/>
   <mapping class="com.sones.facebook.placemanager.model.PlaceCategory"/>

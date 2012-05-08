@@ -21,6 +21,9 @@ import com.sones.usermanager.model.ApplicationUserConstants;
 @Table(name=ApplicationUserConstants.TABLE_NAME,schema=DatabaseConstants.FACEBOOK_SCHEMA)
 public class ApplicationUser implements Serializable
 {
+	/** The generated serial version.	 */
+	private static final long serialVersionUID = 7348926936270388549L;
+	
 	/**
 	 * <b>Column:</b> APUS_ID <br/><br/>
 	 * The id of the user is an assigned number.
