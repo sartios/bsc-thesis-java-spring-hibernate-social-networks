@@ -9,7 +9,7 @@ public class FacebookRestHandlerTester
 {
 	private IFacebookRestHandler handler;
 	private	String sourceId = "100000866964787";
-	private	String token = "access_token=AAAAAAITEghMBAKQyyM0xgEoLpy2WjA4v6Cd5OHwLf4OhV6o2ZBw2BN4ZCZC0KU9cyQEwIbWJIhiPyZAJkp02n1Q543ZCZBuUE0HZByp0eK6v7vJFH6QOve4";
+	private	String token = "access_token=AAACV6ZAIZClUQBAIUWj1gLZCZCFmkFugI4MLsBIv5MbBybzYTVTmFeWzd4LVQflYG9s50RA3GcOE771VVGe8HrMT7jHZBuNqCC0F4Ppc4CQZDZD";
 	
 	@Before
 	public	void	SetUp()
@@ -111,6 +111,13 @@ public class FacebookRestHandlerTester
 	public void TestGetPublicPlaces()
 	{
 		String jsonString = handler.GetPublicPlaces("coffee", "access_token=AAAAAAITEghMBAKQyyM0xgEoLpy2WjA4v6Cd5OHwLf4OhV6o2ZBw2BN4ZCZC0KU9cyQEwIbWJIhiPyZAJkp02n1Q543ZCZBuUE0HZByp0eK6v7vJFH6QOve4");
+		assertFalse( jsonString.isEmpty() );
+	}
+	
+	@Test
+	public void TestGetFacebookAccountCorrectly()
+	{
+		String jsonString = handler.GetFacebookAccount(token);
 		assertFalse( jsonString.isEmpty() );
 	}
 }

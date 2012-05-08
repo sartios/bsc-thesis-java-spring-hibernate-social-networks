@@ -5,12 +5,15 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
+import org.springframework.dao.DataAccessException;
 
+import com.sones.facebook.model.feed.Checkin;
 import com.sones.facebook.model.feed.Link;
 import com.sones.facebook.model.feed.Note;
 import com.sones.facebook.model.feed.Photo;
 import com.sones.facebook.model.feed.StatusMessage;
 import com.sones.facebook.model.feed.Video;
+import com.sones.sharedDto.facebook.GraphApi.Wall.WallCheckinCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallLinkCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallNoteCreateDto;
@@ -27,6 +30,7 @@ public class FacebookWallPostSaver implements	IFacebookWallPostSaver
 	private	ILinkSaver linkSaver;
 	private	IPhotoSaver photoSaver;
 	private	INoteSaver noteSaver;
+	private ICheckinSaver checkinSaver;
 	
 	public FacebookWallPostSaver()
 	{
@@ -39,7 +43,7 @@ public class FacebookWallPostSaver implements	IFacebookWallPostSaver
 	}
 	
 	@Override
-	public void SavePost(WallFacebookPostCreateDto postDto) 
+	public void SavePost(WallFacebookPostCreateDto postDto) throws DataAccessException
 	{
 		if( postDto == null )
 		{
@@ -97,6 +101,16 @@ public class FacebookWallPostSaver implements	IFacebookWallPostSaver
 			mapper.map(noteDto, note);
 			//noteSaver = (NoteSaver)context.getBean("noteSaver");
 			noteSaver.Save(note);
+		}
+		else if(postDto.getType().equals("Checkin"))
+		{
+			_LOGGER.warn("Saving note");
+			WallCheckinCreateDto checkinDto = new WallCheckinCreateDto();
+			checkinDto =	(WallCheckinCreateDto)postDto;
+			Checkin checkin = new Checkin();
+			mapper.map(checkinDto, checkin);
+			//noteSaver = (NoteSaver)context.getBean("noteSaver");
+			checkinSaver.Save(checkin);
 		}
 	}
 
@@ -185,6 +199,20 @@ public class FacebookWallPostSaver implements	IFacebookWallPostSaver
 	 */
 	public void setNoteSaver(INoteSaver noteSaver) {
 		this.noteSaver = noteSaver;
+	}
+
+	/**
+	 * @param checkinSaver the checkinSaver to set
+	 */
+	public void setCheckinSaver(ICheckinSaver checkinSaver) {
+		this.checkinSaver = checkinSaver;
+	}
+
+	/**
+	 * @return the checkinSaver
+	 */
+	public ICheckinSaver getCheckinSaver() {
+		return checkinSaver;
 	}
 
 }

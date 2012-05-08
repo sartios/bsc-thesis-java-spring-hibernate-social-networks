@@ -45,7 +45,7 @@ public final class LinkConstants
 	/**
 	 * The length of the link url property.
 	 */
-	public	static	final	int	LENGTH_LINK	=	255;
+	public	static	final	int	LENGTH_LINK	=	1000;
 	
 	/**
 	 * The length of the name property.
@@ -60,12 +60,12 @@ public final class LinkConstants
 	/**
 	 * The length of the icon property.
 	 */
-	public	static	final	int	LENGTH_ICON	=	255;
+	public	static	final	int	LENGTH_ICON	=	1000;
 	
 	/**
 	 * The length of the picture url property.
 	 */
-	public	static	final	int	LENGTH_PICTURE	=	255;
+	public	static	final	int	LENGTH_PICTURE	=	1000;
 	
 	/**
 	 * The length of the message property.

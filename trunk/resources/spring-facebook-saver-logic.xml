@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+
+	<bean id="saverLogic" class="com.sones.facebook.saver.FacebookPostSaverLogic">
+		<property name="mapper" ref="dozerMapper"/>
+		<property name="sourceFacebookPostSaver" ref="sourceFacebookPostSaver"/>
+		<property name="sourceSaver" ref="sourceSaver"/>
+		<property name="userSaver" ref="userSaver"/>
+		<property name="wallPostSaver" ref="wallPostSaver"/>
+	</bean>
+	
+			<!-- Wall post saver dependencies -->
+<!-- ========================================================================================== -->
+	<bean id="wallPostSaver" class="com.sones.facebook.saver.wall.feed.FacebookWallPostSaver">
+		<property name="linkSaver" ref="linkSaver"/>
+		<property name="mapper" ref="dozerMapper"/>
+		<property name="noteSaver" ref="noteSaver"/>
+		<property name="photoSaver" ref="photoSaver"/>
+		<property name="statusSaver" ref="statusSaver"/>
+		<property name="videoSaver" ref="videoSaver"/>
+		<property name="checkinSaver" ref="checkinSaver"/>
+	</bean>
+	
+	<bean id="checkinSaver" class="com.sones.facebook.saver.wall.feed.CheckinSaver">
+		<constructor-arg name="checkinDao" ref="checkinDao"/>
+		<constructor-arg name="commentSaver" ref="commentSaver"/>
+	</bean>
+	
+	<bean id="linkSaver" class="com.sones.facebook.saver.wall.feed.LinkSaver">
+		<property name="linkDao" ref="linkDao"/>
+		<property name="commentSaver" ref="commentSaver"/>
+	</bean>
+	
+	<bean id="linkDao" class="com.sones.facebook.dao.hibernate.feed.HibernateLinkDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="noteSaver" class="com.sones.facebook.saver.wall.feed.NoteSaver">
+		<property name="commentSaver" ref="commentSaver"/>
+		<property name="noteDao" ref="noteDao"/>
+	</bean>
+	
+	<bean id="noteDao" class="com.sones.facebook.dao.hibernate.feed.HibernateNoteDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="photoSaver" class="com.sones.facebook.saver.wall.feed.PhotoSaver">
+		<property name="commentSaver" ref="commentSaver"/>
+		<property name="photoDao" ref="photoDao"/>
+	</bean>
+	
+	<bean id="photoDao" class="com.sones.facebook.dao.hibernate.feed.HibernatePhotoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="checkinDao" class="com.sones.facebook.dao.hibernate.feed.HibernateCheckinDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="statusSaver" class="com.sones.facebook.saver.wall.feed.StatusMessageSaver">
+		<property name="commentSaver" ref="commentSaver"/>
+		<property name="statusDao" ref="statusDao"/>
+	</bean>
+	
+	<bean id="statusDao" class="com.sones.facebook.dao.hibernate.feed.HibernateStatusMessageDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="videoSaver" class="com.sones.facebook.saver.wall.feed.VideoSaver">
+		<property name="commentSaver" ref="commentSaver"/>
+		<property name="videoDao" ref="videoDao"/>
+	</bean>
+	
+	<bean id="commentSaver" class="com.sones.facebook.saver.wall.feed.CommentSaver">
+		<property name="commentDao" ref="commentDao"/>
+		<property name="userSaver" ref="userSaver"/>
+	</bean>
+	
+	<bean id="commentDao" class="com.sones.facebook.dao.hibernate.feed.comment.HibernateCommentDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="videoDao" class="com.sones.facebook.dao.hibernate.feed.HibernateVideoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+				<!-- Saver for source's posts dependencies -->
+<!-- ========================================================================================== -->
+	<bean id="sourceFacebookPostSaver" class="com.sones.facebook.saver.source.SourceFacebookPostSaver">
+		<property name="sourceFacebookPostDao" ref="sourceFacebookPostDao"/>
+	</bean>
+	
+	<bean id="sourceFacebookPostDao" class="com.sones.facebook.dao.hibernate.feed.HibernateSourceFacebookPostDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+						<!-- Saver for sources dependencies -->
+<!-- ========================================================================================== -->
+	<bean id="sourceSaver" class="com.sones.facebook.saver.source.SourceSaver">
+		<property name="sourceDao" ref="sourceDao"/>
+		<property name="sourceTypeDao" ref="sourceTypeDao"/>
+	</bean>
+	
+	<bean id="sourceDao" class="com.sones.facebook.dao.hibernate.source.HibernateSourceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="sourceTypeDao" class="com.sones.facebook.dao.hibernate.source.HibernateSourceTypeDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+			<!-- Saver for users dependencies -->
+<!-- ========================================================================================== -->
+	<bean id="userSaver" class="com.sones.facebook.saver.source.UserSaver">
+		<property name="userDao" ref="userDao"/>
+	</bean>
+	
+	<bean id="userDao" class="com.sones.facebook.dao.hibernate.source.HibernateUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+		<!-- Dozer mapper dependencies -->
+<!-- ========================================================================================== -->
+	
+	<bean id="dozerMapper" class="org.dozer.DozerBeanMapper">
+		<property name="mappingFiles">
+			<list>
+				<value>Dozer/facebook/GraphApi/Wall/CreateWallMapper.xml</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

@@ -22,11 +22,22 @@
 		<property name="photoSaver" ref="photoSaver"/>
 		<property name="statusSaver" ref="statusSaver"/>
 		<property name="videoSaver" ref="videoSaver"/>
+		<property name="checkinSaver" ref="checkinSaver"/>
+	</bean>
+	
+	<bean id="checkinSaver" class="com.sones.facebook.saver.wall.feed.CheckinSaver">
+		<constructor-arg name="checkinDao" ref="checkinDao"/>
+		<constructor-arg name="commentSaver" ref="commentSaver"/>
+		<constructor-arg name="placeDao" ref="placeDao"/>
 	</bean>
 	
 	<bean id="linkSaver" class="com.sones.facebook.saver.wall.feed.LinkSaver">
 		<property name="linkDao" ref="linkDao"/>
 		<property name="commentSaver" ref="commentSaver"/>
+	</bean>
+	
+	<bean id="placeDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	
 	<bean id="linkDao" class="com.sones.facebook.dao.hibernate.feed.HibernateLinkDao">
@@ -48,6 +59,10 @@
 	</bean>
 	
 	<bean id="photoDao" class="com.sones.facebook.dao.hibernate.feed.HibernatePhotoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="checkinDao" class="com.sones.facebook.dao.hibernate.feed.HibernateCheckinDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
 	

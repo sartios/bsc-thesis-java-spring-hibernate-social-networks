@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="spring-facebook-downloader-service.xml"/>
+	
+	<bean id="optionDao" class="com.sones.facebook.downloader.dao.hibernate.HibernateFacebookDownloadOptionDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="downloadingTask" class="com.sones.facebook.downloader.logic.PostDownloadingTimerTask">
+		<constructor-arg name="service" ref="facebookDownloaderService"/>
+	</bean>
+	
+	<bean id="accountDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookAccountDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="postDownloaderManagerService" class="com.sones.facebook.downloader.logic.FacebookPostDownloaderManagerService">
+		<constructor-arg name="accountDao" ref="accountDao"/>
+		<constructor-arg name="optionDao" ref="optionDao"/>
+		<constructor-arg name="task" ref="downloadingTask"/>
+	</bean>
+
+</beans>

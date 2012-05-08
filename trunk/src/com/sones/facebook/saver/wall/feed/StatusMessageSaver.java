@@ -22,7 +22,7 @@ public class StatusMessageSaver implements IStatusMessageSaver
 	}
 	
 	@Override
-	public void Save(StatusMessage statusMessage) 
+	public void Save(StatusMessage statusMessage) throws DataAccessException 
 	{
 		if( statusMessage == null )
 		{
@@ -31,7 +31,7 @@ public class StatusMessageSaver implements IStatusMessageSaver
 		}
 		try
 		{
-			if( isAnExistingStatusMessage( statusMessage ) == false )
+			if( statusMessageExists( statusMessage ) == false )
 			{
 				if( hasComments( statusMessage ) )
 				{
@@ -82,14 +82,16 @@ public class StatusMessageSaver implements IStatusMessageSaver
 		return commentSaver;
 	}
 	
-	private	boolean	isAnExistingStatusMessage( StatusMessage statusMessage )
+	private	boolean	statusMessageExists( StatusMessage statusMessage )
 	{
-		StatusMessage	dbStatusMessage	=	statusDao.GetById( statusMessage.getId() );
-		if( dbStatusMessage == null )
+		String statusID = statusMessage.getId();
+		StatusMessage dbStatusMessage = statusDao.GetById(statusID);
+		if(dbStatusMessage != null)
 		{
-			return	false;
+			_LOGGER.warn("Status already exists.");
+			return true;
 		}
-		return	true;
+		return false;
 	}
 	
 	private	boolean	hasComments( StatusMessage statusMessage )

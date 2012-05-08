@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 import com.sones.facebook.JsonHandler.FacebookJsonHandler;
 import com.sones.facebook.JsonHandler.IFacebookJsonHandler;
 import com.sones.facebook.placemanager.model.Place;
+import com.sones.facebook.tokenmanager.model.FacebookAccount;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallCheckinCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallCommentCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
@@ -46,6 +47,13 @@ public class FacebookJsonHandlerTester
 	public	void	tearDown()
 	{
 		handler = null;
+	}
+	
+	@Test
+	public void TestGetFacebookAccountCorrectly()
+	{
+		FacebookAccount account = handler.GetFacebookAccount(reader.getFacebookAccount());
+		assertEquals("100000866964787", account.getId());
 	}
 	
 	@Test

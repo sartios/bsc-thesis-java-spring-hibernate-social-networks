@@ -21,7 +21,7 @@ public class LinkSaver implements ILinkSaver
 	}
 	
 	@Override
-	public void Save(Link link) 
+	public void Save(Link link) throws DataAccessException
 	{
 		if( link == null )
 		{
@@ -30,7 +30,7 @@ public class LinkSaver implements ILinkSaver
 		}
 		try
 		{
-			if( isAnExistingLink( link ) == false )
+			if( linkExists( link ) == false )
 			{
 				if( hasComments( link ) )
 				{
@@ -80,14 +80,16 @@ public class LinkSaver implements ILinkSaver
 		return commentSaver;
 	}
 	
-	private	boolean	isAnExistingLink( Link link )
+	private	boolean	linkExists( Link link )
 	{
-		Link	dbLink	=	linkDao.GetById( link.getId() );
-		if( dbLink == null )
+		String linkId = link.getId();
+		Link dbLink = linkDao.GetById(linkId);
+		if( dbLink != null )
 		{
-			return	false;
+			_LOGGER.warn("Link already exists.");
+			return	true;
 		}
-		return	true;
+		return	false;
 	}
 	
 	private	boolean	hasComments( Link link )

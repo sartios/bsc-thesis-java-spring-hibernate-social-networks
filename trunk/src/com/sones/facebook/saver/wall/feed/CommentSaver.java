@@ -21,7 +21,7 @@ public class CommentSaver	implements	ICommentSaver
 	}
 	
 	@Override
-	public void Save(Iterable<Comment> comments)
+	public void Save(Iterable<Comment> comments) throws DataAccessException
 	{
 		if( comments == null )
 		{

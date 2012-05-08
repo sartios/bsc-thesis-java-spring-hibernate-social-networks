@@ -181,8 +181,8 @@ public class KeywordRetrieverServiceTester
 			results.add(result2);
 		}
 		
-		service = new KeywordRetrieverService(keywordSearchDao, resultDao, user);
-		Map<Keyword,Long> serviceResults = service.getKeywords(9, -50);
+		service = new KeywordRetrieverService(keywordSearchDao, resultDao);
+		Map<Keyword,Long> serviceResults = service.getKeywords(user,9, -50);
 		
 		assertEquals(2, serviceResults.size());
 		assertEquals(16, serviceResults.get(keyword1).intValue());
