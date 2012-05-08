@@ -22,7 +22,7 @@ public class NoteSaver implements INoteSaver
 	}
 	
 	@Override
-	public void Save(Note note)
+	public void Save(Note note) throws DataAccessException
 	{
 		if( note == null )
 		{
@@ -31,7 +31,7 @@ public class NoteSaver implements INoteSaver
 		}
 		try
 		{
-			if( isAnExistingNote( note ) == false )
+			if( noteExists( note ) == false )
 			{
 				if( hasComments( note ) )
 				{
@@ -78,14 +78,15 @@ public class NoteSaver implements INoteSaver
 		return commentSaver;
 	}
 	
-	private	boolean	isAnExistingNote( Note note )
+	private	boolean	noteExists( Note note )
 	{
 		Note	dbNote	=	noteDao.GetById( note.getId() );
-		if( dbNote == null )
+		if( dbNote != null )
 		{
-			return	false;
+			_LOGGER.warn("Note already exists.");
+			return	true;
 		}
-		return	true;
+		return	false;
 	}
 	
 	private	boolean	hasComments( Note note )

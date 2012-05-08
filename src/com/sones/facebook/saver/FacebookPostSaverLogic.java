@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
+import org.springframework.dao.DataAccessException;
 
 import com.sones.facebook.model.feed.FacebookPost;
 import com.sones.facebook.model.feed.SourceFacebookPost;
@@ -60,6 +61,7 @@ public class FacebookPostSaverLogic	implements	IFacebookPostSaverLogic
 
 	@Override
 	public boolean saveWallPosts(Iterable<WallSourceFacebookPostCreateDto> posts)
+	throws DataAccessException, IllegalArgumentException, MapErrorException 
 	{
 		if( posts == null )
 		{

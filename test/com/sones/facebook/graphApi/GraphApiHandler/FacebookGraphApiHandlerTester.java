@@ -33,6 +33,15 @@ public class FacebookGraphApiHandlerTester
 		token = "access_token=AAACV6ZAIZClUQBAIUWj1gLZCZCFmkFugI4MLsBIv5MbBybzYTVTmFeWzd4LVQflYG9s50RA3GcOE771VVGe8HrMT7jHZBuNqCC0F4Ppc4CQZDZD";
 	}
 	
+	@Test
+	public void TestGetFacebookAccountWorksCorrectly()
+	{
+		FacebookToken ftoken = new FacebookToken();
+		ftoken.setValue(token);
+		FacebookAccount account = handler.GetFacebookAccount(ftoken);
+		assertEquals("100000866964787", account.getId());
+	}
+	
 	@Test(expected=IllegalArgumentException.class)
 	public void TestGetWallPostsNullSource()
 	{

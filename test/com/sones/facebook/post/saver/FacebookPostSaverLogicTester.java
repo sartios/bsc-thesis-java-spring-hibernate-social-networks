@@ -49,16 +49,6 @@ public class FacebookPostSaverLogicTester
 			sourceFacebookPost.setId(sourceFacebookPostId);
 			sourcePostsDto.add(sourceFacebookPost);
 		}
-		
-		boolean isThrowing = true;
-		try
-		{
-			saverLogic.saveWallPosts(sourcePostsDto);
-			isThrowing = false;
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-		}
-		Assert.assertFalse(isThrowing);
+		saverLogic.saveWallPosts(sourcePostsDto);
 	}
 }

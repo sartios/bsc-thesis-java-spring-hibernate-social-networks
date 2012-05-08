@@ -35,21 +35,21 @@ public class VideoConstants
 	/**
 	 * The length of the name property.
 	 */
-	public	static	final	int	LENGTH_NAME	=	255;
+	public	static	final	int	LENGTH_NAME	=	1000;
 	
 	/**
 	 * The length of the description property.
 	 */
-	public	static	final	int	LENGTH_DESCRIPTION	=	255;
+	public	static	final	int	LENGTH_DESCRIPTION	=	1000;
 	
 	
 	/**
 	 * The length of the picture property.
 	 */
-	public	static	final	int	LENGTH_PICTURE	=	255;
+	public	static	final	int	LENGTH_PICTURE	=	1000;
 	
 	/**
 	 * The length of the source property.
 	 */
-	public	static	final	int	LENGTH_SOURCE	=	255;
+	public	static	final	int	LENGTH_SOURCE	=	1000;
 }

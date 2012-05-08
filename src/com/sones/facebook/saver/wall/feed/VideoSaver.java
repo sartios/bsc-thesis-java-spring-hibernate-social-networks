@@ -21,7 +21,7 @@ public class VideoSaver implements IVideoSaver
 	}
 	
 	@Override
-	public void Save(Video video) 
+	public void Save(Video video) throws DataAccessException 
 	{
 		if( video == null )
 		{
@@ -30,7 +30,7 @@ public class VideoSaver implements IVideoSaver
 		}
 		try
 		{
-			if( isAnExistingVideo( video ) == false )
+			if( videoExists(video) == false )
 			{
 				boolean	hadComments	=	hasComments( video );
 				if( hadComments == true )
@@ -83,14 +83,16 @@ public class VideoSaver implements IVideoSaver
 		return commentSaver;
 	}
 	
-	private	boolean	isAnExistingVideo( Video video )
+	private	boolean	videoExists( Video video )
 	{
-		Video	dbVideo	=	videoDao.GetById( video.getId() );
-		if( dbVideo == null )
+		String videoID = video.getId();
+		Video dbVideo = videoDao.GetById(videoID);
+		if(dbVideo != null)
 		{
-			return	false;
+			_LOGGER.warn("Video already exists.");
+			return	true;
 		}
-		return	true;
+		return	false;
 	}
 	
 	private	boolean	hasComments( Video video )

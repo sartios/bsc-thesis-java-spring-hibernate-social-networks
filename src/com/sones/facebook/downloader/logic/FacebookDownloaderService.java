@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
+import org.springframework.dao.DataAccessException;
 
 import com.sones.facebook.downloader.dao.IFacebookDownloadDao;
 import com.sones.facebook.downloader.dao.IFacebookPostDownloadDao;
@@ -23,6 +24,7 @@ import com.sones.facebook.tokenmanager.model.FacebookToken;
 import com.sones.facebook.tokenmanager.dao.IFacebookTokenDao;
 import com.sones.facebook.usermanager.dao.IApplicationUserSourceDao;
 import com.sones.facebook.usermanager.model.ApplicationUserSource;
+import com.sones.sharedDto.exceptions.MapErrorException;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallFacebookPostCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceCreateDto;
 import com.sones.sharedDto.facebook.GraphApi.Wall.WallSourceFacebookPostCreateDto;
@@ -109,7 +111,7 @@ public class FacebookDownloaderService	implements	IFacebookDownloaderService
 	 * ..
 	 */
 	@Override
-	public void DownloadWallPosts(ApplicationUser appUser) 
+	public void DownloadWallPosts(ApplicationUser appUser) throws DataAccessException
 	{
 		ValidateApplicationUser( appUser );
 		FacebookToken	accessToken	=	GetFacebookToken( appUser );
@@ -117,7 +119,12 @@ public class FacebookDownloaderService	implements	IFacebookDownloaderService
 		Date	date	=	GetDownloadDate( appUser );
 		Set< WallSourceFacebookPostCreateDto >	sourcePostsDtos	=	GetSourcePosts(appUserSources , accessToken , date );
 		FacebookDownload	currentDownload	=	SaveCurrentDownloadAndReturn( appUser );
-		saverService.saveWallPosts( sourcePostsDtos );
+		try
+		{
+			saverService.saveWallPosts( sourcePostsDtos );
+		}
+		catch (MapErrorException e)
+		{}
 		Set< FacebookPostDownload >	postDownloads	=	SaveFacebookPostsPerDownloadAndReturn( sourcePostsDtos , currentDownload);
 	}
 	

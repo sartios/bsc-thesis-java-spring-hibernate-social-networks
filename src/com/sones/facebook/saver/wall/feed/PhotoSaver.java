@@ -21,7 +21,7 @@ public class PhotoSaver implements IPhotoSaver
 	}
 	
 	@Override
-	public void Save(Photo photo) 
+	public void Save(Photo photo) throws DataAccessException
 	{
 		if( photo == null )
 		{
@@ -30,7 +30,7 @@ public class PhotoSaver implements IPhotoSaver
 		}
 		try
 		{
-			if( isAnExistingPhoto( photo ) == false )
+			if( photoExists( photo ) == false )
 			{
 				if( hasComments( photo ) )
 				{
@@ -81,14 +81,15 @@ public class PhotoSaver implements IPhotoSaver
 		return commentSaver;
 	}
 	
-	private	boolean	isAnExistingPhoto( Photo photo )
+	private	boolean	photoExists( Photo photo )
 	{
 		Photo	dbPhoto	=	photoDao.GetById( photo.getId() );
-		if( dbPhoto == null )
+		if( dbPhoto != null )
 		{
-			return	false;
+			_LOGGER.warn("Photo already exists.");
+			return	true;
 		}
-		return	true;
+		return	false;
 	}
 	
 	private	boolean	hasComments( Photo photo )
