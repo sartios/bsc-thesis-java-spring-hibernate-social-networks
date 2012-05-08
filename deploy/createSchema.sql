@@ -4,6 +4,15 @@
         primary key (APUS_ID)
     );
 
+    create table FCBK.APPLICATION_USER_CREDENTIALS (
+        AUCR_ID varchar(20) not null,
+        AUCR_NAME varchar(20),
+        AUCR_PASSWORD varchar(20),
+        AUCR_USERNAME varchar(20),
+        AUCR_APUS_ID varchar(20),
+        primary key (AUCR_ID)
+    );
+
     create table FCBK.APPLICATION_USER_KEYWORDS (
         AUKE_APUS_ID varchar(20),
         AUKE_KEYW_ID varchar(20),
@@ -281,6 +290,12 @@
         FCBK_POST_ID varchar(255) not null,
         primary key (FCBK_POST_ID)
     );
+
+    alter table FCBK.APPLICATION_USER_CREDENTIALS 
+        add index FK853BEF9729821FC0 (AUCR_APUS_ID), 
+        add constraint FK853BEF9729821FC0 
+        foreign key (AUCR_APUS_ID) 
+        references FCBK.APPLICATION_USERS (APUS_ID);
 
     alter table FCBK.APPLICATION_USER_KEYWORDS 
         add index FK922788CF61BA3798 (AUKE_KEYW_ID), 

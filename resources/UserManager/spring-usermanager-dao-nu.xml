@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<import resource="../spring-hibernate.xml"/>
+	
+	<bean id="applicationUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="criteriaDao" class="com.sones.facebook.publicsource.dao.hibernate.HibernateCriteriaDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="appUserCriteriaDao" class="com.sones.facebook.usermanager.dao.hibernate.HibernateApplicationUserPlaceCriteriaDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="appUserCredentialDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserCredentialDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+
+</beans>
