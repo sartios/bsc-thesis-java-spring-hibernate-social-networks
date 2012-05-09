@@ -9,6 +9,14 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
+import com.sones.facebook.controller.user.CreateUseController;
 
 public class LoginFrame extends JFrame {
 
@@ -16,16 +24,25 @@ public class LoginFrame extends JFrame {
 	private JPanel jContentPane = null;
 	private JLabel jLabel = null;
 	private JLabel jLabel1 = null;
-	private JTextField jTextField = null;
-	private JTextField jTextField1 = null;
+	private JTextField jUsernameTextField = null;
+	private JTextField jPasswordTextField = null;
 	private JPanel jPanel = null;
 	private JButton jButton = null;
+	private JMenuBar jJMenuBar = null;
+	private JMenu jMenu = null;
+	private JMenuItem jMenuItem = null;
+	private CreateUserFrame createFrame = null;
+	private CreateUseController controller;
+	private List<ILoginListener> listeners;
+	
 	/**
 	 * This is the default constructor
 	 */
 	public LoginFrame() {
 		super();
 		initialize();
+		controller = new CreateUseController();
+		listeners = new ArrayList<ILoginListener>();
 	}
 
 	/**
@@ -35,6 +52,7 @@ public class LoginFrame extends JFrame {
 	 */
 	private void initialize() {
 		this.setSize(300, 200);
+		this.setJMenuBar(getJJMenuBar());
 		this.setContentPane(getJContentPane());
 		this.setTitle("Login");
 	}
@@ -77,35 +95,35 @@ public class LoginFrame extends JFrame {
 			jContentPane.setLayout(new GridBagLayout());
 			jContentPane.add(jLabel, gridBagConstraints);
 			jContentPane.add(jLabel1, gridBagConstraints1);
-			jContentPane.add(getJTextField(), gridBagConstraints2);
-			jContentPane.add(getJTextField1(), gridBagConstraints3);
+			jContentPane.add(getJUsernameTextField(), gridBagConstraints2);
+			jContentPane.add(getJPasswordTextField(), gridBagConstraints3);
 			jContentPane.add(getJPanel(), gridBagConstraints4);
 		}
 		return jContentPane;
 	}
 
 	/**
-	 * This method initializes jTextField	
+	 * This method initializes jUsernameTextField	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
-	private JTextField getJTextField() {
-		if (jTextField == null) {
-			jTextField = new JTextField();
+	private JTextField getJUsernameTextField() {
+		if (jUsernameTextField == null) {
+			jUsernameTextField = new JTextField();
 		}
-		return jTextField;
+		return jUsernameTextField;
 	}
 
 	/**
-	 * This method initializes jTextField1	
+	 * This method initializes jPasswordTextField	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
-	private JTextField getJTextField1() {
-		if (jTextField1 == null) {
-			jTextField1 = new JTextField();
+	private JTextField getJPasswordTextField() {
+		if (jPasswordTextField == null) {
+			jPasswordTextField = new JTextField();
 		}
-		return jTextField1;
+		return jPasswordTextField;
 	}
 
 	/**
@@ -131,8 +149,83 @@ public class LoginFrame extends JFrame {
 		if (jButton == null) {
 			jButton = new JButton();
 			jButton.setText("Login");
+			jButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					String username = jUsernameTextField.getText();
+					String password = jPasswordTextField.getText();
+					Boolean result = controller.login(username, password);
+					if(result == true)
+					{
+						updateListeners();
+					}
+				}
+			});
 		}
 		return jButton;
 	}
 
+	/**
+	 * This method initializes jJMenuBar	
+	 * 	
+	 * @return javax.swing.JMenuBar	
+	 */
+	private JMenuBar getJJMenuBar() {
+		if (jJMenuBar == null) {
+			jJMenuBar = new JMenuBar();
+			jJMenuBar.add(getJMenu());
+		}
+		return jJMenuBar;
+	}
+
+	/**
+	 * This method initializes jMenu	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JMenu getJMenu() {
+		if (jMenu == null) {
+			jMenu = new JMenu();
+			jMenu.setText("New user");
+			jMenu.add(getJMenuItem());
+		}
+		return jMenu;
+	}
+
+	/**
+	 * This method initializes jMenuItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJMenuItem() {
+		if (jMenuItem == null) {
+			jMenuItem = new JMenuItem();
+			jMenuItem.setText("Create");
+			jMenuItem.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					if(createFrame == null)
+					{
+						createFrame = new CreateUserFrame();
+						createFrame.setController(controller);
+					}
+					createFrame.show();
+				}
+			});
+		}
+		return jMenuItem;
+	}
+	
+	public void addListener(ILoginListener listener)
+	{
+		listeners.add(listener);
+	}
+	
+	private void updateListeners()
+	{
+		for(ILoginListener listener : listeners)
+		{
+			listener.successfullLogin();
+		}
+	}
 }
