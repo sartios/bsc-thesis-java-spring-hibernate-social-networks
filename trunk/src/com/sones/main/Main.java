@@ -10,30 +10,32 @@ import com.sones.facebook.gui.posts.LinkFrame;
 import com.sones.facebook.gui.posts.PhotoFrame;
 import com.sones.facebook.gui.sources.FacebookSourceSelectorFrame;
 import com.sones.facebook.gui.user.FacebookTokenFrame;
+import com.sones.facebook.gui.user.ILoginListener;
+import com.sones.facebook.gui.user.LoginFrame;
 import com.sones.sharedDto.facebook.view.posts.CommentViewDto;
 import com.sones.sharedDto.facebook.view.posts.LinkViewDto;
 import com.sones.sharedDto.facebook.view.posts.PhotoViewDto;
 import com.sones.sharedDto.facebook.view.posts.UserViewDto;
 
-public class Main {
-
+public class Main implements ILoginListener
+{
+	public Main()
+	{
+		String[] args = new String[2];
+		main(args);
+	}
+	
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) 
+	public void main(String[] args) 
 	{
-		DownloaderMainFrame downloaderFrame = new DownloaderMainFrame();
-		FacebookTokenFrame tokenFrame = new FacebookTokenFrame();
-		FacebookSourceSelectorFrame sourceFrame = new FacebookSourceSelectorFrame();
-		
-		FacebookMainFrame facebookMainFrame = new FacebookMainFrame();
-		facebookMainFrame.setSourceFrame(sourceFrame);
-		facebookMainFrame.setDownloaderFrame(downloaderFrame);
-		facebookMainFrame.setTokenFrame(tokenFrame);
-		facebookMainFrame.show();
+		LoginFrame loginFrame = new LoginFrame();
+		loginFrame.show();
+		loginFrame.addListener(this);
 	}
 	
-	private static void showPhoto()
+	private void showPhoto()
 	{
 		UserViewDto user = new UserViewDto();
 		user.setUsername("Coca-Cola");
@@ -48,7 +50,7 @@ public class Main {
 		frame.show();
 	}
 	
-	private static void showLink()
+	private void showLink()
 	{
 		UserViewDto user = new UserViewDto();
 		user.setUsername("Stelios Stark Savramis");
@@ -78,6 +80,20 @@ public class Main {
 		CommentFrame commentFrame = new CommentFrame();
 		commentFrame.setComments(comments);
 		commentFrame.show();
+	}
+
+	@Override
+	public void successfullLogin()
+	{
+		DownloaderMainFrame downloaderFrame = new DownloaderMainFrame();
+		FacebookTokenFrame tokenFrame = new FacebookTokenFrame();
+		FacebookSourceSelectorFrame sourceFrame = new FacebookSourceSelectorFrame();
+		
+		FacebookMainFrame facebookMainFrame = new FacebookMainFrame();
+		facebookMainFrame.setSourceFrame(sourceFrame);
+		facebookMainFrame.setDownloaderFrame(downloaderFrame);
+		facebookMainFrame.setTokenFrame(tokenFrame);
+		facebookMainFrame.show();		
 	}
 
 }

@@ -9,6 +9,9 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import com.sones.facebook.controller.user.CreateUseController;
+
 import java.awt.Insets;
 
 public class CreateUserFrame extends JFrame {
@@ -18,11 +21,13 @@ public class CreateUserFrame extends JFrame {
 	private JLabel jLabel = null;
 	private JLabel jLabel1 = null;
 	private JLabel jLabel2 = null;
-	private JTextField jTextField = null;
-	private JTextField jTextField1 = null;
-	private JTextField jTextField2 = null;
+	private JTextField jNameTextField = null;
+	private JTextField jUsernameTextField = null;
+	private JTextField jPasswordTextField = null;
 	private JPanel jPanel = null;
 	private JButton jButton = null;
+	private CreateUseController controller;
+	
 	/**
 	 * This is the default constructor
 	 */
@@ -94,48 +99,48 @@ public class CreateUserFrame extends JFrame {
 			jContentPane.add(jLabel, gridBagConstraints);
 			jContentPane.add(jLabel1, gridBagConstraints1);
 			jContentPane.add(jLabel2, gridBagConstraints2);
-			jContentPane.add(getJTextField(), gridBagConstraints3);
-			jContentPane.add(getJTextField1(), gridBagConstraints4);
-			jContentPane.add(getJTextField2(), gridBagConstraints5);
+			jContentPane.add(getJNameTextField(), gridBagConstraints3);
+			jContentPane.add(getJUsernameTextField(), gridBagConstraints4);
+			jContentPane.add(getJPasswordTextField(), gridBagConstraints5);
 			jContentPane.add(getJPanel(), gridBagConstraints6);
 		}
 		return jContentPane;
 	}
 
 	/**
-	 * This method initializes jTextField	
+	 * This method initializes jNameTextField	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
-	private JTextField getJTextField() {
-		if (jTextField == null) {
-			jTextField = new JTextField();
+	private JTextField getJNameTextField() {
+		if (jNameTextField == null) {
+			jNameTextField = new JTextField();
 		}
-		return jTextField;
+		return jNameTextField;
 	}
 
 	/**
-	 * This method initializes jTextField1	
+	 * This method initializes jUsernameTextField	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
-	private JTextField getJTextField1() {
-		if (jTextField1 == null) {
-			jTextField1 = new JTextField();
+	private JTextField getJUsernameTextField() {
+		if (jUsernameTextField == null) {
+			jUsernameTextField = new JTextField();
 		}
-		return jTextField1;
+		return jUsernameTextField;
 	}
 
 	/**
-	 * This method initializes jTextField2	
+	 * This method initializes jPasswordTextField	
 	 * 	
 	 * @return javax.swing.JTextField	
 	 */
-	private JTextField getJTextField2() {
-		if (jTextField2 == null) {
-			jTextField2 = new JTextField();
+	private JTextField getJPasswordTextField() {
+		if (jPasswordTextField == null) {
+			jPasswordTextField = new JTextField();
 		}
-		return jTextField2;
+		return jPasswordTextField;
 	}
 
 	/**
@@ -164,8 +169,24 @@ public class CreateUserFrame extends JFrame {
 		if (jButton == null) {
 			jButton = new JButton();
 			jButton.setText("Create");
+			jButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					String name = jNameTextField.getText();
+					String username = jUsernameTextField.getText();
+					String password = jPasswordTextField.getText();
+					controller.createNewUser(name, username, password);
+				}
+			});
 		}
 		return jButton;
 	}
 
+	/**
+	 * @param controller the controller to set
+	 */
+	public void setController(CreateUseController controller) {
+		this.controller = controller;
+	}
+	
 }  //  @jve:decl-index=0:visual-constraint="10,10"
