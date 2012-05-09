@@ -1,0 +1,29 @@
+How to start the gui:
+
+1. Run com.sones.main.Main
+2. Login if you have account, or create a new account and try to login.
+3. If the login process succeed, then you move in a form from which you can start the downloader.
+
+
+Get your token:
+
+1. Click on token button
+2. Click on get request
+3. Paste the request into a browser
+4. Login on facebook
+5. Copy the access token that it returned to the browser into the edit box
+6. Click on save button
+
+Select sources
+
+1. Click on sources
+2. Download your friend list if you haven't already
+3. Load your friend list
+4. Double click the sources you want.
+5. Save
+
+Downloader
+
+1. Click on downloader button
+2. On Settings > Interval give the interval in milliseconds.
+3. Start downloading
