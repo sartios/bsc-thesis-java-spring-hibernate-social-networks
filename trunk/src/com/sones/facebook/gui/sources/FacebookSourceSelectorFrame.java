@@ -4,6 +4,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+
+import java.awt.Container;
 import java.awt.GridBagLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -13,12 +15,15 @@ import javax.swing.JList;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
+import org.apache.log4j.Logger;
 
 import com.sones.facebook.controller.sources.FacebookSourceSelectorController;
 import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
@@ -43,7 +48,9 @@ public class FacebookSourceSelectorFrame extends JFrame {
 	private DefaultListModel friendModel = new DefaultListModel();
 	private DefaultListModel sourceModel = new DefaultListModel();
 	private Map<String, Integer> selectedSources = new HashMap<String, Integer>();  //  @jve:decl-index=0:
-	private ApplicationUserViewDto userDto;
+	private ApplicationUserViewDto userDto;  //  @jve:decl-index=0:
+	private final Logger _LOGGER;
+	private Set<String> selectedNames;
 	/**
 	 * This is the default constructor
 	 */
@@ -51,6 +58,8 @@ public class FacebookSourceSelectorFrame extends JFrame {
 		super();
 		initialize();
 		controller = new FacebookSourceSelectorController();
+		_LOGGER = Logger.getLogger(FacebookSourceSelectorFrame.class);
+		selectedNames = new HashSet<String>();
 	}
 
 	/**
@@ -214,7 +223,8 @@ public class FacebookSourceSelectorFrame extends JFrame {
 				public void mouseClicked(java.awt.event.MouseEvent e) {
 					if(e.getClickCount() == 2)
 					{
-						addSource();
+						//addSource();
+						addSourceName();
 					}
 				}
 			});
@@ -273,7 +283,8 @@ public class FacebookSourceSelectorFrame extends JFrame {
 			jButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-					saveSelectedSources();
+					//saveSelectedSources();
+					saveSelectedSourceName();
 				}
 			});
 		}
@@ -287,8 +298,15 @@ public class FacebookSourceSelectorFrame extends JFrame {
 		{
 			int index = selectedSources.get(key);
 			indices.add(index);
+			_LOGGER.warn("Index " + index);
 		}
-		controller.saveFriendSources(indices,"1" );
+		String appUserID = userDto.getUserID();
+		controller.saveFriendSources(indices,appUserID );
+	}
+	
+	private void saveSelectedSourceName() {
+		String appUserID = userDto.getUserID();
+		controller.saveFriendSourcesByNames(selectedNames,appUserID );
 	}
 	
 	private void addSource()
@@ -296,9 +314,23 @@ public class FacebookSourceSelectorFrame extends JFrame {
 		int position = jList.getSelectedIndex();
 		String value = (String) jList.getSelectedValue();
 		selectedSources.put(value, position);
+		_LOGGER.warn("Position " + position);
+
 		if(sourceModel.contains(value) == false)
 		{
 			sourceModel.addElement(value);
+		}
+	}
+	
+	private void addSourceName()
+	{
+		String name = (String) jList.getSelectedValue();
+		selectedNames.add(name);
+		_LOGGER.warn("Name " + name);
+
+		if(sourceModel.contains(name) == false)
+		{
+			sourceModel.addElement(name);
 		}
 	}
 

@@ -142,7 +142,7 @@ public class SearcherMainFrame extends JFrame {
 			jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-					controller.selectKeywords();
+					controller.selectKeywords(userDto);
 				}
 			});
 		}

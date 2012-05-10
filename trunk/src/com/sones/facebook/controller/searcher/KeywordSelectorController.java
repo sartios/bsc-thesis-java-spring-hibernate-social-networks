@@ -34,8 +34,10 @@ public class KeywordSelectorController
 		return keywords;
 	}
 	
-	public void submitSelectedKeywords(ApplicationUser appUser, Set<String> keywords)
+	public void submitSelectedKeywords(String appUserID, Set<String> keywords)
 	{
+		ApplicationUser appUser = new ApplicationUser();
+		appUser.setId(appUserID);
 		for(String value : keywords)
 		{
 			Keyword keyword = new Keyword(value);
