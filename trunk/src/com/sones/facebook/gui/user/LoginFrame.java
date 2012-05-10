@@ -17,6 +17,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import com.sones.facebook.controller.user.CreateUseController;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 
 public class LoginFrame extends JFrame {
 
@@ -222,10 +223,11 @@ public class LoginFrame extends JFrame {
 	}
 	
 	private void updateListeners()
-	{
+	{	
+		ApplicationUserViewDto userDto = controller.getUserDto();
 		for(ILoginListener listener : listeners)
 		{
-			listener.successfullLogin();
+			listener.successfullLogin(userDto);
 		}
 	}
 }

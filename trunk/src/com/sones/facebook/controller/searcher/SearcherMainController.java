@@ -33,8 +33,10 @@ public class SearcherMainController
 		creatorFrame.show(true);
 	}
 	
-	public void search(ApplicationUser appUser)
+	public void search(String appUserID)
 	{
+		ApplicationUser appUser = new ApplicationUser();
+		appUser.setId(appUserID);
 		service.searchForKeywordsIntoAllFacebookPostTypes(appUser);
 	}
 	

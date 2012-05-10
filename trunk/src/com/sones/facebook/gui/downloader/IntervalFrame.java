@@ -9,6 +9,12 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import com.sones.facebook.controller.downloader.IntervalController;
+import com.sones.facebook.downloader.logic.IFacebookPostDownloaderManagerService;
+import com.sones.sharedDto.facebook.source.UserIdDto;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
+
 import java.awt.Insets;
 
 public class IntervalFrame extends JFrame {
@@ -18,6 +24,8 @@ public class IntervalFrame extends JFrame {
 	private JLabel jLabel = null;
 	private JTextField jTextField = null;
 	private JButton jButton = null;
+	private IntervalController controller;
+	private ApplicationUserViewDto userDto;  //  @jve:decl-index=0:
 
 	/**
 	 * This is the default constructor
@@ -25,6 +33,7 @@ public class IntervalFrame extends JFrame {
 	public IntervalFrame() {
 		super();
 		initialize();
+		controller = new IntervalController();
 	}
 
 	/**
@@ -97,10 +106,36 @@ public class IntervalFrame extends JFrame {
 			jButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					if(userDto == null)
+					{
+						System.out.println("UserDto is null");
+					}
+					String interval = jTextField.getText();
+					String facebookUserId = userDto.getAccountID();
+					controller.saveOption(facebookUserId, interval);
 				}
 			});
 		}
 		return jButton;
+	}
+	
+	public void setService(IFacebookPostDownloaderManagerService service)
+	{
+		controller.setService(service);
+	}
+
+	/**
+	 * @param userDto the userDto to set
+	 */
+	public void setUserDto(ApplicationUserViewDto userDto) {
+		this.userDto = new ApplicationUserViewDto(userDto);
+	}
+
+	/**
+	 * @return the userDto
+	 */
+	public ApplicationUserViewDto getUserDto() {
+		return userDto;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

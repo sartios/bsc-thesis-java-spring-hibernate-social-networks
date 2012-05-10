@@ -8,6 +8,7 @@ import com.sones.facebook.gui.main.FacebookMainFrame;
 import com.sones.facebook.gui.posts.CommentFrame;
 import com.sones.facebook.gui.posts.LinkFrame;
 import com.sones.facebook.gui.posts.PhotoFrame;
+import com.sones.facebook.gui.searcher.SearcherMainFrame;
 import com.sones.facebook.gui.sources.FacebookSourceSelectorFrame;
 import com.sones.facebook.gui.user.FacebookTokenFrame;
 import com.sones.facebook.gui.user.ILoginListener;
@@ -16,6 +17,7 @@ import com.sones.sharedDto.facebook.view.posts.CommentViewDto;
 import com.sones.sharedDto.facebook.view.posts.LinkViewDto;
 import com.sones.sharedDto.facebook.view.posts.PhotoViewDto;
 import com.sones.sharedDto.facebook.view.posts.UserViewDto;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 
 public class Main implements ILoginListener
 {
@@ -83,17 +85,26 @@ public class Main implements ILoginListener
 	}
 
 	@Override
-	public void successfullLogin()
-	{
+	public void successfullLogin(ApplicationUserViewDto userDto)
+	{		
 		DownloaderMainFrame downloaderFrame = new DownloaderMainFrame();
+		downloaderFrame.setUserDto(userDto);
+		
 		FacebookTokenFrame tokenFrame = new FacebookTokenFrame();
+		tokenFrame.setUserDto(userDto);
+		
 		FacebookSourceSelectorFrame sourceFrame = new FacebookSourceSelectorFrame();
+		sourceFrame.setUserDto(userDto);
+		
+		SearcherMainFrame searcherFrame = new SearcherMainFrame();
+		searcherFrame.setUserDto(userDto);
 		
 		FacebookMainFrame facebookMainFrame = new FacebookMainFrame();
 		facebookMainFrame.setSourceFrame(sourceFrame);
 		facebookMainFrame.setDownloaderFrame(downloaderFrame);
 		facebookMainFrame.setTokenFrame(tokenFrame);
-		facebookMainFrame.show();		
+		facebookMainFrame.setSearcherFrame(searcherFrame);
+		facebookMainFrame.show();	
 	}
 
 }
