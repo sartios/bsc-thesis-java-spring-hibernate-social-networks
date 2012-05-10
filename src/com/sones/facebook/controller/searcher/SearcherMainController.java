@@ -8,6 +8,7 @@ import com.sones.facebook.gui.searcher.KeywordSelectorFrame;
 import com.sones.facebook.keywordSearcher.logic.IKeywordSearcherService;
 import com.sones.facebook.keywordSearcher.logic.KeywordSearcherService;
 import com.sones.facebook.keywordSearcher.logic.retriever.IDataRetriever;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 import com.sones.usermanager.model.ApplicationUser;
 
 public class SearcherMainController 
@@ -23,8 +24,9 @@ public class SearcherMainController
 		initializeService();
 	}
 	
-	public void selectKeywords()
+	public void selectKeywords(ApplicationUserViewDto userDto)
 	{
+		selectorFrame.setUserDto(userDto);
 		selectorFrame.show(true);
 	}
 	

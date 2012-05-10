@@ -17,6 +17,7 @@ import javax.swing.DefaultListModel;
 
 import com.sones.facebook.controller.searcher.KeywordSelectorController;
 import com.sones.facebook.keywordSearcher.model.Keyword;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 import com.sones.usermanager.model.ApplicationUser;
 
 public class KeywordSelectorFrame extends JFrame {
@@ -35,7 +36,7 @@ public class KeywordSelectorFrame extends JFrame {
 	private DefaultListModel selectedKeywords = new DefaultListModel();;
 	private DefaultListModel createdKeywords = new DefaultListModel();;
 	private KeywordSelectorController controller = null;
-	private ApplicationUser appUser;
+	private ApplicationUserViewDto userDto;
 
 	/**
 	 * This is the default constructor
@@ -44,8 +45,6 @@ public class KeywordSelectorFrame extends JFrame {
 		super();
 		initialize();
 		controller = new KeywordSelectorController();
-		appUser = new ApplicationUser();
-		appUser.setId("1");
 	}
 
 	/**
@@ -231,11 +230,26 @@ public class KeywordSelectorFrame extends JFrame {
 					{
 						keywords.add( (String)object );
 					}
+					String appUser = userDto.getUserID();
 					controller.submitSelectedKeywords(appUser,keywords );
 				}
 			});
 		}
 		return jMenuItem1;
+	}
+
+	/**
+	 * @param userDto the userDto to set
+	 */
+	public void setUserDto(ApplicationUserViewDto userDto) {
+		this.userDto = new ApplicationUserViewDto(userDto);
+	}
+
+	/**
+	 * @return the userDto
+	 */
+	public ApplicationUserViewDto getUserDto() {
+		return userDto;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

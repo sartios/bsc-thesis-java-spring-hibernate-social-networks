@@ -15,6 +15,13 @@ public class ApplicationUserViewDto
 		this.setAccountID(accountID);
 		this.setName(name);
 	}
+	
+	public ApplicationUserViewDto(ApplicationUserViewDto userDto)
+	{
+		this.setUserID(userDto.getUserID());
+		this.setAccountID(userDto.getAccountID());
+		this.setName(userDto.getName());
+	}
 
 	/**
 	 * @param userID the userID to set
