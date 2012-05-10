@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import com.sones.facebook.controller.sources.FacebookSourceSelectorController;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 
 public class FacebookSourceSelectorFrame extends JFrame {
 
@@ -41,9 +42,8 @@ public class FacebookSourceSelectorFrame extends JFrame {
 	private FacebookSourceSelectorController controller;
 	private DefaultListModel friendModel = new DefaultListModel();
 	private DefaultListModel sourceModel = new DefaultListModel();
-	private String facebookUserId = new String("100000866964787");
 	private Map<String, Integer> selectedSources = new HashMap<String, Integer>();  //  @jve:decl-index=0:
-	
+	private ApplicationUserViewDto userDto;
 	/**
 	 * This is the default constructor
 	 */
@@ -156,7 +156,7 @@ public class FacebookSourceSelectorFrame extends JFrame {
 			jMenuItem.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-				
+					String facebookUserId = userDto.getAccountID();
 					Iterable<String> friends = controller.getFriendNames(facebookUserId);
 					for(String name : friends)
 					{
@@ -180,6 +180,7 @@ public class FacebookSourceSelectorFrame extends JFrame {
 			jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					String facebookUserId = userDto.getAccountID();
 					controller.downloadFacebookFriends(facebookUserId);
 				}
 			});
@@ -299,6 +300,20 @@ public class FacebookSourceSelectorFrame extends JFrame {
 		{
 			sourceModel.addElement(value);
 		}
+	}
+
+	/**
+	 * @param userDto the userDto to set
+	 */
+	public void setUserDto(ApplicationUserViewDto userDto) {
+		this.userDto = new ApplicationUserViewDto(userDto);
+	}
+
+	/**
+	 * @return the userDto
+	 */
+	public ApplicationUserViewDto getUserDto() {
+		return userDto;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import com.sones.facebook.controller.searcher.SearcherMainController;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 import com.sones.usermanager.model.ApplicationUser;
 
 public class SearcherMainFrame extends JFrame {
@@ -30,7 +31,7 @@ public class SearcherMainFrame extends JFrame {
 	private JMenuItem jMenuItem7 = null;
 	private JMenuItem jMenuItem8 = null;
 	private SearcherMainController controller;
-	private ApplicationUser appUser;
+	private ApplicationUserViewDto userDto;  //  @jve:decl-index=0:
 	
 	/**
 	 * This is the default constructor
@@ -39,8 +40,6 @@ public class SearcherMainFrame extends JFrame {
 		super();
 		initialize();
 		controller = new SearcherMainController();
-		appUser = new ApplicationUser();
-		appUser.setId("1");
 	}
 
 	/**
@@ -206,6 +205,7 @@ public class SearcherMainFrame extends JFrame {
 			jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					String appUser = userDto.getUserID();
 					controller.search(appUser);
 				}
 			});
@@ -292,6 +292,20 @@ public class SearcherMainFrame extends JFrame {
 			jMenuItem8.setText("Options");
 		}
 		return jMenuItem8;
+	}
+
+	/**
+	 * @param userDto the userDto to set
+	 */
+	public void setUserDto(ApplicationUserViewDto userDto) {
+		this.userDto = new ApplicationUserViewDto(userDto);
+	}
+
+	/**
+	 * @return the userDto
+	 */
+	public ApplicationUserViewDto getUserDto() {
+		return userDto;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

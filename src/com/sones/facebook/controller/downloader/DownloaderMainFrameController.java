@@ -27,4 +27,8 @@ public class DownloaderMainFrameController
 		{
 		}
 	}
+
+	public IFacebookPostDownloaderManagerService getService() {
+		return service;
+	}
 }

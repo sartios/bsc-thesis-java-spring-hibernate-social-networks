@@ -9,7 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JButton;
 
 import com.sones.facebook.controller.downloader.DownloaderMainFrameController;
-import com.sones.usermanager.model.ApplicationUser;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 
 import java.awt.GridBagConstraints;
 
@@ -23,7 +23,7 @@ public class DownloaderMainFrame extends JFrame {
 	private IntervalFrame intervalFrame = null;
 	private JButton jButton = null;
 	private DownloaderMainFrameController controller;
-	private String facebookAccountId = "100000866964787";
+	private ApplicationUserViewDto userDto;
 	
 	/**
 	 * This is the default constructor
@@ -32,6 +32,7 @@ public class DownloaderMainFrame extends JFrame {
 		super();
 		initialize();
 		controller = new DownloaderMainFrameController();
+		intervalFrame.setService(controller.getService());
 	}
 
 	/**
@@ -103,6 +104,7 @@ public class DownloaderMainFrame extends JFrame {
 			jMenuItem.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					intervalFrame.setUserDto(userDto);
 					intervalFrame.show(true);
 				}
 			});
@@ -122,11 +124,26 @@ public class DownloaderMainFrame extends JFrame {
 			jButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					String facebookAccountId = userDto.getAccountID();
 					controller.startDownloading(facebookAccountId);
 				}
 			});
 		}
 		return jButton;
+	}
+
+	/**
+	 * @param userDto the userDto to set
+	 */
+	public void setUserDto(ApplicationUserViewDto userDto) {
+		this.userDto = new ApplicationUserViewDto(userDto);
+	}
+
+	/**
+	 * @return the userDto
+	 */
+	public ApplicationUserViewDto getUserDto() {
+		return userDto;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

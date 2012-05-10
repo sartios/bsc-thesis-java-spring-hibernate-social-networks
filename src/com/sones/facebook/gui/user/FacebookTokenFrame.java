@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import com.sones.facebook.controller.user.FacebookTokenController;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 
 import java.awt.Insets;
 
@@ -31,7 +32,7 @@ public class FacebookTokenFrame extends JFrame {
 	private FacebookTokenController controller;
 	private JLabel jLabel1 = null;
 	private JTextField jTextField1 = null;
-	private String appUserId = "1";
+	private ApplicationUserViewDto userDto;  //  @jve:decl-index=0:
 	
 	/**
 	 * This is the default constructor
@@ -145,6 +146,7 @@ public class FacebookTokenFrame extends JFrame {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
 					String value = jTextField.getText();
+					String appUserId = userDto.getUserID();
 					controller.saveToken(appUserId, value);
 				}
 			});
@@ -187,6 +189,20 @@ public class FacebookTokenFrame extends JFrame {
 			jTextField1 = new JTextField();
 		}
 		return jTextField1;
+	}
+
+	/**
+	 * @param userDto the userDto to set
+	 */
+	public void setUserDto(ApplicationUserViewDto userDto) {
+		this.userDto = new ApplicationUserViewDto(userDto);
+	}
+
+	/**
+	 * @return the userDto
+	 */
+	public ApplicationUserViewDto getUserDto() {
+		return userDto;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
