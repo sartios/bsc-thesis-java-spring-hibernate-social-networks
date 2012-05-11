@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+	<import resource="spring-keywordSearcher-service.xml"/>
+	
+	<bean id="statusDao" class="com.sones.facebook.dao.hibernate.feed.HibernateStatusMessageDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="checkinDao" class="com.sones.facebook.dao.hibernate.feed.HibernateCheckinDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="linkDao" class="com.sones.facebook.dao.hibernate.feed.HibernateLinkDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="photoDao" class="com.sones.facebook.dao.hibernate.feed.HibernatePhotoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="videoDao" class="com.sones.facebook.dao.hibernate.feed.HibernateVideoDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="noteDao" class="com.sones.facebook.dao.hibernate.feed.HibernateNoteDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="downloadDao" class="com.sones.facebook.downloader.dao.hibernate.HibernateFacebookDownloadDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="postDownloadDao" class="com.sones.facebook.downloader.dao.hibernate.HibernateFacebookPostDownloadDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="keywordDao" class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateKeywordDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="appUserKeywordDao" class="com.sones.facebook.keywordSearcher.dao.hibernate.HibernateApplicationUserKeywordDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+</beans>

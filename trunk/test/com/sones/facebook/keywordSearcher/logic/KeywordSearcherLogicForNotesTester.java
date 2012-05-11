@@ -3,6 +3,7 @@ package com.sones.facebook.keywordSearcher.logic;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -28,6 +29,7 @@ public class KeywordSearcherLogicForNotesTester	extends	AbstractKeywordSearcherL
 	private	IKeywordSearcherService	searcherService;
 	private	IDataRetriever	dataManager;
 	private	final	String	MESSAGE	=	"Status Message ";
+	private Date date = new Date(0);
 	
 	public	KeywordSearcherLogicForNotesTester()
 	{
@@ -60,7 +62,7 @@ public class KeywordSearcherLogicForNotesTester	extends	AbstractKeywordSearcherL
 			facebookPostDownloads.addAll( temp );
 		}
 		
-		searcherService.searchForKeywordsIntoNotes(appUser);
+		searcherService.searchForKeywordsIntoNotes(appUser, date);
 		
 		List< FacebookPostKeywordResult >	dbResults	=	(List<FacebookPostKeywordResult>) getFacebookPostKeywordResultDao().GetByApplicationUser( appUser );
 		
@@ -95,7 +97,7 @@ public class KeywordSearcherLogicForNotesTester	extends	AbstractKeywordSearcherL
 			facebookPostDownloads.addAll( temp );
 		}
 		
-		searcherService.searchForKeywordsIntoNotes(appUser);
+		searcherService.searchForKeywordsIntoNotes(appUser, date);
 		
 		List< FacebookPostKeywordResult >	dbResults	=	(List<FacebookPostKeywordResult>) getFacebookPostKeywordResultDao().GetByApplicationUser( appUser );
 		
@@ -130,7 +132,7 @@ public class KeywordSearcherLogicForNotesTester	extends	AbstractKeywordSearcherL
 			facebookPostDownloads.addAll( temp );
 		}
 		
-		searcherService.searchForKeywordsIntoNotes(appUser);
+		searcherService.searchForKeywordsIntoNotes(appUser, date);
 		
 		List< FacebookPostKeywordResult >	dbResults	=	(List<FacebookPostKeywordResult>) getFacebookPostKeywordResultDao().GetByApplicationUser( appUser );
 		

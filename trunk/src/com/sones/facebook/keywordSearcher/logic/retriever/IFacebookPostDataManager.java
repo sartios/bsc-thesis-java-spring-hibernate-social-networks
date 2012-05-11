@@ -1,5 +1,7 @@
 package com.sones.facebook.keywordSearcher.logic.retriever;
 
+import java.util.Date;
+
 import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.usermanager.model.ApplicationUser;
 
@@ -16,5 +18,5 @@ public interface IFacebookPostDataManager
 	 * @param appUser
 	 * @return {@link FacebookPostDownload}s that were not searched for keywords.
 	 */
-	public	Iterable<FacebookPostDownload>	getStatusMessagesForKeywordSearch( ApplicationUser appUser );
+	public	Iterable<FacebookPostDownload>	getStatusMessagesForKeywordSearch(ApplicationUser appUser, Date date);
 }

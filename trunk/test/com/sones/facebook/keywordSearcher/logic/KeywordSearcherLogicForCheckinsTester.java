@@ -3,6 +3,7 @@ package com.sones.facebook.keywordSearcher.logic;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -27,6 +28,7 @@ public class KeywordSearcherLogicForCheckinsTester	extends	AbstractKeywordSearch
 	private ICheckinDao checkinDao;
 	private	IKeywordSearcherService	searcherService;
 	private	ICheckinSearchDataManager	dataManager;
+	private Date date;
 	
 	public	KeywordSearcherLogicForCheckinsTester()
 	{
@@ -35,6 +37,7 @@ public class KeywordSearcherLogicForCheckinsTester	extends	AbstractKeywordSearch
 		searcherService	=	( KeywordSearcherService )getContext().getBean( "keywordSearcherService" );
 		dataManager	=	( CheckinSearchDataManager )getContext().getBean("checkinDataRetriever");
 		searcherService.addDataRetriever(dataManager);
+		date = new Date(0);
 	}
 
 	@Before
@@ -59,7 +62,7 @@ public class KeywordSearcherLogicForCheckinsTester	extends	AbstractKeywordSearch
 			facebookPostDownloads.addAll( temp );
 		}
 		
-		searcherService.searchForKeywordsIntoCheckins(appUser);
+		searcherService.searchForKeywordsIntoCheckins(appUser, date);
 		
 		List< FacebookPostKeywordResult >	dbResults	=	(List<FacebookPostKeywordResult>) getFacebookPostKeywordResultDao().GetByApplicationUser( appUser );
 		
@@ -94,7 +97,7 @@ public class KeywordSearcherLogicForCheckinsTester	extends	AbstractKeywordSearch
 			facebookPostDownloads.addAll( temp );
 		}
 		
-		searcherService.searchForKeywordsIntoCheckins(appUser);
+		searcherService.searchForKeywordsIntoCheckins(appUser, date);
 		
 		List< FacebookPostKeywordResult >	dbResults	=	(List<FacebookPostKeywordResult>) getFacebookPostKeywordResultDao().GetByApplicationUser( appUser );
 		
@@ -129,7 +132,7 @@ public class KeywordSearcherLogicForCheckinsTester	extends	AbstractKeywordSearch
 			facebookPostDownloads.addAll( temp );
 		}
 		
-		searcherService.searchForKeywordsIntoCheckins(appUser);
+		searcherService.searchForKeywordsIntoCheckins(appUser, date);
 		
 		List< FacebookPostKeywordResult >	dbResults	=	(List<FacebookPostKeywordResult>) getFacebookPostKeywordResultDao().GetByApplicationUser( appUser );
 		

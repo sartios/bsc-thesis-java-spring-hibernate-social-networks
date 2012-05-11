@@ -1,5 +1,7 @@
 package com.sones.facebook.keywordSearcher.logic.retriever;
 
+import java.util.Date;
+
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
 import com.sones.usermanager.model.ApplicationUser;
 
@@ -12,6 +14,6 @@ public interface ICheckinSearchDataManager	extends	IDataRetriever
 	 * @param appUser
 	 * @return Checkins ready for search.
 	 */
-	public	Iterable<ISearchableFacebookFeed>	getCheckinForSearch( ApplicationUser appUser );
+	public	Iterable<ISearchableFacebookFeed>	getCheckinForSearch( ApplicationUser appUser , Date date );
 	
 }
