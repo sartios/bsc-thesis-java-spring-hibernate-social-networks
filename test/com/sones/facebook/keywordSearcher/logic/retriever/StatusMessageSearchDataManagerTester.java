@@ -27,7 +27,6 @@ import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.downloader.model.FacebookPostDownloadId;
 import com.sones.facebook.keywordSearcher.dao.IKeywordSearchDao;
 import com.sones.facebook.keywordSearcher.dao.hibernate.HibernateKeywordSearchDao;
-import com.sones.facebook.keywordSearcher.logic.exceptions.NoKeywordSearchException;
 import com.sones.facebook.keywordSearcher.model.KeywordSearch;
 import com.sones.facebook.model.feed.FacebookPost;
 import com.sones.facebook.model.feed.StatusMessage;
@@ -58,14 +57,6 @@ public class StatusMessageSearchDataManagerTester
 	public	void	tearDown()
 	{
 		dataManager	=	null;
-	}
-	
-	@Test(expected=NoKeywordSearchException.class)
-	public	void	testGetStatusMessagesForSearchWhenUserHasNotSearchAgainForKeywords()
-	{
-		ApplicationUser	appUser	=	new	ApplicationUser();
-		appUser.setId( "1" );
-		dataManager.getStatusMessagesForSearch( appUser );
 	}
 	
 	@Test
@@ -132,7 +123,7 @@ public class StatusMessageSearchDataManagerTester
 		keywordSearch.setDate( downloads.get( 1 ).getDate() );
 		keywordSearchDao.Save( keywordSearch );
 		
-		Set<ISearchableFacebookFeed> results	=	(Set<ISearchableFacebookFeed>) dataManager.getStatusMessagesForSearch( appUser );
+		Set<ISearchableFacebookFeed> results	=	(Set<ISearchableFacebookFeed>) dataManager.getStatusMessagesForSearch( appUser, keywordSearch.getDate() );
 		assertEquals( 12 , results.size() );
 		
 		keywordSearchDao.Delete( keywordSearch );

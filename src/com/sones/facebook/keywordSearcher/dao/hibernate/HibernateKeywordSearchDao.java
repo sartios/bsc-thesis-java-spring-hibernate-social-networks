@@ -43,18 +43,17 @@ public class HibernateKeywordSearchDao extends HibernateGenericDao<KeywordSearch
 		Session session = getHibernateTemplate().getSessionFactory().openSession();
 		Criteria criteria = session.createCriteria(KeywordSearch.class)
 			.addOrder(Order.desc("date"))
-			.createCriteria("user")
-			.add(Restrictions.eq("id", appUser.getId()))
-			.setFirstResult(0);
+			.add(Restrictions.eq("user", appUser))
+			.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		
-		List	results	=	criteria.list();
-		int	resultsSize	=	results.size();
+		List<KeywordSearch>	results	=	criteria.list();
+		session.close();
 		KeywordSearch	search	=	null;
-		if( resultsSize <= 0 )
+		if(results.isEmpty() == true )
 		{
 			_LOGGER.info("There is not a keyword search for this application user.");
 		}
-		else	if	( resultsSize > 0 )
+		else
 		{
 			search	=	(KeywordSearch) results.get( 0 );
 		}

@@ -61,6 +61,8 @@ public class KeywordSearcherService implements IKeywordSearcherService
 	private	IFacebookPostKeywordResultDao	keywordSearchResultDao;
 	
 	private	IIdMaker	idMaker;
+	
+	private Set<FacebookPostKeywordResult> results;
 
 	/**
 	 * Initializes the object.
@@ -68,22 +70,33 @@ public class KeywordSearcherService implements IKeywordSearcherService
 	public	KeywordSearcherService()
 	{
 		_LOGGER	=	Logger.getLogger( KeywordSearcherService.class );
+		results = new HashSet<FacebookPostKeywordResult>();
 	}
 	
 	@Override
 	public void searchForKeywordsIntoAllFacebookPostTypes( ApplicationUser appUser ) 
 	{
-		searchForKeywordsIntoCheckins( appUser );
-		searchForKeywordsIntoPhotos( appUser );
-		searchForKeywordsIntoLinks( appUser );
-		searchForKeywordsIntoStatusMessages( appUser );
-		searchForKeywordsIntoVideos( appUser );
-		searchForKeywordsIntoNotes( appUser );
-
+		KeywordSearch search = keywordSearchDao.getLastKeywordSearchByAppUser(appUser);
+		Date date;
+		if(search == null)
+		{
+			date = new Date(0);
+		}
+		else
+		{
+			date = search.getDate();
+		}
+		searchForKeywordsIntoCheckins( appUser, date );
+		searchForKeywordsIntoPhotos( appUser, date );
+		searchForKeywordsIntoLinks( appUser, date );
+		searchForKeywordsIntoStatusMessages( appUser, date );
+		searchForKeywordsIntoVideos( appUser, date );
+		searchForKeywordsIntoNotes( appUser, date );
+		saveKeywordSearchResults( results );
 	}
 	
 	@Override
-	public void searchForKeywordsIntoLinks(ApplicationUser appUser) 
+	public void searchForKeywordsIntoLinks( ApplicationUser appUser , Date date ) 
 	{
 		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
@@ -95,12 +108,12 @@ public class KeywordSearcherService implements IKeywordSearcherService
 				break;
 			}
 		}
-		search( dataRetriever , appUser );
+		search( dataRetriever , appUser, date );
 
 	}
 
 	@Override
-	public void searchForKeywordsIntoNotes(ApplicationUser appUser) 
+	public void searchForKeywordsIntoNotes( ApplicationUser appUser , Date date ) 
 	{
 		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
@@ -112,12 +125,12 @@ public class KeywordSearcherService implements IKeywordSearcherService
 				break;
 			}
 		}
-		search( dataRetriever , appUser );
+		search( dataRetriever , appUser, date );
 
 	}
 
 	@Override
-	public void searchForKeywordsIntoPhotos(ApplicationUser appUser) 
+	public void searchForKeywordsIntoPhotos( ApplicationUser appUser , Date date )
 	{
 		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
@@ -129,11 +142,11 @@ public class KeywordSearcherService implements IKeywordSearcherService
 				break;
 			}
 		}
-		search( dataRetriever , appUser );
+		search( dataRetriever , appUser, date );
 	}
 
 	@Override
-	public void searchForKeywordsIntoStatusMessages(ApplicationUser appUser) 
+	public void searchForKeywordsIntoStatusMessages( ApplicationUser appUser , Date date )
 	{
 		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
@@ -145,12 +158,12 @@ public class KeywordSearcherService implements IKeywordSearcherService
 				break;
 			}
 		}
-		search( dataRetriever , appUser );
+		search( dataRetriever , appUser, date );
 
 	}
 
 	@Override
-	public void searchForKeywordsIntoVideos(ApplicationUser appUser) 
+	public void searchForKeywordsIntoVideos( ApplicationUser appUser , Date date )
 	{
 		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
@@ -162,12 +175,12 @@ public class KeywordSearcherService implements IKeywordSearcherService
 				break;
 			}
 		}
-		search( dataRetriever , appUser );
+		search( dataRetriever , appUser, date );
 
 	}
 
 	@Override
-	public void searchForKeywordsIntoCheckins(ApplicationUser appUser) 
+	public void searchForKeywordsIntoCheckins( ApplicationUser appUser , Date date )
 	{
 		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
@@ -179,15 +192,15 @@ public class KeywordSearcherService implements IKeywordSearcherService
 				break;
 			}
 		}
-		search( dataRetriever , appUser );
+		search( dataRetriever , appUser, date );
 	}
 
-	private void search( IDataRetriever dataRetriever , ApplicationUser appUser ) 
+	private void search( IDataRetriever dataRetriever , ApplicationUser appUser, Date date ) 
 	{
 		validateDataRetriever(  dataRetriever );
 		Iterable<KeywordSearchDto>	keywords	=	keywordRetriever.getApplicationUserKeywords( appUser );
 		validateKeywords( keywords );
-		Iterable< ISearchableFacebookFeed >	posts	=	dataRetriever.getDataToBeSearched( appUser );
+		Iterable< ISearchableFacebookFeed >	posts	=	dataRetriever.getDataToBeSearched( appUser, date );
 		validatePosts( posts );
 		KeywordSearch	search	=	getKeywordSearch( appUser );	
 		keywordSearchDao.Save( search );
@@ -197,8 +210,8 @@ public class KeywordSearcherService implements IKeywordSearcherService
 			validateResults( resultsDto );
 			if( resultsDto != null )
 			{
-				Set< FacebookPostKeywordResult >	results	=	getResultsFromDto( resultsDto , search , appUser );
-				saveKeywordSearchResults( results );
+				Set< FacebookPostKeywordResult >	tmpresults	=	getResultsFromDto( resultsDto , search , appUser );
+				results.addAll(tmpresults);
 			}
 		}
 		

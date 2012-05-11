@@ -40,11 +40,11 @@ public class StatusMessageSearchDataManager	extends	AbstractDataManager implemen
 	}
 
 	@Override
-	public Iterable<ISearchableFacebookFeed> getStatusMessagesForSearch( ApplicationUser appUser )
+	public Iterable<ISearchableFacebookFeed> getStatusMessagesForSearch( ApplicationUser appUser, Date date )
 	{
 
 		Set<ISearchableFacebookFeed> posts = new HashSet<ISearchableFacebookFeed>();
-		Set<FacebookPostDownload>	downloadedPosts	=	(Set<FacebookPostDownload>) getManager().getStatusMessagesForKeywordSearch(appUser);
+		Set<FacebookPostDownload>	downloadedPosts	=	(Set<FacebookPostDownload>) getManager().getStatusMessagesForKeywordSearch(appUser, date);
 		if( downloadedPosts == null )
 		{
 			_LOGGER.error( "There are not status messages to be searched" );
@@ -82,7 +82,7 @@ public class StatusMessageSearchDataManager	extends	AbstractDataManager implemen
 
 	@Override
 	public Iterable<ISearchableFacebookFeed> getDataToBeSearched(
-			ApplicationUser appUser) {
-		return	getStatusMessagesForSearch( appUser );
+			ApplicationUser appUser, Date date) {
+		return	getStatusMessagesForSearch( appUser, date );
 	}
 }

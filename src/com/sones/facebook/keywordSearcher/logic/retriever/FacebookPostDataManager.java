@@ -9,8 +9,6 @@ import org.apache.log4j.Logger;
 import com.sones.facebook.downloader.dao.IFacebookPostDownloadDao;
 import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.keywordSearcher.dao.IKeywordSearchDao;
-import com.sones.facebook.keywordSearcher.logic.exceptions.NullDateException;
-import com.sones.facebook.keywordSearcher.model.KeywordSearch;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.StatusMessageSearchDto;
 import com.sones.usermanager.model.ApplicationUser;
 
@@ -37,25 +35,8 @@ public class FacebookPostDataManager implements	IFacebookPostDataManager
 	}
 
 	@Override
-	public Iterable<FacebookPostDownload> getStatusMessagesForKeywordSearch(
-			ApplicationUser appUser) {
-		Date	date	=	null;
-		KeywordSearch	search = keywordSearchDao.getLastKeywordSearchByAppUser( appUser );
-		if( search == null )
-		{
-			_LOGGER.error("Application user has not download posts, thus he can't search for keywords");
-			///throw	new	NoKeywordSearchException();
-			date	=	new	Date(0);
-		}
-		if( search != null)
-		{
-			date = search.getDate();
-		}
-		if( date == null )
-		{
-			_LOGGER.error( "Date of search can't be null!" );
-			throw	new	NullDateException("Date of search can't be null!");
-		}
+	public Iterable<FacebookPostDownload> getStatusMessagesForKeywordSearch(ApplicationUser appUser, Date date) 
+	{
 		_LOGGER.warn( "Retrieving posts that were downloaded after: " + date.toString() );
 		Set<StatusMessageSearchDto> posts = new HashSet<StatusMessageSearchDto>();
 		Set<FacebookPostDownload>	downloadedPosts	=	(Set<FacebookPostDownload>) facebookPostDownloadDao.getFacebookPostAfterDateByAppUser(date, appUser);

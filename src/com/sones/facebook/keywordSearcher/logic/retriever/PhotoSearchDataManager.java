@@ -1,5 +1,6 @@
 package com.sones.facebook.keywordSearcher.logic.retriever;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,10 +33,10 @@ public class PhotoSearchDataManager	extends	AbstractDataManager	implements	IPhot
 	}
 	
 	@Override
-	public Iterable<ISearchableFacebookFeed> getPhotoForKeywordSearch(ApplicationUser appUser) 
+	public Iterable<ISearchableFacebookFeed> getPhotoForKeywordSearch(ApplicationUser appUser, Date date) 
 	{
 		Set<ISearchableFacebookFeed> posts = new HashSet<ISearchableFacebookFeed>();
-		Set<FacebookPostDownload>	downloadedPosts	=	(Set<FacebookPostDownload>) getManager().getStatusMessagesForKeywordSearch(appUser);
+		Set<FacebookPostDownload>	downloadedPosts	=	(Set<FacebookPostDownload>) getManager().getStatusMessagesForKeywordSearch(appUser, date);
 		if( downloadedPosts != null )
 		{
 			for( FacebookPostDownload post : downloadedPosts )
@@ -68,7 +69,7 @@ public class PhotoSearchDataManager	extends	AbstractDataManager	implements	IPhot
 
 	@Override
 	public Iterable<ISearchableFacebookFeed> getDataToBeSearched(
-			ApplicationUser appUser) {
-		return	getPhotoForKeywordSearch(appUser);
+			ApplicationUser appUser, Date date) {
+		return	getPhotoForKeywordSearch(appUser, date);
 	}
 }

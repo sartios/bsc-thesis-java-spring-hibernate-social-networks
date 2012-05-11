@@ -1,5 +1,7 @@
 package com.sones.facebook.keywordSearcher.logic.retriever;
 
+import java.util.Date;
+
 import com.sones.facebook.model.feed.Video;
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
 import com.sones.usermanager.model.ApplicationUser;
@@ -18,6 +20,6 @@ public interface IVideoSearchDataManager	extends	IDataRetriever
 	 * @param appUser
 	 * @return Videos ready for search.
 	 */
-	public	Iterable<ISearchableFacebookFeed>	getVideoForKeywordSearch( ApplicationUser appUser );
+	public	Iterable<ISearchableFacebookFeed>	getVideoForKeywordSearch( ApplicationUser appUser , Date date );
 	
 }

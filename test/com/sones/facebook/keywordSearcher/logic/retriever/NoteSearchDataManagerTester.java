@@ -27,7 +27,6 @@ import com.sones.facebook.downloader.model.FacebookPostDownload;
 import com.sones.facebook.downloader.model.FacebookPostDownloadId;
 import com.sones.facebook.keywordSearcher.dao.IKeywordSearchDao;
 import com.sones.facebook.keywordSearcher.dao.hibernate.HibernateKeywordSearchDao;
-import com.sones.facebook.keywordSearcher.logic.exceptions.NoKeywordSearchException;
 import com.sones.facebook.keywordSearcher.model.KeywordSearch;
 import com.sones.facebook.model.feed.FacebookPost;
 import com.sones.facebook.model.feed.Note;
@@ -57,14 +56,6 @@ public class NoteSearchDataManagerTester
 	public	void	tearDown()
 	{
 		dataManager	=	null;
-	}
-	
-	@Test(expected=NoKeywordSearchException.class)
-	public	void	testGetNoteForSearchWhenUserHasNotSearchAgainForKeywords()
-	{
-		ApplicationUser	appUser	=	new	ApplicationUser();
-		appUser.setId( "1" );
-		dataManager.getNoteForSearch( appUser );
 	}
 	
 	@Test
@@ -130,7 +121,7 @@ public class NoteSearchDataManagerTester
 		keywordSearch.setDate( downloads.get( 1 ).getDate() );
 		keywordSearchDao.Save( keywordSearch );
 		
-		Set<ISearchableFacebookFeed> results	=	(Set<ISearchableFacebookFeed>) dataManager.getNoteForSearch( appUser );
+		Set<ISearchableFacebookFeed> results	=	(Set<ISearchableFacebookFeed>) dataManager.getNoteForSearch( appUser, keywordSearch.getDate() );
 		assertEquals( 12 , results.size() );
 		
 		keywordSearchDao.Delete( keywordSearch );

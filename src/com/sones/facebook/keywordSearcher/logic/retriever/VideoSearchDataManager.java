@@ -1,5 +1,6 @@
 package com.sones.facebook.keywordSearcher.logic.retriever;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,10 +36,10 @@ public class VideoSearchDataManager extends	AbstractDataManager	implements	IVide
 	
 	@Override
 	public Iterable<ISearchableFacebookFeed> getVideoForKeywordSearch(
-			ApplicationUser appUser) {
+			ApplicationUser appUser, Date date) {
 		
 		Set<ISearchableFacebookFeed> posts = new HashSet<ISearchableFacebookFeed>();
-		Set<FacebookPostDownload>	downloadedPosts	=	(Set<FacebookPostDownload>) getManager().getStatusMessagesForKeywordSearch(appUser);
+		Set<FacebookPostDownload>	downloadedPosts	=	(Set<FacebookPostDownload>) getManager().getStatusMessagesForKeywordSearch(appUser, date);
 		if( downloadedPosts != null )
 		{
 			for( FacebookPostDownload post : downloadedPosts )
@@ -72,8 +73,8 @@ public class VideoSearchDataManager extends	AbstractDataManager	implements	IVide
 
 	@Override
 	public Iterable<ISearchableFacebookFeed> getDataToBeSearched(
-			ApplicationUser appUser) {
-		return	getVideoForKeywordSearch(appUser);
+			ApplicationUser appUser, Date date) {
+		return	getVideoForKeywordSearch(appUser, date);
 	}
 
 }

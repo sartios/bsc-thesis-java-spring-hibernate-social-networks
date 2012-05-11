@@ -1,5 +1,7 @@
 package com.sones.facebook.keywordSearcher.logic.retriever;
 
+import java.util.Date;
+
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
 import com.sones.usermanager.model.ApplicationUser;
 
@@ -12,7 +14,7 @@ public interface ILinkSearchDataManager	extends	IDataRetriever
 	 * @param appUser
 	 * @return Links ready for search.
 	 */
-	public	Iterable<ISearchableFacebookFeed>	getLinkForSearch( ApplicationUser appUser );
+	public	Iterable<ISearchableFacebookFeed>	getLinkForSearch( ApplicationUser appUser , Date date );
 
 	
 }

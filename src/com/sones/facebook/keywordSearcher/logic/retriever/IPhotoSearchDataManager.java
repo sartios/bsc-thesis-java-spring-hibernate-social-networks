@@ -1,5 +1,7 @@
 package com.sones.facebook.keywordSearcher.logic.retriever;
 
+import java.util.Date;
+
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
 import com.sones.usermanager.model.ApplicationUser;
 
@@ -12,6 +14,6 @@ public interface IPhotoSearchDataManager	extends	IDataRetriever
 	 * @param appUser
 	 * @return Photos ready for search.
 	 */
-	public	Iterable<ISearchableFacebookFeed>	getPhotoForKeywordSearch( ApplicationUser appUser );
+	public	Iterable<ISearchableFacebookFeed>	getPhotoForKeywordSearch( ApplicationUser appUser , Date date );
 	
 }
