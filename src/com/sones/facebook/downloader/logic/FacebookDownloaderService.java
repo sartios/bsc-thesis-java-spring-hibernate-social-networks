@@ -73,6 +73,8 @@ public class FacebookDownloaderService	implements	IFacebookDownloaderService
 	 */
 	private	IFacebookPostDownloadDao	postDownloadDao;
 	
+	private Date date = null;
+	
 	/**
 	 * Initializes the object.
 	 */
@@ -107,6 +109,12 @@ public class FacebookDownloaderService	implements	IFacebookDownloaderService
 		this.postDownloadDao = postDownloadDao;
 	}
 
+	@Override
+	public void Stop() 
+	{
+		date = null;
+	}
+	
 	/**
 	 * ..
 	 */
@@ -163,118 +171,6 @@ public class FacebookDownloaderService	implements	IFacebookDownloaderService
 		return appUserSources;
 	}
 
-	/**
-	 * @return the tokenDao
-	 */
-	public IFacebookTokenDao getTokenDao() {
-		return tokenDao;
-	}
-
-
-	/**
-	 * @param tokenDao the tokenDao to set
-	 */
-	public void setTokenDao(IFacebookTokenDao tokenDao) {
-		this.tokenDao = tokenDao;
-	}
-
-
-	/**
-	 * @return the appUserSourceDao
-	 */
-	public IApplicationUserSourceDao getAppUserSourceDao() {
-		return appUserSourceDao;
-	}
-
-
-	/**
-	 * @param appUserSourceDao the appUserSourceDao to set
-	 */
-	public void setAppUserSourceDao(IApplicationUserSourceDao appUserSourceDao) {
-		this.appUserSourceDao = appUserSourceDao;
-	}
-
-
-	/**
-	 * @return the downloadDao
-	 */
-	public IFacebookDownloadDao getDownloadDao() {
-		return downloadDao;
-	}
-
-
-	/**
-	 * @param downloadDao the downloadDao to set
-	 */
-	public void setDownloadDao(IFacebookDownloadDao downloadDao) {
-		this.downloadDao = downloadDao;
-	}
-
-
-	/**
-	 * @return the graphApiHandler
-	 */
-	public IFacebookGraphApiHandler getGraphApiHandler() {
-		return graphApiHandler;
-	}
-
-
-	/**
-	 * @param graphApiHandler the graphApiHandler to set
-	 */
-	public void setGraphApiHandler(IFacebookGraphApiHandler graphApiHandler) {
-		this.graphApiHandler = graphApiHandler;
-	}
-
-
-	/**
-	 * @return the saverService
-	 */
-	public IFacebookPostSaverLogic getSaverService() {
-		return saverService;
-	}
-
-
-	/**
-	 * @param saverService the saverService to set
-	 */
-	public void setSaverService(IFacebookPostSaverLogic saverService) {
-		this.saverService = saverService;
-	}
-
-
-	/**
-	 * @return the mapper
-	 */
-	public DozerBeanMapper getMapper() {
-		return mapper;
-	}
-
-
-	/**
-	 * @param mapper the mapper to set
-	 */
-	public void setMapper(DozerBeanMapper mapper) {
-		this.mapper = mapper;
-	}
-
-
-	/**
-	 * @return the postDownloadDao
-	 */
-	public IFacebookPostDownloadDao getPostDownloadDao() {
-		return postDownloadDao;
-	}
-
-
-	/**
-	 * @param postDownloadDao the postDownloadDao to set
-	 */
-	public void setPostDownloadDao(IFacebookPostDownloadDao postDownloadDao) {
-		this.postDownloadDao = postDownloadDao;
-	}
-
-
 	private	Set< FacebookPostDownload >	SaveFacebookPostsPerDownloadAndReturn( Set< WallSourceFacebookPostCreateDto >	sourcePostsDtos , FacebookDownload	currentDownload  )
 	{
 		Set< FacebookPostDownload >	postDownloads	=	new	HashSet< FacebookPostDownload >();
@@ -297,15 +193,21 @@ public class FacebookDownloaderService	implements	IFacebookDownloaderService
 	
 	private	Date	GetDownloadDate( ApplicationUser appUser )
 	{
-		FacebookDownload	download	=	downloadDao.GetLastAppUserDownload( appUser );
-		Date	date	=	null;
-		if( IsFirstTimeThatDownloads( download ) )
+		if(this.date != null)
 		{
-			date	=	new	Date(0);
+			FacebookDownload download = downloadDao.GetLastAppUserDownload( appUser );
+			if( IsFirstTimeThatDownloads( download ) )
+			{
+				date	=	new	Date(0);
+			}
+			else
+			{
+				date	=	download.getDate();
+			}
 		}
 		else
 		{
-			date	=	download.getDate();
+			date	=	new	Date(0);
 		}
 		return	date;
 	}

@@ -8,6 +8,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.sones.facebook.controller.results.KeywordsController;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 import com.sones.usermanager.model.ApplicationUser;
 
 import java.awt.GridBagConstraints;
@@ -33,7 +34,7 @@ public class KeywordsFrame extends JFrame {
 	private JTextField jNumOfFoundTextField = null;
 	private JTextField jTimeRangeTextField = null;
 	private JButton jButton = null;
-	private ApplicationUser appUser = null;
+	private ApplicationUserViewDto userDto;
 	
 	/**
 	 * This is the default constructor
@@ -42,8 +43,6 @@ public class KeywordsFrame extends JFrame {
 		super();
 		initialize();
 		initTableModel();
-		appUser = new ApplicationUser();
-		appUser.setId("1");
 	}
 
 	/**
@@ -205,7 +204,8 @@ public class KeywordsFrame extends JFrame {
 			jButton.setText("Show");
 			jButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					ApplicationUser appUser = new ApplicationUser();
+					appUser.setId(userDto.getUserID());
 					clearKeywordResults();
 					Integer timeOfFounds = new Integer( jNumOfFoundTextField.getText() );
 					Integer time = new Integer( jTimeRangeTextField.getText() );
@@ -228,6 +228,20 @@ public class KeywordsFrame extends JFrame {
 	private void clearKeywordResults()
 	{
 		tableModel.setRowCount(0);
+	}
+
+	/**
+	 * @param userDto the userDto to set
+	 */
+	public void setUserDto(ApplicationUserViewDto userDto) {
+		this.userDto = userDto;
+	}
+
+	/**
+	 * @return the userDto
+	 */
+	public ApplicationUserViewDto getUserDto() {
+		return userDto;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

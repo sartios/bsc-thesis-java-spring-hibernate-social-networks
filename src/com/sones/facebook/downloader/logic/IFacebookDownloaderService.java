@@ -8,7 +8,8 @@ import com.sones.usermanager.model.ApplicationUser;
  * @author sartios.sones@gmail.com.
  *
  */
-public	interface	IFacebookDownloaderService
+public interface IFacebookDownloaderService
 {
-	public	void	DownloadWallPosts( ApplicationUser appUser );
+	public void DownloadWallPosts( ApplicationUser appUser );
+	public void Stop();
 }

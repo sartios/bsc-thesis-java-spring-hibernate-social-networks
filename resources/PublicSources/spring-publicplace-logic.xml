@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<import resource="../spring-hibernate.xml"/>
+<import resource="../spring-hibernate.xml"/>
 
-	<bean id="service" class="com.sones.facebook.publicsource.logic.PublicSourceService">
+	<bean id="publicSourceDownloaderService" class="com.sones.facebook.publicsource.logic.PublicSourceService">
 		<constructor-arg name="graphApiHandler" ref="graphApiHandler"/>
 		<constructor-arg name="placeCategoryDao" ref="placeCategoryDao"/>
 		<constructor-arg name="placeCriteriaDao" ref="placeCriteriaDao"/>
@@ -14,6 +14,14 @@
 		<constructor-arg name="appUserDao" ref="appUserDao"/>
 		<constructor-arg name="tokenDao" ref="tokenDao"/>
 	</bean>
+	
+	<bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
+	  	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	 </bean>
+	 
+	 <bean id="tokenDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookTokenDao">
+	 	<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	 </bean>
 	
 	<bean id="graphApiHandler" class="com.sones.facebook.graphApi.GraphApiHandler.FacebookGraphApiHandler">
 		<property name="jsonHandler" ref="jsonHandler"/>
@@ -25,14 +33,6 @@
 	
 	<bean id="restHandler" class="com.sones.facebook.graphApi.FacebookRestHandler.FacebookRestHandler">
 	</bean>
-	 
-	 <bean id="appUserDao" class="com.sones.usermanager.dao.hibernate.HibernateApplicationUserDao">
-	  	<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	 </bean>
-	 
-	 <bean id="tokenDao" class="com.sones.facebook.tokenmanager.dao.hibernate.HibernateFacebookTokenDao">
-	 	<property name="hibernateTemplate" ref="hibernateTemplate"/>
-	 </bean>
 	 
 	<bean id="placeCategoryDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceCategoryDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
@@ -49,5 +49,5 @@
 	<bean id="criteriaDao" class="com.sones.facebook.publicsource.dao.hibernate.HibernateCriteriaDao">
 		<property name="hibernateTemplate" ref="hibernateTemplate"/>
 	</bean>
-	
+
 </beans>

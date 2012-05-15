@@ -20,4 +20,13 @@ public interface IPublicSourceService
 	 * @throws IllegalArgumentException if any of the parameters is null.
 	 */
 	public void DownloadPublicPlaces( Iterable< Criteria > criterias, FacebookToken token, ApplicationUser appUser );
+
+		/**
+	 * Downloads the public places that agree on criteria.
+	 * @param criterias the criterias to search for
+	 * @param token the facebook accesss token.
+	 * @param appUser the application user who requests the service.
+	 * @throws IllegalArgumentException if any of the parameters is null.
+	 */
+	public void DownloadPublicPlaces(Iterable<String> criteriaValues, String appUserID, Iterable<String> cities, String radical);
 }

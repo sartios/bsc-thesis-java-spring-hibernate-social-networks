@@ -43,5 +43,4 @@ public class PostDownloadingTimerTask extends TimerTask
 		_LOGGER.warn("Downloading...");
 		service.DownloadWallPosts(appUser);
 	}
-
 }

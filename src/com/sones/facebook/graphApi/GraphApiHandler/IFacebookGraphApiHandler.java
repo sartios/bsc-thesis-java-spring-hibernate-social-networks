@@ -41,10 +41,11 @@ public interface IFacebookGraphApiHandler
 	 * @param token the facebook access token.
 	 * @throws IllegalArgumentException if any of the parameters is null.
 	 */
-	public	Iterable< Place >	GetPublicPlaces( Criteria criteria, FacebookToken token );
+	public	Iterable< Place >	GetPublicPlaces( Criteria criteria, FacebookToken token, String city, String radical );
 	
 	public Iterable<FacebookFriend> GetFacebookFriends(FacebookAccount account, FacebookToken token);
 	
 	public FacebookAccount GetFacebookAccount(FacebookToken token);
 	
+	public Iterable<Place> GetPublicPlaces( Criteria criteria, FacebookToken token );
 }

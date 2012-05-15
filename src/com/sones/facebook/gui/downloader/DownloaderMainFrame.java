@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JButton;
 
 import com.sones.facebook.controller.downloader.DownloaderMainFrameController;
+import com.sones.facebook.gui.sources.FacebookSourceManagerFrame;
 import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 
 import java.awt.GridBagConstraints;
@@ -24,6 +25,10 @@ public class DownloaderMainFrame extends JFrame {
 	private JButton jButton = null;
 	private DownloaderMainFrameController controller;
 	private ApplicationUserViewDto userDto;
+	private JButton jButton1 = null;
+	private JMenu jMenu1 = null;
+	private JMenuItem jMenuItem1 = null;
+	private FacebookSourceManagerFrame sourceManagerFrame;
 	
 	/**
 	 * This is the default constructor
@@ -55,12 +60,16 @@ public class DownloaderMainFrame extends JFrame {
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			GridBagConstraints gridBagConstraints12 = new GridBagConstraints();
+			gridBagConstraints12.gridx = 0;
+			gridBagConstraints12.gridy = 1;
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 0;
 			jContentPane = new JPanel();
 			jContentPane.setLayout(new GridBagLayout());
 			jContentPane.add(getJButton(), gridBagConstraints);
+			jContentPane.add(getJButton1(), gridBagConstraints12);
 		}
 		return jContentPane;
 	}
@@ -74,6 +83,7 @@ public class DownloaderMainFrame extends JFrame {
 		if (jJMenuBar == null) {
 			jJMenuBar = new JMenuBar();
 			jJMenuBar.add(getJMenu());
+			jJMenuBar.add(getJMenu1());
 		}
 		return jJMenuBar;
 	}
@@ -146,4 +156,61 @@ public class DownloaderMainFrame extends JFrame {
 		return userDto;
 	}
 
+	/**
+	 * This method initializes jButton1	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJButton1() {
+		if (jButton1 == null) {
+			jButton1 = new JButton();
+			jButton1.setText("Stop Downloading");
+			jButton1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					controller.stopDownloading();
+				}
+			});
+		}
+		return jButton1;
+	}
+
+	/**
+	 * This method initializes jMenu1	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JMenu getJMenu1() {
+		if (jMenu1 == null) {
+			jMenu1 = new JMenu();
+			jMenu1.setText("Sources");
+			jMenu1.add(getJMenuItem1());
+		}
+		return jMenu1;
+	}
+
+	/**
+	 * This method initializes jMenuItem1	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJMenuItem1() {
+		if (jMenuItem1 == null) {
+			jMenuItem1 = new JMenuItem();
+			jMenuItem1.setText("Manage");
+			jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					sourceManagerFrame.show();
+				}
+			});
+		}
+		return jMenuItem1;
+	}
+
+	/**
+	 * @param sourceManagerFrame the sourceManagerFrame to set
+	 */
+	public void setSourceManagerFrame(FacebookSourceManagerFrame sourceManagerFrame) {
+		this.sourceManagerFrame = sourceManagerFrame;
+	}
 }  //  @jve:decl-index=0:visual-constraint="10,10"

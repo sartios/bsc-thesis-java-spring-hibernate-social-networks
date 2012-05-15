@@ -289,6 +289,7 @@ public class WallFeedFactory implements IWallFeedFactory
 		String	name	=	"";
 		String 	description = "";
 		String	picture	=	"";
+		String source = "";
 		try
 		{
 			name	=	object.get("name").toString();
@@ -313,6 +314,15 @@ public class WallFeedFactory implements IWallFeedFactory
 		{
 
 		}
+		
+		try
+		{
+			source	=	object.get("source").toString();
+		}
+		catch (MorphException e) 
+		{
+
+		}
 		WallVideoCreateDto video =	new	WallVideoCreateDto();
 		video.setType("Video");
 		video.setComments(getComments(object));
@@ -322,6 +332,7 @@ public class WallFeedFactory implements IWallFeedFactory
 		video.setName(name);
 		video.setDescription(description);
 		video.setPicture(picture);
+		video.setSource(source);
 		return video;
 	}
 

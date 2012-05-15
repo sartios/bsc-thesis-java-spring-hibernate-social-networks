@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import java.awt.Insets;
 import javax.swing.JTextArea;
 
+import com.sones.facebook.controller.posts.VideoController;
 import com.sones.sharedDto.facebook.view.posts.VideoViewDto;
 
 public class VideoFrame extends JFrame {
@@ -29,12 +30,17 @@ public class VideoFrame extends JFrame {
 	private JLabel jDescriptionLabel = null;
 	private JTextArea jDescriptionTextArea = null;
 	private VideoViewDto postDto;
+	private VideoController controller;
+	private CommentFrame commentFrame;
+	
 	/**
 	 * This is the default constructor
 	 */
 	public VideoFrame() {
 		super();
 		initialize();
+		controller = new VideoController();
+		commentFrame = new CommentFrame();
 	}
 
 	/**
@@ -126,6 +132,12 @@ public class VideoFrame extends JFrame {
 		if (jButton == null) {
 			jButton = new JButton();
 			jButton.setText("Show comments");
+			jButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					commentFrame.setComments(postDto.getComments());
+				}
+			});
 		}
 		return jButton;
 	}
@@ -139,6 +151,14 @@ public class VideoFrame extends JFrame {
 		if (jButton1 == null) {
 			jButton1 = new JButton();
 			jButton1.setText("Play video");
+			jButton1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					String url = postDto.getSource();
+					System.out.println(url);
+					controller.goToVideo(url);
+				}
+			});
 		}
 		return jButton1;
 	}

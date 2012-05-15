@@ -27,12 +27,15 @@ public class PhotoFrame extends JFrame {
 	private JLabel jUsernameValueLabel = null;
 	private JButton jButton = null;
 	private PhotoViewDto postDto;
+	private CommentFrame commentFrame;
+	
 	/**
 	 * This is the default constructor
 	 */
 	public PhotoFrame() {
 		super();
 		initialize();
+		commentFrame = new CommentFrame();
 	}
 
 	/**
@@ -92,6 +95,12 @@ public class PhotoFrame extends JFrame {
 		if (jButton == null) {
 			jButton = new JButton();
 			jButton.setText("Show comments");
+			jButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					commentFrame.setComments(postDto.getComments());
+				}
+			});
 		}
 		return jButton;
 	}

@@ -8,7 +8,11 @@ import com.sones.facebook.gui.main.FacebookMainFrame;
 import com.sones.facebook.gui.posts.CommentFrame;
 import com.sones.facebook.gui.posts.LinkFrame;
 import com.sones.facebook.gui.posts.PhotoFrame;
+import com.sones.facebook.gui.results.FacebookPostKeywordSearchResultsFrame;
+import com.sones.facebook.gui.results.KeywordsFrame;
 import com.sones.facebook.gui.searcher.SearcherMainFrame;
+import com.sones.facebook.gui.sources.FacebookPlaceSourceSelector;
+import com.sones.facebook.gui.sources.FacebookSourceManagerFrame;
 import com.sones.facebook.gui.sources.FacebookSourceSelectorFrame;
 import com.sones.facebook.gui.user.FacebookTokenFrame;
 import com.sones.facebook.gui.user.ILoginListener;
@@ -87,23 +91,43 @@ public class Main implements ILoginListener
 	@Override
 	public void successfullLogin(ApplicationUserViewDto userDto)
 	{		
+		FacebookSourceSelectorFrame sourceFrame = new FacebookSourceSelectorFrame();
+		sourceFrame.setUserDto(userDto);
+		
+		FacebookPlaceSourceSelector placeFrame = new FacebookPlaceSourceSelector();
+		placeFrame.setUserDto(userDto);
+		
 		DownloaderMainFrame downloaderFrame = new DownloaderMainFrame();
 		downloaderFrame.setUserDto(userDto);
+		
+		FacebookSourceManagerFrame sourceManagerFrame = new FacebookSourceManagerFrame();
+		sourceManagerFrame.setUserDto(userDto);
+		sourceManagerFrame.setFriendSourceSelectionFrame(sourceFrame);
+		sourceManagerFrame.setPlaceSourceSelectorFrame(placeFrame);
+
+		downloaderFrame.setSourceManagerFrame(sourceManagerFrame);
+		
 		
 		FacebookTokenFrame tokenFrame = new FacebookTokenFrame();
 		tokenFrame.setUserDto(userDto);
 		
-		FacebookSourceSelectorFrame sourceFrame = new FacebookSourceSelectorFrame();
-		sourceFrame.setUserDto(userDto);
-		
 		SearcherMainFrame searcherFrame = new SearcherMainFrame();
 		searcherFrame.setUserDto(userDto);
+		
+		FacebookPostKeywordSearchResultsFrame postResultsFrame = new FacebookPostKeywordSearchResultsFrame();
+		postResultsFrame.setUserDto(userDto);
+		
+		KeywordsFrame keywordResultsFrame = new KeywordsFrame();
+		keywordResultsFrame.setUserDto(userDto);
 		
 		FacebookMainFrame facebookMainFrame = new FacebookMainFrame();
 		facebookMainFrame.setSourceFrame(sourceFrame);
 		facebookMainFrame.setDownloaderFrame(downloaderFrame);
 		facebookMainFrame.setTokenFrame(tokenFrame);
 		facebookMainFrame.setSearcherFrame(searcherFrame);
+		facebookMainFrame.setPlaceFrame(placeFrame);
+		facebookMainFrame.setPostResultFrame(postResultsFrame);
+		facebookMainFrame.setKeywordResultFrame(keywordResultsFrame);
 		facebookMainFrame.show();	
 	}
 

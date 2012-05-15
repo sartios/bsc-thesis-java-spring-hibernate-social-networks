@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<import resource="../spring-hibernate.xml"/>
+
+	<bean id="criteriaDao" class="com.sones.facebook.publicsource.dao.hibernate.HibernateCriteriaDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="placeCriteriaDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceCriteriaDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="placeDao" class="com.sones.facebook.placemanager.dao.hibernate.HibernatePlaceDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"/>
+	</bean>
+	
+	<bean id="publicSourceRetrieverService" class="com.sones.facebook.publicsource.logic.PublicSourceRetrieverService">
+		<constructor-arg name="criteriaDao" ref="criteriaDao"/>
+		<constructor-arg name="placeCriteriaDao" ref="placeCriteriaDao"/>
+	</bean>
+
+</beans>

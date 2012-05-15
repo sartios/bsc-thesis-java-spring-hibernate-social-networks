@@ -41,6 +41,14 @@ public class FacebookRestHandler implements IFacebookRestHandler
 	}
 	
 	@Override
+	public String GetPublicPlaces(String criteria, String token, String city, String radical)
+	{
+		String graphCall = "https://graph.facebook.com/search?q=" + criteria + "&type=place"+"&center="+city+"&distance="+radical+"&"+token;
+		_LOGGER.warn(graphCall);
+		return doGet( graphCall );
+	}
+	
+	@Override
 	public String GetFriends(String accountId, String token) 
 	{
 		CheckNullOrEmpty( accountId , "Account id can't be null or empty." );

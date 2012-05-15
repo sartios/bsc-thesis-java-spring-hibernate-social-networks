@@ -44,27 +44,27 @@ public class FacebookPostController
 			_LOGGER.error("Status is null");
 		}
 		statusFrame.setPost(postDto);
-		statusFrame.show(true);
+		statusFrame.show();
 	}
 	
 	public void showVideo(String id)
 	{
 		VideoViewDto postDto = service.getVideo(id);
 		videoFrame.setPost(postDto);
-		videoFrame.show(true);
+		videoFrame.show();
 	}
 
 	public void showLink(String id)
 	{
 		LinkViewDto postDto = service.getLink(id);
 		linkFrame.setPost(postDto);
-		linkFrame.show(true);
+		linkFrame.show();
 	}
 	
 	public void showPhoto(String id)
 	{
 		PhotoViewDto postDto = service.getPhoto(id);
 		photoFrame.setPost(postDto);
-		photoFrame.show(true);
+		photoFrame.show();
 	}
 }

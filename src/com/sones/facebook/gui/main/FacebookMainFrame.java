@@ -1,20 +1,23 @@
 package com.sones.facebook.gui.main;
 
-import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import javax.swing.JButton;
 
 import com.sones.facebook.gui.downloader.DownloaderMainFrame;
+import com.sones.facebook.gui.results.FacebookPostKeywordSearchResultsFrame;
+import com.sones.facebook.gui.results.KeywordsFrame;
 import com.sones.facebook.gui.searcher.SearcherMainFrame;
+import com.sones.facebook.gui.sources.FacebookPlaceSourceSelector;
 import com.sones.facebook.gui.sources.FacebookSourceSelectorFrame;
 import com.sones.facebook.gui.user.FacebookTokenFrame;
-import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class FacebookMainFrame extends JFrame {
 
@@ -27,10 +30,26 @@ public class FacebookMainFrame extends JFrame {
 	private FacebookTokenFrame tokenFrame;
 	private DownloaderMainFrame downloaderFrame;
 	private SearcherMainFrame searcherFrame;
+	private FacebookPlaceSourceSelector placeFrame;
 	private JPanel jPanel = null;
-	private JButton jSearcherButton = null;
 	private JPanel jPanel1 = null;
 	private JButton jButton4 = null;
+	private JMenuBar jJMenuBar = null;
+	private JMenu jDownloaderMenu = null;
+	private JMenu jSourceMenu = null;
+	private JMenu jTokenMenu = null;
+	private JMenu jSearcherMenu = null;
+	private JMenuItem jFriendsMenuItem = null;
+	private JMenuItem jCreateTokenMenuItem = null;
+	private JMenuItem jOpenSearcherMenuItem = null;
+	private JMenuItem jOpenDownloaderMenuItem = null;
+	private JButton jSearcherButton = null;
+	private JMenuItem jPlacesMenuItem = null;
+	private JMenu jMenu = null;
+	private JMenuItem jMenuItem = null;
+	private FacebookPostKeywordSearchResultsFrame postResultFrame;
+	private KeywordsFrame keywordResultFrame;
+	private JMenuItem jMenuItem1 = null;
 
 	/**
 	 * This is the default constructor
@@ -47,6 +66,7 @@ public class FacebookMainFrame extends JFrame {
 	 */
 	private void initialize() {
 		this.setSize(556, 333);
+		this.setJMenuBar(getJJMenuBar());
 		this.setContentPane(getJContentPane());
 		this.setTitle("JFrame");
 	}
@@ -85,7 +105,7 @@ public class FacebookMainFrame extends JFrame {
 			jTokenButton.setText("Token");
 			jTokenButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					tokenFrame.show();
+					showCreateToken();
 				}
 			});
 		}
@@ -104,7 +124,7 @@ public class FacebookMainFrame extends JFrame {
 			jSourcesButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-					sourceFrame.show();
+					showFriendSources();
 				}
 			});
 		}
@@ -123,7 +143,7 @@ public class FacebookMainFrame extends JFrame {
 			jDownloaderButton.addActionListener(new java.awt.event.ActionListener() {   
 				public void actionPerformed(java.awt.event.ActionEvent e) {    
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-					downloaderFrame.show();
+					showDownloader();
 				}
 			
 			});
@@ -180,6 +200,9 @@ public class FacebookMainFrame extends JFrame {
 	 */
 	private JPanel getJPanel() {
 		if (jPanel == null) {
+			GridBagConstraints gridBagConstraints5 = new GridBagConstraints();
+			gridBagConstraints5.gridx = 3;
+			gridBagConstraints5.gridy = 0;
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = -1;
 			gridBagConstraints.gridy = -1;
@@ -194,28 +217,9 @@ public class FacebookMainFrame extends JFrame {
 			jPanel.add(getJDownloaderButton(), gridBagConstraints2);
 			jPanel.add(getJSourcesButton(), gridBagConstraints1);
 			jPanel.add(getJTokenButton(), gridBagConstraints);
-			jPanel.add(getJSearcherButton(), new GridBagConstraints());
+			jPanel.add(getJSearcherButton(), gridBagConstraints5);
 		}
 		return jPanel;
-	}
-
-	/**
-	 * This method initializes jSearcherButton	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getJSearcherButton() {
-		if (jSearcherButton == null) {
-			jSearcherButton = new JButton();
-			jSearcherButton.setText("Searcher");
-			jSearcherButton.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-					searcherFrame.show();
-				}
-			});
-		}
-		return jSearcherButton;
 	}
 
 	/**
@@ -257,10 +261,289 @@ public class FacebookMainFrame extends JFrame {
 			jButton4.setText("Exit");
 			jButton4.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
 				}
 			});
 		}
 		return jButton4;
+	}
+
+	/**
+	 * This method initializes jJMenuBar	
+	 * 	
+	 * @return javax.swing.JMenuBar	
+	 */
+	private JMenuBar getJJMenuBar() {
+		if (jJMenuBar == null) {
+			jJMenuBar = new JMenuBar();
+			jJMenuBar.add(getJDownloaderMenu());
+			jJMenuBar.add(getJSourceMenu());
+			jJMenuBar.add(getJTokenMenu());
+			jJMenuBar.add(getJSearcherMenu());
+			jJMenuBar.add(getJMenu());
+		}
+		return jJMenuBar;
+	}
+
+	/**
+	 * This method initializes jDownloaderMenu	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JMenu getJDownloaderMenu() {
+		if (jDownloaderMenu == null) {
+			jDownloaderMenu = new JMenu();
+			jDownloaderMenu.add(getJOpenDownloaderMenuItem());
+			jDownloaderMenu.setText("Downloader");
+		}
+		return jDownloaderMenu;
+	}
+
+	/**
+	 * This method initializes jSourceMenu	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JMenu getJSourceMenu() {
+		if (jSourceMenu == null) {
+			jSourceMenu = new JMenu();
+			jSourceMenu.setText("Sources");
+			jSourceMenu.add(getJFriendsMenuItem());
+			jSourceMenu.add(getJPlacesMenuItem());
+		}
+		return jSourceMenu;
+	}
+
+	/**
+	 * This method initializes jTokenMenu	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JMenu getJTokenMenu() {
+		if (jTokenMenu == null) {
+			jTokenMenu = new JMenu();
+			jTokenMenu.add(getJCreateTokenMenuItem());
+			jTokenMenu.setText("Token");
+		}
+		return jTokenMenu;
+	}
+
+	/**
+	 * This method initializes jSearcherMenu	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JMenu getJSearcherMenu() {
+		if (jSearcherMenu == null) {
+			jSearcherMenu = new JMenu();
+			jSearcherMenu.add(getJOpenSearcherMenuItem());
+			jSearcherMenu.setText("Searcher");
+		}
+		return jSearcherMenu;
+	}
+
+	/**
+	 * This method initializes jFriendsMenuItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJFriendsMenuItem() {
+		if (jFriendsMenuItem == null) {
+			jFriendsMenuItem = new JMenuItem();
+			jFriendsMenuItem.setText("Friends");
+			jFriendsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					showFriendSources();
+				}
+			});
+		}
+		return jFriendsMenuItem;
+	}
+
+	protected void showFriendSources() {
+		this.sourceFrame.show();
+	}
+
+	/**
+	 * This method initializes jCreateTokenMenuItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJCreateTokenMenuItem() {
+		if (jCreateTokenMenuItem == null) {
+			jCreateTokenMenuItem = new JMenuItem();
+			jCreateTokenMenuItem.setText("Create");
+			jCreateTokenMenuItem.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					showCreateToken();
+				}
+			});
+		}
+		return jCreateTokenMenuItem;
+	}
+
+	protected void showCreateToken() {
+		this.tokenFrame.show();
+	}
+
+	/**
+	 * This method initializes jOpenSearcherMenuItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJOpenSearcherMenuItem() {
+		if (jOpenSearcherMenuItem == null) {
+			jOpenSearcherMenuItem = new JMenuItem();
+			jOpenSearcherMenuItem.setText("Open");
+			jOpenSearcherMenuItem.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					showSearcher();
+				}
+			});
+		}
+		return jOpenSearcherMenuItem;
+	}
+
+	protected void showSearcher() {
+		this.searcherFrame.show();
+	}
+
+	/**
+	 * This method initializes jOpenDownloaderMenuItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJOpenDownloaderMenuItem() {
+		if (jOpenDownloaderMenuItem == null) {
+			jOpenDownloaderMenuItem = new JMenuItem();
+			jOpenDownloaderMenuItem.setText("Open");
+			jOpenDownloaderMenuItem.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					showDownloader();
+				}
+			});
+		}
+		return jOpenDownloaderMenuItem;
+	}
+
+	protected void showDownloader() {
+		this.downloaderFrame.show();
+	}
+
+	/**
+	 * This method initializes jSearcherButton	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJSearcherButton() {
+		if (jSearcherButton == null) {
+			jSearcherButton = new JButton();
+			jSearcherButton.setText("Searcher");
+			jSearcherButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					showSearcher();
+				}
+			});
+		}
+		return jSearcherButton;
+	}
+
+	/**
+	 * @param placeFrame the placeFrame to set
+	 */
+	public void setPlaceFrame(FacebookPlaceSourceSelector placeFrame) {
+		this.placeFrame = placeFrame;
+	}
+
+	/**
+	 * This method initializes jPlacesMenuItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJPlacesMenuItem() {
+		if (jPlacesMenuItem == null) {
+			jPlacesMenuItem = new JMenuItem();
+			jPlacesMenuItem.setText("Places");
+			jPlacesMenuItem.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					placeFrame.show();
+				}
+			});
+		}
+		return jPlacesMenuItem;
+	}
+
+	/**
+	 * This method initializes jMenu	
+	 * 	
+	 * @return javax.swing.JMenu	
+	 */
+	private JMenu getJMenu() {
+		if (jMenu == null) {
+			jMenu = new JMenu();
+			jMenu.setText("Results");
+			jMenu.add(getJMenuItem());
+			jMenu.add(getJMenuItem1());
+		}
+		return jMenu;
+	}
+
+	/**
+	 * This method initializes jMenuItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJMenuItem() {
+		if (jMenuItem == null) {
+			jMenuItem = new JMenuItem();
+			jMenuItem.setText("View posts");
+			jMenuItem.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					showPostResults();
+				}
+			});
+		}
+		return jMenuItem;
+	}
+
+	protected void showPostResults() {
+		postResultFrame.show();
+	}
+
+	/**
+	 * @param postResultFrame the postResultFrame to set
+	 */
+	public void setPostResultFrame(FacebookPostKeywordSearchResultsFrame postResultFrame) {
+		this.postResultFrame = postResultFrame;
+	}
+	
+	/**
+	 * @param keywordResultFrame the keywordResultFrame to set
+	 */
+	public void setKeywordResultFrame(KeywordsFrame keywordResultFrame) {
+		this.keywordResultFrame = keywordResultFrame;
+	}
+
+	/**
+	 * This method initializes jMenuItem1	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJMenuItem1() {
+		if (jMenuItem1 == null) {
+			jMenuItem1 = new JMenuItem();
+			jMenuItem1.setText("View keywords");
+			jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					showKeywordResults();
+				}
+			});
+		}
+		return jMenuItem1;
+	}
+
+	protected void showKeywordResults() {
+		keywordResultFrame.show();
 	}
 }  //  @jve:decl-index=0:visual-constraint="10,10"

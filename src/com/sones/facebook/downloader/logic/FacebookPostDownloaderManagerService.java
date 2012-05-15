@@ -31,12 +31,12 @@ public class FacebookPostDownloaderManagerService implements IFacebookPostDownlo
 		this.optionDao = optionDao;
 		this.accountDao = accountDao;
 		this.task = task;
-		timer = new Timer();
 	}
 
 	@Override
 	public void startDownloading(String facebookUserId) throws DataAccessException
 	{
+		Timer currentTimer = new Timer();
 		FacebookAccount account = accountDao.GetById(facebookUserId);
 		if(account == null)
 		{
@@ -50,14 +50,20 @@ public class FacebookPostDownloaderManagerService implements IFacebookPostDownlo
 			_LOGGER.error("Facebook account didn't set an option.");
 			throw new NullPointerException("Facebook account didn't set an option.");
 		}
-		long delay = Long.parseLong(option.getDownloadInterval());
+		String interv = option.getDownloadInterval();
+		_LOGGER.warn("Interval " +interv);
+		long delay = Long.parseLong(interv);
 		ApplicationUser appUser = account.getAppUser();
 		if(appUser == null)
 		{
 			_LOGGER.error("Null application user");
 		}
+		_LOGGER.warn("Set application user");
 		task.setAppUser( appUser );
-		timer.schedule(task, 0, delay);
+		
+		_LOGGER.warn("Set timer");
+		currentTimer.schedule(task, 0, delay);
+		timer = currentTimer;
 	}
 	
 	@Override
