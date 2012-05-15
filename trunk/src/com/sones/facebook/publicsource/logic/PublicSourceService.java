@@ -11,7 +11,9 @@ import com.sones.facebook.placemanager.model.PlaceCategory;
 import com.sones.facebook.placemanager.model.PlaceCriteria;
 import com.sones.facebook.publicsource.dao.ICriteriaDao;
 import com.sones.facebook.publicsource.model.Criteria;
+import com.sones.facebook.tokenmanager.dao.IFacebookTokenDao;
 import com.sones.facebook.tokenmanager.model.FacebookToken;
+import com.sones.usermanager.dao.IApplicationUserDao;
 import com.sones.usermanager.model.ApplicationUser;
 
 public class PublicSourceService implements IPublicSourceService
@@ -46,6 +48,10 @@ public class PublicSourceService implements IPublicSourceService
 	 */
 	private	ICriteriaDao criteriaDao;
 	
+	private IApplicationUserDao appUserDao;
+	
+	private IFacebookTokenDao tokenDao;
+		
 	/**
 	 * Initializes the object.
 	 */
@@ -54,6 +60,79 @@ public class PublicSourceService implements IPublicSourceService
 		_LOGGER = Logger.getLogger( PublicSourceService.class );
 	}
 	
+		/**
+	 * @param graphApiHandler
+	 * @param placeDao
+	 * @param placeCategoryDao
+	 * @param placeCriteriaDao
+	 * @param criteriaDao
+	 * @param appUserDao
+	 * @param tokenDao
+	 */
+	public PublicSourceService(IFacebookGraphApiHandler graphApiHandler,
+			IPlaceDao placeDao, IPlaceCategoryDao placeCategoryDao,
+			IPlaceCriteriaDao placeCriteriaDao, ICriteriaDao criteriaDao,
+			IApplicationUserDao appUserDao, IFacebookTokenDao tokenDao) 
+	{
+		_LOGGER = Logger.getLogger( PublicSourceService.class );
+		this.graphApiHandler = graphApiHandler;
+		this.placeDao = placeDao;
+		this.placeCategoryDao = placeCategoryDao;
+		this.placeCriteriaDao = placeCriteriaDao;
+		this.criteriaDao = criteriaDao;
+		this.appUserDao = appUserDao;
+		this.tokenDao = tokenDao;
+	}
+
+		/** {@inheritDoc} */
+	@Override
+	public void DownloadPublicPlaces(Iterable<String> criteriaValues, String appUserID, Iterable<String> cities, String radical) 
+	{
+		ApplicationUser appUser = appUserDao.GetById(appUserID);
+		CheckNullability(appUser, "Application user can't be null.");
+		
+		CheckNullability(criteriaValues, "Criteria values can't be null.");
+		
+		FacebookToken token = tokenDao.GetByApplicationUser(appUser);
+		CheckNullability(token, "Application user has not facebook token.");
+
+		for( String criteriaValue : criteriaValues )
+		{
+			Criteria criteria = new Criteria(criteriaValue);
+			for( String city : cities)
+			{
+				Iterable< Place > places = graphApiHandler.GetPublicPlaces( criteria, token, city, radical );
+				SavePlacesWithCriteria( places , criteriaValue );
+			}
+		}
+	}
+	
+	private void SavePlacesWithCriteria(Iterable<Place> places,
+				String criteriaValue) {
+		for( Place place : places )
+		{
+			SavePlaceAndReturn( place );
+			Criteria dbCriteria = SaveCriteriaAndReturn( criteriaValue );
+			PlaceCriteria placeCriteria = new PlaceCriteria(place, dbCriteria);
+			if( placeCriteriaDao.GetById( placeCriteria.getId() ) == null )
+			{
+				placeCriteriaDao.Save( placeCriteria );
+			}
+		}			
+		}
+
+	private Criteria SaveCriteriaAndReturn(String criteriaValue) {
+		Criteria model = criteriaDao.GetByValue( criteriaValue );
+		if( model == null )
+		{
+			String id = criteriaDao.GetRowCount().toString();
+			model = new Criteria( criteriaValue );
+			model.setId( id );
+			criteriaDao.Save( model );
+		}
+		return model;
+	}
+
 	/** {@inheritDoc} */
 	@Override
 	public void DownloadPublicPlaces(Iterable<Criteria> criterias, FacebookToken token, ApplicationUser appUser) 
@@ -68,76 +147,6 @@ public class PublicSourceService implements IPublicSourceService
 			SavePlacesWithCriteria( places , criteria );
 		}
 		
-	}
-
-	/**
-	 * @param graphApiHandler the graphApiHandler to set
-	 */
-	public void setGraphApiHandler(IFacebookGraphApiHandler graphApiHandler) {
-		this.graphApiHandler = graphApiHandler;
-	}
-
-	/**
-	 * @return the graphApiHandler
-	 */
-	public IFacebookGraphApiHandler getGraphApiHandler() {
-		return graphApiHandler;
-	}
-
-	/**
-	 * @return the placeDao
-	 */
-	public IPlaceDao getPlaceDao() {
-		return placeDao;
-	}
-
-	/**
-	 * @param placeDao the placeDao to set
-	 */
-	public void setPlaceDao(IPlaceDao placeDao) {
-		this.placeDao = placeDao;
-	}
-
-	/**
-	 * @return the placeCategoryDao
-	 */
-	public IPlaceCategoryDao getPlaceCategoryDao() {
-		return placeCategoryDao;
-	}
-
-	/**
-	 * @param placeCategoryDao the placeCategoryDao to set
-	 */
-	public void setPlaceCategoryDao(IPlaceCategoryDao placeCategoryDao) {
-		this.placeCategoryDao = placeCategoryDao;
-	}
-
-	/**
-	 * @return the placeCriteriaDao
-	 */
-	public IPlaceCriteriaDao getPlaceCriteriaDao() {
-		return placeCriteriaDao;
-	}
-
-	/**
-	 * @param placeCriteriaDao the placeCriteriaDao to set
-	 */
-	public void setPlaceCriteriaDao(IPlaceCriteriaDao placeCriteriaDao) {
-		this.placeCriteriaDao = placeCriteriaDao;
-	}
-
-	/**
-	 * @return the criteriaDao
-	 */
-	public ICriteriaDao getCriteriaDao() {
-		return criteriaDao;
-	}
-
-	/**
-	 * @param criteriaDao the criteriaDao to set
-	 */
-	public void setCriteriaDao(ICriteriaDao criteriaDao) {
-		this.criteriaDao = criteriaDao;
 	}
 
 	/**

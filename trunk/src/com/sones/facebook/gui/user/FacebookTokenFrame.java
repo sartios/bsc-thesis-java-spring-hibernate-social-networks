@@ -51,7 +51,7 @@ public class FacebookTokenFrame extends JFrame {
 	private void initialize() {
 		this.setSize(466, 344);
 		this.setContentPane(getJContentPane());
-		this.setTitle("JFrame");
+		this.setTitle("Facebook Access Token");
 	}
 
 	/**

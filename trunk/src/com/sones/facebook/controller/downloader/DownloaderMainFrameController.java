@@ -4,7 +4,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sones.facebook.downloader.logic.IFacebookPostDownloaderManagerService;
-import com.sones.sharedDto.exceptions.MapErrorException;
 
 public class DownloaderMainFrameController 
 {
@@ -30,5 +29,9 @@ public class DownloaderMainFrameController
 
 	public IFacebookPostDownloaderManagerService getService() {
 		return service;
+	}
+
+	public void stopDownloading() {
+		service.stopDownloading();
 	}
 }

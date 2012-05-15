@@ -23,6 +23,8 @@
 	<property name="main.class" value="MainLoader.main"/>
 	<property name="hibernate.properties" value="${resources.dir}/hibernate.properties"/>
 	<property name="sql.database.schema" value="createSchema.sql"/>
+	<property name="reports.dir" location="docs"/>
+
 
 
 
@@ -52,6 +54,11 @@
 		<pathelement location="${build.classes}"/>
 		<pathelement location="${src.dir}"/>
 		<pathelement location="${config.dir}"/>
+	</path>
+	
+	<path id="doc.classpath">
+		<path refid="runtime.classpath"/>
+		<pathelement location="${reports.dir}"/>
 	</path>
 	
 	<!-- Compiler options -->
@@ -102,6 +109,36 @@
         	<classpath refid="lib.classpath"/>
         </javac>
     </target>
+	
+	<!-- ================================= 
+          target: compile              
+         ================================= -->
+	<target name="javadocs" depends="compile" description="generates javadoc and also UML Diagram">
+		<mkdir dir="${reports.dir}"/>	
+		<mkdir dir="${reports.dir}/javadoc"/>
+		        <javadoc sourcepath="${src.dir}" packagenames="com.sones.*" destdir="${reports.dir}/javadoc"
+		        	classpathref="doc.classpath" private="true">
+		        	   <doclet name="org.umlgraph.doclet.UmlGraphDoc"
+		        		  path="lib/UMLGraph.jar">
+		        	        <param name="-attributes" />
+		        	        <param name="-operations" />
+		        	        <param name="-qualify" />
+		        	        <param name="-types" />
+		        	        <param name="-visibility" />
+		        	    </doclet>
+		        	  </javadoc>
+			  <apply executable="dot" dest="${reports.dir}"  parallel="false">
+			    <arg value="-Tpng"/>
+			    <arg value="-o"/>
+			     <targetfile/>
+			     <srcfile/>
+			     <fileset dir="${reports.dir}">
+			     	<include name="**/*.dot"/>	
+			     </fileset>
+			     <mapper type="glob" from="*.dot" to="*.png"/>
+			  	 <globmapper from="*.dot" to="*.png"/>
+			  </apply>
+		</target>
 
 	<!-- ================================= 
           target: create-package              

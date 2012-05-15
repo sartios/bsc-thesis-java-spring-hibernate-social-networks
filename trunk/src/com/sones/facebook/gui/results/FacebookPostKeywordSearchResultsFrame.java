@@ -10,6 +10,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.sones.facebook.controller.results.FacebookPostKeywordSearchResultsController;
+import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
 import com.sones.usermanager.model.ApplicationUser;
 
 import java.awt.Insets;
@@ -27,7 +28,7 @@ public class FacebookPostKeywordSearchResultsFrame extends JFrame {
 	private JButton jButton1 = null;
 	private DefaultTableModel tableModel = new DefaultTableModel();
 	private FacebookPostKeywordSearchResultsController controller;
-	private ApplicationUser appUser;
+	private ApplicationUserViewDto userDto;
 	
 	/**
 	 * This is the default constructor
@@ -37,8 +38,6 @@ public class FacebookPostKeywordSearchResultsFrame extends JFrame {
 		initialize();
 		controller = new FacebookPostKeywordSearchResultsController();
 		initTableModel();
-		appUser = new ApplicationUser();
-		appUser.setId("1");
 	}
 
 	private void initTableModel() {
@@ -95,7 +94,8 @@ public class FacebookPostKeywordSearchResultsFrame extends JFrame {
 			jButton.setText("Show Results");
 			jButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					ApplicationUser appUser = new ApplicationUser();
+					appUser.setId(userDto.getUserID());
 					List< Vector< String > > rows = controller.getFacebookResults(appUser);
 					for( Vector< String > row : rows )
 					{
@@ -177,6 +177,20 @@ public class FacebookPostKeywordSearchResultsFrame extends JFrame {
 			});
 		}
 		return jButton1;
+	}
+
+	/**
+	 * @param userDto the userDto to set
+	 */
+	public void setUserDto(ApplicationUserViewDto userDto) {
+		this.userDto = userDto;
+	}
+
+	/**
+	 * @return the userDto
+	 */
+	public ApplicationUserViewDto getUserDto() {
+		return userDto;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

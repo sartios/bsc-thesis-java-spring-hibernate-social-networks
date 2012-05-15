@@ -16,6 +16,7 @@ public class WallVideoCreateDto extends WallFacebookPostCreateDto
 	private	String	name;
 	private	String	description;
 	private	String	picture;
+	private String source;
 	
 	/**
 	 * Initializes the object.
@@ -83,5 +84,19 @@ public class WallVideoCreateDto extends WallFacebookPostCreateDto
 	 */
 	public String getPicture() {
 		return picture;
+	}
+
+	/**
+	 * @param source the source to set
+	 */
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	/**
+	 * @return the source
+	 */
+	public String getSource() {
+		return source;
 	}
 }

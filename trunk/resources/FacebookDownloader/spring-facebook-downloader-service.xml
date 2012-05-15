@@ -6,13 +6,13 @@
 	<import resource="spring-facebook-saver-logic.xml"/>
 	
 	<bean id="facebookDownloaderService" class="com.sones.facebook.downloader.logic.FacebookDownloaderService">
-		<property name="appUserSourceDao" ref="appUserSourceDao"/>
-		<property name="downloadDao" ref="downloadDao"/>
-		<property name="graphApiHandler" ref="graphApiHandler"/>
-		<property name="mapper" ref="dozerMapper"/>
-		<property name="postDownloadDao" ref="postDownloadDao"/>
-		<property name="saverService" ref="saverLogic"/>
-		<property name="tokenDao" ref="tokenDao"/>
+		<constructor-arg name="appUserSourceDao" ref="appUserSourceDao"/>
+		<constructor-arg name="downloadDao" ref="downloadDao"/>
+		<constructor-arg name="graphApiHandler" ref="graphApiHandler"/>
+		<constructor-arg name="mapper" ref="dozerMapper"/>
+		<constructor-arg name="postDownloadDao" ref="postDownloadDao"/>
+		<constructor-arg name="saverService" ref="saverLogic"/>
+		<constructor-arg name="tokenDao" ref="tokenDao"/>
 	</bean>
 	
 	<bean id="appUserSourceDao" class="com.sones.facebook.usermanager.dao.hibernate.HibernateApplicationUserSourceDao">

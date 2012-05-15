@@ -23,13 +23,14 @@ public class StatusMessageFrame extends JFrame {
 	private JPanel jPanel = null;
 	private JButton jButton = null;
 	private StatusMessageViewDto postDto;  //  @jve:decl-index=0:
-	
+	private CommentFrame commentFrame;
 	/**
 	 * This is the default constructor
 	 */
 	public StatusMessageFrame() {
 		super();
 		initialize();
+		commentFrame = new CommentFrame();
 	}
 
 	/**
@@ -126,6 +127,13 @@ public class StatusMessageFrame extends JFrame {
 		if (jButton == null) {
 			jButton = new JButton();
 			jButton.setText("Show comments");
+			jButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()	
+					commentFrame.setComments(postDto.getComments());
+					commentFrame.show();
+				}
+			});
 		}
 		return jButton;
 	}

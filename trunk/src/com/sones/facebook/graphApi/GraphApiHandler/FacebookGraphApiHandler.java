@@ -158,4 +158,12 @@ public class FacebookGraphApiHandler implements IFacebookGraphApiHandler
 			throw new IllegalArgumentException( message );
 		}
 	}
+
+	@Override
+	public Iterable<Place> GetPublicPlaces(Criteria criteria,FacebookToken token, String city, String radical) 
+	{
+		String jsonString = restHandler.GetPublicPlaces(criteria.getValue(), token.getValue(), city, radical);
+		Iterable<Place> places = jsonHandler.GetPublicPlaces( jsonString );
+		return places;
+	}
 }

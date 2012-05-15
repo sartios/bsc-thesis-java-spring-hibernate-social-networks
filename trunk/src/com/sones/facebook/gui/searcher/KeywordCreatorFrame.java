@@ -103,6 +103,7 @@ public class KeywordCreatorFrame extends JFrame {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
 					String keyword = jKeywordTextField.getText();
 					controller.createKeyword(keyword);
+					jKeywordTextField.setText("");
 				}
 			});
 		}

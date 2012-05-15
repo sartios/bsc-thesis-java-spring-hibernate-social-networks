@@ -1,25 +1,21 @@
 package com.sones.facebook.controller.posts;
 
-import com.sones.facebook.post.logic.IFacebookPostViewService;
-import com.sones.sharedDto.facebook.view.posts.VideoViewDto;
+import java.io.IOException;
 
 public class VideoController 
 {
-	private IFacebookPostViewService service;
-	private VideoViewDto postDto;
-	
-	public VideoController( IFacebookPostViewService service )
+	public void goToVideo(String url)
 	{
-		this.service = service;
-	}
-	
-	public void findPost(String id)
-	{
-		postDto = service.getVideo(id);
-	}
-	
-	public VideoViewDto getStatusMessage()
-	{
-		return postDto;
+		if(url != null)
+		{
+			try
+			{
+				Process p=Runtime.getRuntime().exec("cmd /c start "+url);
+			}
+			catch(IOException e1)
+			{
+				System.out.println(e1);
+			}
+		}
 	}
 }
