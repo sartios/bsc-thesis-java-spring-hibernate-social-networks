@@ -8,12 +8,12 @@
 						<!-- Keyword searcher service dependencies -->
 <!-- =================================================================================================================== -->
 	<bean id="keywordSearcherService" class="com.sones.facebook.keywordSearcher.logic.KeywordSearcherService">
-		<property name="searcher" ref="searcher"/>
-		<property name="keywordRetriever" ref="keywordRetriever"/>
-		<property name="keywordSearchDao" ref="keywordSearchDao"/>
-		<property name="mapper" ref="dozerMapper"/>
-		<property name="keywordSearchResultDao" ref="keywordSearchResultDao"/>
-		<property name="idMaker" ref="idMaker"/>
+		<constructor-arg name="searcher" ref="searcher"/>
+		<constructor-arg name="keywordRetriever" ref="keywordRetriever"/>
+		<constructor-arg name="keywordSearchDao" ref="keywordSearchDao"/>
+		<constructor-arg name="mapper" ref="dozerMapper"/>
+		<constructor-arg name="keywordSearchResultDao" ref="keywordSearchResultDao"/>
+		<constructor-arg name="idMaker" ref="idMaker"/>
 	</bean>
 	
 	<bean id="searcher" class="com.sones.facebook.keywordSearcher.logic.searcher.KeywordSearcher">

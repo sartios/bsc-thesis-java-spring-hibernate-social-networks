@@ -29,6 +29,11 @@ import com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchResultCreateDto
 import com.sones.sharedDto.facebook.keywordSearcher.feeds.ISearchableFacebookFeed;
 import com.sones.usermanager.model.ApplicationUser;
 
+/**
+ * @assoc 1..0 has 0 IKeywordSearcher
+ * @author sartios.sones@gmail.com.
+ *
+ */
 public class KeywordSearcherService implements IKeywordSearcherService 
 {
 	/**
@@ -56,36 +61,80 @@ public class KeywordSearcherService implements IKeywordSearcherService
 	 */
 	private	IApplicationUserKeywordRetriever	keywordRetriever;
 	
+	/**
+	 * The dao for {@link KeywordSearch} model.
+	 */
 	private	IKeywordSearchDao	keywordSearchDao;
 	
+	/**
+	 * The dao for {@link FacebookPostKeywordResult} model
+	 */
 	private	IFacebookPostKeywordResultDao	keywordSearchResultDao;
 	
+	/**
+	 * Cretes ids for the searches.
+	 */
 	private	IIdMaker	idMaker;
 	
+	/**
+	 * The collection of the results that were created during searches.
+	 */
 	private Set<FacebookPostKeywordResult> results;
-
+	
+	/**
+	 * The date after which will retrieve posts to search.
+	 */
+	private Date date;
+	
 	/**
 	 * Initializes the object.
 	 */
-	public	KeywordSearcherService()
+	private	KeywordSearcherService()
 	{
 		_LOGGER	=	Logger.getLogger( KeywordSearcherService.class );
 		results = new HashSet<FacebookPostKeywordResult>();
+		date = null;
+	}
+	
+	/**
+	 * @param searcher
+	 * @param dataRetrievers
+	 * @param mapper
+	 * @param keywordRetriever
+	 * @param keywordSearchDao
+	 * @param keywordSearchResultDao
+	 * @param idMaker
+	 * @param results
+	 */
+	public KeywordSearcherService(IKeywordSearcher searcher,
+			DozerBeanMapper mapper,
+			IApplicationUserKeywordRetriever keywordRetriever,
+			IKeywordSearchDao keywordSearchDao,
+			IFacebookPostKeywordResultDao keywordSearchResultDao,
+			IIdMaker idMaker) 
+	{
+		_LOGGER	=	Logger.getLogger( KeywordSearcherService.class );
+		this.searcher = searcher;
+		this.mapper = mapper;
+		this.keywordRetriever = keywordRetriever;
+		this.keywordSearchDao = keywordSearchDao;
+		this.keywordSearchResultDao = keywordSearchResultDao;
+		this.idMaker = idMaker;
+		results = new HashSet<FacebookPostKeywordResult>();
+		date = null;	
+		dataRetrievers = new HashSet<IDataRetriever>();
 	}
 	
 	@Override
 	public void searchForKeywordsIntoAllFacebookPostTypes( ApplicationUser appUser ) 
 	{
-		KeywordSearch search = keywordSearchDao.getLastKeywordSearchByAppUser(appUser);
-		Date date;
-		if(search == null)
+		if(isNull(appUser) == true)
 		{
-			date = new Date(0);
+			_LOGGER.error( "Application user can't be null!" );
+			throw	new	IllegalArgumentException( "Application user can't be null!" );
 		}
-		else
-		{
-			date = search.getDate();
-		}
+		
+		
 		searchForKeywordsIntoCheckins( appUser, date );
 		searchForKeywordsIntoPhotos( appUser, date );
 		searchForKeywordsIntoLinks( appUser, date );
@@ -93,12 +142,12 @@ public class KeywordSearcherService implements IKeywordSearcherService
 		searchForKeywordsIntoVideos( appUser, date );
 		searchForKeywordsIntoNotes( appUser, date );
 		saveKeywordSearchResults( results );
+		date = getDateForNextData( appUser );
 	}
-	
+
 	@Override
 	public void searchForKeywordsIntoLinks( ApplicationUser appUser , Date date ) 
 	{
-		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
 		for( IDataRetriever	temp : dataRetrievers )
 		{
@@ -115,7 +164,6 @@ public class KeywordSearcherService implements IKeywordSearcherService
 	@Override
 	public void searchForKeywordsIntoNotes( ApplicationUser appUser , Date date ) 
 	{
-		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
 		for( IDataRetriever	temp : dataRetrievers )
 		{
@@ -132,7 +180,6 @@ public class KeywordSearcherService implements IKeywordSearcherService
 	@Override
 	public void searchForKeywordsIntoPhotos( ApplicationUser appUser , Date date )
 	{
-		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
 		for( IDataRetriever	temp : dataRetrievers )
 		{
@@ -148,7 +195,6 @@ public class KeywordSearcherService implements IKeywordSearcherService
 	@Override
 	public void searchForKeywordsIntoStatusMessages( ApplicationUser appUser , Date date )
 	{
-		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
 		for( IDataRetriever	temp : dataRetrievers )
 		{
@@ -165,7 +211,6 @@ public class KeywordSearcherService implements IKeywordSearcherService
 	@Override
 	public void searchForKeywordsIntoVideos( ApplicationUser appUser , Date date )
 	{
-		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
 		for( IDataRetriever	temp : dataRetrievers )
 		{
@@ -182,7 +227,6 @@ public class KeywordSearcherService implements IKeywordSearcherService
 	@Override
 	public void searchForKeywordsIntoCheckins( ApplicationUser appUser , Date date )
 	{
-		checkApplicationUser( appUser );
 		IDataRetriever	dataRetriever	=	null;
 		for( IDataRetriever	temp : dataRetrievers )
 		{
@@ -194,40 +238,48 @@ public class KeywordSearcherService implements IKeywordSearcherService
 		}
 		search( dataRetriever , appUser, date );
 	}
-
-	private void search( IDataRetriever dataRetriever , ApplicationUser appUser, Date date ) 
+	
+	@Override
+	public	void	addDataRetriever( IDataRetriever dataRetriever )
 	{
-		validateDataRetriever(  dataRetriever );
-		Iterable<KeywordSearchDto>	keywords	=	keywordRetriever.getApplicationUserKeywords( appUser );
-		validateKeywords( keywords );
-		Iterable< ISearchableFacebookFeed >	posts	=	dataRetriever.getDataToBeSearched( appUser, date );
-		validatePosts( posts );
-		KeywordSearch	search	=	getKeywordSearch( appUser );	
-		keywordSearchDao.Save( search );
-		if( posts != null )
+		if( dataRetriever == null )
 		{
-			Iterable< KeywordSearchResultCreateDto >	resultsDto	= searcher.getKeywordSearchResults(posts, keywords);
-			validateResults( resultsDto );
-			if( resultsDto != null )
-			{
-				Set< FacebookPostKeywordResult >	tmpresults	=	getResultsFromDto( resultsDto , search , appUser );
-				results.addAll(tmpresults);
-			}
+			_LOGGER.error( "Data retriever can't be null" );
+			throw	new	IllegalArgumentException();
 		}
-		
-	}
-
-	private void saveKeywordSearchResults(Set<FacebookPostKeywordResult> results) 
-	{
-		_LOGGER.warn( "There are " + results.size() + "to be saved." );
-		for( FacebookPostKeywordResult result : results )
+		if( dataRetrievers == null )
 		{
-			String	id	=	idMaker.getKeywordSearchResultId();
-			result.setId( id );
-			keywordSearchResultDao.Save( result );
-		}		
+			dataRetrievers	=	new	HashSet< IDataRetriever >();
+		}
+		dataRetrievers.add( dataRetriever );
 	}
 
+	@Override
+	public void setNextDateAfterWhichWillRetrieveData(Date date) 
+	{
+		this.date = date;
+	}
+	
+	private boolean isNull(Object object)
+	{
+		if(object == null)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	private KeywordSearch getKeywordSearch( ApplicationUser appUser )
+	{
+		KeywordSearch	search	=	new	KeywordSearch();
+		Date	now	=	Calendar.getInstance().getTime();
+		search.setDate( now );
+		search.setUser( appUser );
+		String	searchId	=	idMaker.getKeywordSearchId();
+		search.setId( searchId );
+		return	search;
+	}
+	
 	private Set<FacebookPostKeywordResult> getResultsFromDto( Iterable<KeywordSearchResultCreateDto> resultsDto , KeywordSearch search, ApplicationUser appUser) 
 	{
 		Set<FacebookPostKeywordResult>	results	=	new	HashSet<FacebookPostKeywordResult>();
@@ -250,157 +302,66 @@ public class KeywordSearcherService implements IKeywordSearcherService
 			_LOGGER.error( "There are not results. resultsDto is null!" );
 		}	
 	}
-
-	private KeywordSearch getKeywordSearch( ApplicationUser appUser )
+	
+	private void saveKeywordSearchResults(Set<FacebookPostKeywordResult> results) 
 	{
-		KeywordSearch	search	=	new	KeywordSearch();
-		Date	now	=	Calendar.getInstance().getTime();
-		search.setDate( now );
-		search.setUser( appUser );
-		String	searchId	=	idMaker.getKeywordSearchId();
-		search.setId( searchId );
-		return	search;
+		_LOGGER.warn( "There are " + results.size() + "to be saved." );
+		for( FacebookPostKeywordResult result : results )
+		{
+			String	id	=	idMaker.getKeywordSearchResultId();
+			result.setId( id );
+			keywordSearchResultDao.Save( result );
+		}		
 	}
-
-	private void validatePosts(Iterable<ISearchableFacebookFeed> posts)
+	
+	private Date getDateForNextData( ApplicationUser appUser )  
 	{
- 		if( posts == null )
+		KeywordSearch search = keywordSearchDao.getLastKeywordSearchByAppUser(appUser);
+		Date nextdate = null;
+		if(search == null)
+		{
+			nextdate = new Date(0);
+		}
+		else
+		{
+			nextdate = search.getDate();
+		}
+		return nextdate;
+	}
+	
+	private void search( IDataRetriever dataRetriever , ApplicationUser appUser, Date date ) 
+	{
+		if(isNull(dataRetriever) == true)
+		{
+			_LOGGER.error( "There is not checkin data retriever registered!" );
+			throw new NotRegisteredRetriever( "There is not checkin data retriever registered!" );
+		}
+		Iterable<KeywordSearchDto>	keywords	=	keywordRetriever.getApplicationUserKeywords( appUser );
+
+		if(isNull(keywords) == true)
+		{
+			_LOGGER.error( "Application user's keywords are null!" );
+			throw new NoKeywordsException( "There are not keywords for this application user" );
+		}
+		Iterable< ISearchableFacebookFeed >	posts	=	dataRetriever.getDataToBeSearched( appUser, date );
+
+		if(isNull(posts) == true)
 		{
 			_LOGGER.error( "The posts that are to be searched are null." );
 		}
-		
-	}
 
-	private void validateKeywords(Iterable<KeywordSearchDto> keywords)
-	{
-		if( keywords == null )
+		KeywordSearch	search	=	getKeywordSearch( appUser );	
+		keywordSearchDao.Save( search );
+		if( posts != null )
 		{
-			_LOGGER.error( "Application user's keywords are null!" );
-			throw	new	NoKeywordsException( "There are not keywords for this application user" );
+			Iterable< KeywordSearchResultCreateDto >	resultsDto	= searcher.getKeywordSearchResults(posts, keywords);
+			validateResults( resultsDto );
+			if( resultsDto != null )
+			{
+				Set< FacebookPostKeywordResult >	tmpresults	=	getResultsFromDto( resultsDto , search , appUser );
+				results.addAll(tmpresults);
+			}
 		}
 		
-	}
-
-	private void validateDataRetriever(IDataRetriever dataRetriever) 
-	{
-		if( dataRetriever == null )
-		{
-			_LOGGER.error( "There is not checkin data retriever registered!" );
-			throw	new	NotRegisteredRetriever( "There is not checkin data retriever registered!" );
-		}
-		
-	}
-	
-	private	void	checkApplicationUser( ApplicationUser appUser )
-	{
-		if( appUser == null )
-		{
-			_LOGGER.error( "Application user can't be null!" );
-			throw	new	IllegalArgumentException( "Application user can't be null!" );
-		}
-	}
-
-	/**
-	 * @param dataRetrievers the dataRetrievers to set
-	 */
-	public void setDataRetrievers(Set<IDataRetriever> dataRetrievers) {
-		this.dataRetrievers = dataRetrievers;
-	}
-
-	/**
-	 * @return the dataRetrievers
-	 */
-	public Set<IDataRetriever> getDataRetrievers() {
-		return dataRetrievers;
-	}
-
-	/**
-	 * @param searcher the searcher to set
-	 */
-	public void setSearcher(IKeywordSearcher searcher) {
-		this.searcher = searcher;
-	}
-
-	/**
-	 * @return the searcher
-	 */
-	public IKeywordSearcher getSearcher() {
-		return searcher;
-	}
-
-	@Override
-	public	void	addDataRetriever( IDataRetriever dataRetriever )
-	{
-		if( dataRetriever == null )
-		{
-			_LOGGER.error( "Data retriever can't be null" );
-			throw	new	IllegalArgumentException();
-		}
-		if( dataRetrievers == null )
-		{
-			dataRetrievers	=	new	HashSet< IDataRetriever >();
-		}
-		dataRetrievers.add( dataRetriever );
-	}
-	
-
-	
-	public DozerBeanMapper getMapper() {
-		return mapper;
-	}
-
-	public void setMapper(DozerBeanMapper mapper) {
-		this.mapper = mapper;
-	}
-
-	public IApplicationUserKeywordRetriever getKeywordRetriever() {
-		return keywordRetriever;
-	}
-
-	public void setKeywordRetriever(
-			IApplicationUserKeywordRetriever keywordRetriever) {
-		this.keywordRetriever = keywordRetriever;
-	}
-
-	/**
-	 * @param keywordSearchDao the keywordSearchDao to set
-	 */
-	public void setKeywordSearchDao(IKeywordSearchDao keywordSearchDao) {
-		this.keywordSearchDao = keywordSearchDao;
-	}
-
-	/**
-	 * @return the keywordSearchDao
-	 */
-	public IKeywordSearchDao getKeywordSearchDao() {
-		return keywordSearchDao;
-	}
-
-	/**
-	 * @param keywordSearchResultDao the keywordSearchResultDao to set
-	 */
-	public void setKeywordSearchResultDao(IFacebookPostKeywordResultDao keywordSearchResultDao) {
-		this.keywordSearchResultDao = keywordSearchResultDao;
-	}
-
-	/**
-	 * @return the keywordSearchResultDao
-	 */
-	public IFacebookPostKeywordResultDao getKeywordSearchResultDao() {
-		return keywordSearchResultDao;
-	}
-
-	/**
-	 * @param idMaker the idMaker to set
-	 */
-	public void setIdMaker(IIdMaker idMaker) {
-		this.idMaker = idMaker;
-	}
-
-	/**
-	 * @return the idMaker
-	 */
-	public IIdMaker getIdMaker() {
-		return idMaker;
 	}
 }

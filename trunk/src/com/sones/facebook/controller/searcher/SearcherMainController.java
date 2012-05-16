@@ -1,21 +1,24 @@
 package com.sones.facebook.controller.searcher;
 
+import java.util.Date;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.sones.facebook.gui.searcher.KeywordCreatorFrame;
 import com.sones.facebook.gui.searcher.KeywordSelectorFrame;
+import com.sones.facebook.keywordSearcher.logic.IKeywordSearcherManagerService;
 import com.sones.facebook.keywordSearcher.logic.IKeywordSearcherService;
 import com.sones.facebook.keywordSearcher.logic.KeywordSearcherService;
 import com.sones.facebook.keywordSearcher.logic.retriever.IDataRetriever;
 import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
-import com.sones.usermanager.model.ApplicationUser;
 
 public class SearcherMainController 
 {
 	private KeywordCreatorFrame creatorFrame;
 	private KeywordSelectorFrame selectorFrame;
-	private IKeywordSearcherService service;
+	private IKeywordSearcherService searcherService;
+	private IKeywordSearcherManagerService managerService;
 	
 	public SearcherMainController()
 	{
@@ -37,27 +40,31 @@ public class SearcherMainController
 	
 	public void search(String appUserID)
 	{
-		ApplicationUser appUser = new ApplicationUser();
-		appUser.setId(appUserID);
-		service.searchForKeywordsIntoAllFacebookPostTypes(appUser);
+		Date date = new Date(0);
+		managerService.startKeywordSearch(appUserID, date);
 	}
 	
 	private void initializeService()
 	{
-		ApplicationContext context = new ClassPathXmlApplicationContext("KeywordSearcher/spring-keywordSearcher-service.xml");
-		service = (KeywordSearcherService) context.getBean("keywordSearcherService");
+		ApplicationContext context = new ClassPathXmlApplicationContext("KeywordSearcher/spring-keywordSearcher-service.xml", "KeywordSearcher/spring-searcher-manager-service.xml");
+		searcherService = (KeywordSearcherService) context.getBean("keywordSearcherService");
 		IDataRetriever checkinRet = (IDataRetriever) context.getBean("checkinDataRetriever");
 		IDataRetriever statusRet = (IDataRetriever) context.getBean("statusMessageDataRetriever");
 		IDataRetriever linkRet = (IDataRetriever) context.getBean("linkDataRetriever");
 		IDataRetriever photoRet = (IDataRetriever) context.getBean("photoDataRetriever");
 		IDataRetriever videoRet = (IDataRetriever) context.getBean("videoDataRetriever");
 		IDataRetriever noteRet = (IDataRetriever) context.getBean("noteDataRetriever");
-		service.addDataRetriever(checkinRet);
-		service.addDataRetriever(statusRet);
-		service.addDataRetriever(linkRet);
-		service.addDataRetriever(photoRet);
-		service.addDataRetriever(videoRet);
-		service.addDataRetriever(noteRet);
+		searcherService.addDataRetriever(checkinRet);
+		searcherService.addDataRetriever(statusRet);
+		searcherService.addDataRetriever(linkRet);
+		searcherService.addDataRetriever(photoRet);
+		searcherService.addDataRetriever(videoRet);
+		searcherService.addDataRetriever(noteRet);
+		managerService = (IKeywordSearcherManagerService) context.getBean("keywordSearcherManagerService");
+		managerService.setSearchService(searcherService);
+	}
 
+	public IKeywordSearcherManagerService getService() {
+		return managerService;
 	}
 }
