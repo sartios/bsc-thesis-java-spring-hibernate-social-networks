@@ -16,9 +16,8 @@ import java.util.Set;
 import javax.swing.DefaultListModel;
 
 import com.sones.facebook.controller.searcher.KeywordSelectorController;
-import com.sones.facebook.keywordSearcher.model.Keyword;
 import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
-import com.sones.usermanager.model.ApplicationUser;
+import javax.swing.JButton;
 
 public class KeywordSelectorFrame extends JFrame {
 
@@ -37,6 +36,7 @@ public class KeywordSelectorFrame extends JFrame {
 	private DefaultListModel createdKeywords = new DefaultListModel();;
 	private KeywordSelectorController controller = null;
 	private ApplicationUserViewDto userDto;
+	private JButton jCloseButton = null;
 
 	/**
 	 * This is the default constructor
@@ -66,6 +66,11 @@ public class KeywordSelectorFrame extends JFrame {
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			GridBagConstraints gridBagConstraints11 = new GridBagConstraints();
+			gridBagConstraints11.gridx = 1;
+			gridBagConstraints11.anchor = GridBagConstraints.SOUTHEAST;
+			gridBagConstraints11.insets = new Insets(0, 0, 0, 10);
+			gridBagConstraints11.gridy = 1;
 			GridBagConstraints gridBagConstraints1 = new GridBagConstraints();
 			gridBagConstraints1.fill = GridBagConstraints.BOTH;
 			gridBagConstraints1.weighty = 1.0;
@@ -82,6 +87,7 @@ public class KeywordSelectorFrame extends JFrame {
 			jContentPane.setLayout(new GridBagLayout());
 			jContentPane.add(getJUserKeywordScrollPane(), gridBagConstraints);
 			jContentPane.add(getJSelectedKeywordScrollPane(), gridBagConstraints1);
+			jContentPane.add(getJCloseButton(), gridBagConstraints11);
 		}
 		return jContentPane;
 	}
@@ -250,6 +256,25 @@ public class KeywordSelectorFrame extends JFrame {
 	 */
 	public ApplicationUserViewDto getUserDto() {
 		return userDto;
+	}
+
+	/**
+	 * This method initializes jCloseButton	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJCloseButton() {
+		if (jCloseButton == null) {
+			jCloseButton = new JButton();
+			jCloseButton.setText("Close");
+			jCloseButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					show(false);
+				}
+			});
+		}
+		return jCloseButton;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"
