@@ -9,29 +9,28 @@ import javax.swing.JMenuItem;
 
 import com.sones.facebook.controller.searcher.SearcherMainController;
 import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
-import com.sones.usermanager.model.ApplicationUser;
 
 public class SearcherMainFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private JMenuBar jJMenuBar = null;
-	private JMenu jMenu = null;
-	private JMenuItem jMenuItem = null;
-	private JMenu jMenu1 = null;
-	private JMenuItem jMenuItem1 = null;
-	private JMenuItem jMenuItem2 = null;
-	private JMenu jMenu2 = null;
-	private JMenu jMenu3 = null;
-	private JMenuItem jMenuItem3 = null;
-	private JMenuItem jMenuItem4 = null;
+	private JMenu jCreateMenu = null;
+	private JMenuItem jCreateKeywordMenuItem = null;
+	private JMenu jSelectMenu = null;
+	private JMenuItem jSelectKeywordMenuItem = null;
+	private JMenuItem jSelectLocationMenuItem = null;
+	private JMenu jKeywordSearchMenu = null;
+	private JMenu jSearchMenu = null;
+	private JMenuItem jStartSearchMenuItem = null;
+	private JMenuItem jStopSearchMenuItem = null;
 	private JMenu jMenu4 = null;
-	private JMenuItem jMenuItem5 = null;
 	private JMenuItem jMenuItem6 = null;
 	private JMenuItem jMenuItem7 = null;
-	private JMenuItem jMenuItem8 = null;
 	private SearcherMainController controller;
 	private ApplicationUserViewDto userDto;  //  @jve:decl-index=0:
+	private JMenuItem jCreateOptionMenuItem = null;
+	private KeywordSearcherIntervalFrame intervalFrame;
 	
 	/**
 	 * This is the default constructor
@@ -40,6 +39,8 @@ public class SearcherMainFrame extends JFrame {
 		super();
 		initialize();
 		controller = new SearcherMainController();
+		intervalFrame = new KeywordSearcherIntervalFrame();
+		intervalFrame.setControllerService(controller.getService());
 	}
 
 	/**
@@ -75,134 +76,134 @@ public class SearcherMainFrame extends JFrame {
 	private JMenuBar getJJMenuBar() {
 		if (jJMenuBar == null) {
 			jJMenuBar = new JMenuBar();
-			jJMenuBar.add(getJMenu());
-			jJMenuBar.add(getJMenu1());
-			jJMenuBar.add(getJMenu3());
+			jJMenuBar.add(getJCreateMenu());
+			jJMenuBar.add(getJSelectMenu());
+			jJMenuBar.add(getJSearchMenu());
 		}
 		return jJMenuBar;
 	}
 
 	/**
-	 * This method initializes jMenu	
+	 * This method initializes jCreateMenu	
 	 * 	
 	 * @return javax.swing.JMenu	
 	 */
-	private JMenu getJMenu() {
-		if (jMenu == null) {
-			jMenu = new JMenu();
-			jMenu.setText("Create");
-			jMenu.add(getJMenuItem());
+	private JMenu getJCreateMenu() {
+		if (jCreateMenu == null) {
+			jCreateMenu = new JMenu();
+			jCreateMenu.setText("Create");
+			jCreateMenu.add(getJCreateKeywordMenuItem());
+			jCreateMenu.add(getJCreateOptionMenuItem());
 		}
-		return jMenu;
+		return jCreateMenu;
 	}
 
 	/**
-	 * This method initializes jMenuItem	
+	 * This method initializes jCreateKeywordMenuItem	
 	 * 	
 	 * @return javax.swing.JMenuItem	
 	 */
-	private JMenuItem getJMenuItem() {
-		if (jMenuItem == null) {
-			jMenuItem = new JMenuItem();
-			jMenuItem.setText("Keyword");
-			jMenuItem.addActionListener(new java.awt.event.ActionListener() {
+	private JMenuItem getJCreateKeywordMenuItem() {
+		if (jCreateKeywordMenuItem == null) {
+			jCreateKeywordMenuItem = new JMenuItem();
+			jCreateKeywordMenuItem.setText("Keyword");
+			jCreateKeywordMenuItem.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
 					controller.createKeywords();
 				}
 			});
 		}
-		return jMenuItem;
+		return jCreateKeywordMenuItem;
 	}
 
 	/**
-	 * This method initializes jMenu1	
+	 * This method initializes jSelectMenu	
 	 * 	
 	 * @return javax.swing.JMenu	
 	 */
-	private JMenu getJMenu1() {
-		if (jMenu1 == null) {
-			jMenu1 = new JMenu();
-			jMenu1.setText("Select");
-			jMenu1.add(getJMenuItem1());
-			jMenu1.add(getJMenuItem2());
+	private JMenu getJSelectMenu() {
+		if (jSelectMenu == null) {
+			jSelectMenu = new JMenu();
+			jSelectMenu.setText("Select");
+			jSelectMenu.add(getJSelectKeywordMenuItem());
+			jSelectMenu.add(getJSelectLocationMenuItem());
 		}
-		return jMenu1;
+		return jSelectMenu;
 	}
 
 	/**
-	 * This method initializes jMenuItem1	
+	 * This method initializes jSelectKeywordMenuItem	
 	 * 	
 	 * @return javax.swing.JMenuItem	
 	 */
-	private JMenuItem getJMenuItem1() {
-		if (jMenuItem1 == null) {
-			jMenuItem1 = new JMenuItem();
-			jMenuItem1.setText("Keyword");
-			jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+	private JMenuItem getJSelectKeywordMenuItem() {
+		if (jSelectKeywordMenuItem == null) {
+			jSelectKeywordMenuItem = new JMenuItem();
+			jSelectKeywordMenuItem.setText("Keyword");
+			jSelectKeywordMenuItem.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
 					controller.selectKeywords(userDto);
 				}
 			});
 		}
-		return jMenuItem1;
+		return jSelectKeywordMenuItem;
 	}
 
 	/**
-	 * This method initializes jMenuItem2	
+	 * This method initializes jSelectLocationMenuItem	
 	 * 	
 	 * @return javax.swing.JMenuItem	
 	 */
-	private JMenuItem getJMenuItem2() {
-		if (jMenuItem2 == null) {
-			jMenuItem2 = new JMenuItem();
-			jMenuItem2.setText("Location");
+	private JMenuItem getJSelectLocationMenuItem() {
+		if (jSelectLocationMenuItem == null) {
+			jSelectLocationMenuItem = new JMenuItem();
+			jSelectLocationMenuItem.setText("Location");
 		}
-		return jMenuItem2;
+		return jSelectLocationMenuItem;
 	}
 
 	/**
-	 * This method initializes jMenu2	
+	 * This method initializes jKeywordSearchMenu	
 	 * 	
 	 * @return javax.swing.JMenu	
 	 */
-	private JMenu getJMenu2() {
-		if (jMenu2 == null) {
-			jMenu2 = new JMenu();
-			jMenu2.setText("Keyword ...");
-			jMenu2.add(getJMenuItem3());
-			jMenu2.add(getJMenuItem4());
-			jMenu2.add(getJMenuItem5());
+	private JMenu getJKeywordSearchMenu() {
+		if (jKeywordSearchMenu == null) {
+			jKeywordSearchMenu = new JMenu();
+			jKeywordSearchMenu.setText("Keyword ...");
+			jKeywordSearchMenu.add(getJStartSearchMenuItem());
+			jKeywordSearchMenu.add(getJStopSearchMenuItem());
 		}
-		return jMenu2;
+		return jKeywordSearchMenu;
 	}
 
 	/**
-	 * This method initializes jMenu3	
+	 * This method initializes jSearchMenu	
 	 * 	
 	 * @return javax.swing.JMenu	
 	 */
-	private JMenu getJMenu3() {
-		if (jMenu3 == null) {
-			jMenu3 = new JMenu();
-			jMenu3.setText("Search");
-			jMenu3.add(getJMenu2());
-			jMenu3.add(getJMenu4());
+	private JMenu getJSearchMenu() {
+		if (jSearchMenu == null) {
+			jSearchMenu = new JMenu();
+			jSearchMenu.setText("Search");
+			jSearchMenu.add(getJKeywordSearchMenu());
+			jSearchMenu.add(getJMenu4());
 		}
-		return jMenu3;
+		return jSearchMenu;
 	}
 
 	/**
-	 * This method initializes jMenuItem3	
+	 * This method initializes jStartSearchMenuItem	
 	 * 	
 	 * @return javax.swing.JMenuItem	
 	 */
-	private JMenuItem getJMenuItem3() {
-		if (jMenuItem3 == null) {
-			jMenuItem3 = new JMenuItem();
-			jMenuItem3.setText("Start");
-			jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+	private JMenuItem getJStartSearchMenuItem() {
+		if (jStartSearchMenuItem == null) {
+			jStartSearchMenuItem = new JMenuItem();
+			jStartSearchMenuItem.setText("Start");
+			jStartSearchMenuItem.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
 					String appUser = userDto.getUserID();
@@ -210,20 +211,20 @@ public class SearcherMainFrame extends JFrame {
 				}
 			});
 		}
-		return jMenuItem3;
+		return jStartSearchMenuItem;
 	}
 
 	/**
-	 * This method initializes jMenuItem4	
+	 * This method initializes jStopSearchMenuItem	
 	 * 	
 	 * @return javax.swing.JMenuItem	
 	 */
-	private JMenuItem getJMenuItem4() {
-		if (jMenuItem4 == null) {
-			jMenuItem4 = new JMenuItem();
-			jMenuItem4.setText("Stop");
+	private JMenuItem getJStopSearchMenuItem() {
+		if (jStopSearchMenuItem == null) {
+			jStopSearchMenuItem = new JMenuItem();
+			jStopSearchMenuItem.setText("Stop");
 		}
-		return jMenuItem4;
+		return jStopSearchMenuItem;
 	}
 
 	/**
@@ -237,22 +238,8 @@ public class SearcherMainFrame extends JFrame {
 			jMenu4.setText("Location ...");
 			jMenu4.add(getJMenuItem6());
 			jMenu4.add(getJMenuItem7());
-			jMenu4.add(getJMenuItem8());
 		}
 		return jMenu4;
-	}
-
-	/**
-	 * This method initializes jMenuItem5	
-	 * 	
-	 * @return javax.swing.JMenuItem	
-	 */
-	private JMenuItem getJMenuItem5() {
-		if (jMenuItem5 == null) {
-			jMenuItem5 = new JMenuItem();
-			jMenuItem5.setText("Options");
-		}
-		return jMenuItem5;
 	}
 
 	/**
@@ -282,23 +269,11 @@ public class SearcherMainFrame extends JFrame {
 	}
 
 	/**
-	 * This method initializes jMenuItem8	
-	 * 	
-	 * @return javax.swing.JMenuItem	
-	 */
-	private JMenuItem getJMenuItem8() {
-		if (jMenuItem8 == null) {
-			jMenuItem8 = new JMenuItem();
-			jMenuItem8.setText("Options");
-		}
-		return jMenuItem8;
-	}
-
-	/**
 	 * @param userDto the userDto to set
 	 */
 	public void setUserDto(ApplicationUserViewDto userDto) {
 		this.userDto = new ApplicationUserViewDto(userDto);
+		intervalFrame.setUserDto(userDto);
 	}
 
 	/**
@@ -306,6 +281,25 @@ public class SearcherMainFrame extends JFrame {
 	 */
 	public ApplicationUserViewDto getUserDto() {
 		return userDto;
+	}
+
+	/**
+	 * This method initializes jCreateOptionMenuItem	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJCreateOptionMenuItem() {
+		if (jCreateOptionMenuItem == null) {
+			jCreateOptionMenuItem = new JMenuItem();
+			jCreateOptionMenuItem.setText("Option");
+			jCreateOptionMenuItem.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					intervalFrame.show();
+				}
+			});
+		}
+		return jCreateOptionMenuItem;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

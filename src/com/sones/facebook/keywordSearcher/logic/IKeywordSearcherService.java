@@ -21,7 +21,7 @@ public interface IKeywordSearcherService
 	 * The results are saved.
 	 * @param appUser - The user for who the search is running.
 	 */
-	public	void	searchForKeywordsIntoAllFacebookPostTypes( ApplicationUser appUser );
+	public void searchForKeywordsIntoAllFacebookPostTypes( ApplicationUser appUser );
 
 	/**
 	 * Searches for keywords into facebook status messages that were downloaded by the user
@@ -29,7 +29,7 @@ public interface IKeywordSearcherService
 	 * The results are saved.
 	 * @param appUser - The user for who the search is running.
 	 */
-	public	void	searchForKeywordsIntoStatusMessages( ApplicationUser appUser, Date date );
+	public void searchForKeywordsIntoStatusMessages( ApplicationUser appUser, Date date );
 	
 	/**
 	 * Searches for keywords into facebook links that were downloaded by the user
@@ -37,7 +37,7 @@ public interface IKeywordSearcherService
 	 * The results are saved.
 	 * @param appUser - The user for who the search is running.
 	 */
-	public	void	searchForKeywordsIntoLinks( ApplicationUser appUser, Date date );
+	public void searchForKeywordsIntoLinks( ApplicationUser appUser, Date date );
 	
 	/**
 	 * Searches for keywords into facebook checkins that were downloaded by the user
@@ -45,7 +45,7 @@ public interface IKeywordSearcherService
 	 * The results are saved.
 	 * @param appUser - The user for who the search is running.
 	 */
-	public	void	searchForKeywordsIntoCheckins( ApplicationUser appUser, Date date );
+	public void searchForKeywordsIntoCheckins( ApplicationUser appUser, Date date );
 	
 	/**
 	 * Searches for keywords into facebook photos that were downloaded by the user
@@ -53,7 +53,7 @@ public interface IKeywordSearcherService
 	 * The results are saved.
 	 * @param appUser - The user for who the search is running.
 	 */
-	public	void	searchForKeywordsIntoPhotos( ApplicationUser appUser, Date date );
+	public void searchForKeywordsIntoPhotos( ApplicationUser appUser, Date date );
 	
 	/**
 	 * Searches for keywords into facebook notes that were downloaded by the user
@@ -61,7 +61,7 @@ public interface IKeywordSearcherService
 	 * The results are saved.
 	 * @param appUser - The user for who the search is running.
 	 */
-	public	void	searchForKeywordsIntoNotes( ApplicationUser appUser, Date date );
+	public void searchForKeywordsIntoNotes( ApplicationUser appUser, Date date );
 	
 	/**
 	 * Searches for keywords into facebook videos that were downloaded by the user
@@ -69,11 +69,16 @@ public interface IKeywordSearcherService
 	 * The results are saved.
 	 * @param appUser - The user for who the search is running.
 	 */
-	public	void	searchForKeywordsIntoVideos( ApplicationUser appUser, Date date );
+	public void searchForKeywordsIntoVideos( ApplicationUser appUser, Date date );
 	
 	/**
 	 * Adds a data retriever into the internal collection of retrievers.
 	 * @param dataRetriever to be added.
 	 */
-	public	void	addDataRetriever( IDataRetriever dataRetriever );
+	public void addDataRetriever( IDataRetriever dataRetriever );
+	
+	/**
+	 * Sets the date after which will retrieve data to search.
+	 */
+	public void setNextDateAfterWhichWillRetrieveData(Date date);
 }

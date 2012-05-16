@@ -61,5 +61,6 @@
   <mapping class="com.sones.facebook.downloader.model.FacebookAccountFriend"/>
   <mapping class="com.sones.facebook.downloader.model.FacebookAccountFriendId"/>
   <mapping class="com.sones.facebook.downloader.model.FacebookFriend"/>
+  <mapping class="com.sones.facebook.keywordSearcher.model.KeywordSearchOption"/>
  </session-factory>
 </hibernate-configuration>
