@@ -3,6 +3,7 @@ package com.sones.facebook.keywordSearcher.logic;
 import java.util.Date;
 
 import com.sones.facebook.keywordSearcher.logic.retriever.IDataRetriever;
+import com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchDto;
 import com.sones.usermanager.model.ApplicationUser;
 
 /**

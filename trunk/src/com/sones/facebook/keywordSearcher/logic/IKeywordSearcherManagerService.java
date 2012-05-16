@@ -9,4 +9,5 @@ public interface IKeywordSearcherManagerService
 	void saveOptions(String appUserId, String interval);
 	void startKeywordSearch(String appUserId, Date date);
 	void setSearchService(IKeywordSearcherService service);
+	String getSearchInterval(String appUserId);
 }

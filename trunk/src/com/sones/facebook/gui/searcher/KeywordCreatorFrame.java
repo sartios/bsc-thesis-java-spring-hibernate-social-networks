@@ -18,10 +18,11 @@ public class KeywordCreatorFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
-	private JLabel jLabel = null;
+	private JLabel jKeywordLabel = null;
 	private JTextField jKeywordTextField = null;
-	private JButton jButton = null;
+	private JButton jCreateButton = null;
 	private KeywordCreatorController controller;
+	private JButton jCloseButton = null;
 
 	/**
 	 * This is the default constructor
@@ -50,6 +51,11 @@ public class KeywordCreatorFrame extends JFrame {
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			GridBagConstraints gridBagConstraints21 = new GridBagConstraints();
+			gridBagConstraints21.gridx = 2;
+			gridBagConstraints21.anchor = GridBagConstraints.SOUTHEAST;
+			gridBagConstraints21.insets = new Insets(0, 10, 0, 5);
+			gridBagConstraints21.gridy = 1;
 			GridBagConstraints gridBagConstraints2 = new GridBagConstraints();
 			gridBagConstraints2.gridx = 1;
 			gridBagConstraints2.ipadx = 6;
@@ -66,13 +72,14 @@ public class KeywordCreatorFrame extends JFrame {
 			GridBagConstraints gridBagConstraints = new GridBagConstraints();
 			gridBagConstraints.gridx = 0;
 			gridBagConstraints.gridy = 0;
-			jLabel = new JLabel();
-			jLabel.setText("Enter keyword value:");
+			jKeywordLabel = new JLabel();
+			jKeywordLabel.setText("Enter keyword value:");
 			jContentPane = new JPanel();
 			jContentPane.setLayout(new GridBagLayout());
-			jContentPane.add(jLabel, gridBagConstraints);
+			jContentPane.add(jKeywordLabel, gridBagConstraints);
 			jContentPane.add(getJKeywordTextField(), gridBagConstraints1);
-			jContentPane.add(getJButton(), gridBagConstraints2);
+			jContentPane.add(getJCreateButton(), gridBagConstraints2);
+			jContentPane.add(getJCloseButton(), gridBagConstraints21);
 		}
 		return jContentPane;
 	}
@@ -90,24 +97,43 @@ public class KeywordCreatorFrame extends JFrame {
 	}
 
 	/**
-	 * This method initializes jButton	
+	 * This method initializes jCreateButton	
 	 * 	
 	 * @return javax.swing.JButton	
 	 */
-	private JButton getJButton() {
-		if (jButton == null) {
-			jButton = new JButton();
-			jButton.setText("Create");
-			jButton.addActionListener(new java.awt.event.ActionListener() {
+	private JButton getJCreateButton() {
+		if (jCreateButton == null) {
+			jCreateButton = new JButton();
+			jCreateButton.setText("Create");
+			jCreateButton.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					System.out.println("actionPerformed() for create button"); // TODO Auto-generated Event stub actionPerformed()
 					String keyword = jKeywordTextField.getText();
 					controller.createKeyword(keyword);
 					jKeywordTextField.setText("");
 				}
 			});
 		}
-		return jButton;
+		return jCreateButton;
+	}
+
+	/**
+	 * This method initializes jCloseButton	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJCloseButton() {
+		if (jCloseButton == null) {
+			jCloseButton = new JButton();
+			jCloseButton.setText("Close");
+			jCloseButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed() for close button"); // TODO Auto-generated Event stub actionPerformed()
+					show(false);
+				}
+			});
+		}
+		return jCloseButton;
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

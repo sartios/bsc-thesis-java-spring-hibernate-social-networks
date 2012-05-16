@@ -3,12 +3,19 @@ package com.sones.facebook.gui.searcher;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.GridBagLayout;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import com.sones.facebook.controller.searcher.SearcherMainController;
 import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
+import java.awt.GridBagConstraints;
+import javax.swing.JTabbedPane;
+import javax.swing.JList;
+import java.awt.Insets;
+import javax.swing.JButton;
 
 public class SearcherMainFrame extends JFrame {
 
@@ -31,6 +38,12 @@ public class SearcherMainFrame extends JFrame {
 	private ApplicationUserViewDto userDto;  //  @jve:decl-index=0:
 	private JMenuItem jCreateOptionMenuItem = null;
 	private KeywordSearcherIntervalFrame intervalFrame;
+	private JTabbedPane jTabbedPane = null;
+	private JList jKeywordList = null;
+	private JList jOptionList = null;
+	private DefaultListModel keywordModel = new DefaultListModel();
+	private DefaultListModel keywordOptionsModels = new DefaultListModel();
+	private JButton jButton = null;
 	
 	/**
 	 * This is the default constructor
@@ -49,7 +62,7 @@ public class SearcherMainFrame extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
-		this.setSize(583, 282);
+		this.setSize(363, 282);
 		this.setJMenuBar(getJJMenuBar());
 		this.setContentPane(getJContentPane());
 		this.setTitle("Searcher Main Window");
@@ -62,8 +75,22 @@ public class SearcherMainFrame extends JFrame {
 	 */
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
+			GridBagConstraints gridBagConstraints3 = new GridBagConstraints();
+			gridBagConstraints3.gridx = 0;
+			gridBagConstraints3.anchor = GridBagConstraints.SOUTH;
+			gridBagConstraints3.insets = new Insets(0, 0, 0, 75);
+			gridBagConstraints3.gridy = 1;
+			GridBagConstraints gridBagConstraints = new GridBagConstraints();
+			gridBagConstraints.fill = GridBagConstraints.BOTH;
+			gridBagConstraints.gridy = 0;
+			gridBagConstraints.weightx = 1.0;
+			gridBagConstraints.weighty = 1.0;
+			gridBagConstraints.insets = new Insets(10, 30, 10, 135);
+			gridBagConstraints.gridx = 0;
 			jContentPane = new JPanel();
 			jContentPane.setLayout(new GridBagLayout());
+			jContentPane.add(getJTabbedPane(), gridBagConstraints);
+			jContentPane.add(getJButton(), gridBagConstraints3);
 		}
 		return jContentPane;
 	}
@@ -300,6 +327,85 @@ public class SearcherMainFrame extends JFrame {
 			});
 		}
 		return jCreateOptionMenuItem;
+	}
+
+	/**
+	 * This method initializes jTabbedPane	
+	 * 	
+	 * @return javax.swing.JTabbedPane	
+	 */
+	private JTabbedPane getJTabbedPane() {
+		if (jTabbedPane == null) {
+			jTabbedPane = new JTabbedPane();
+			jTabbedPane.addTab("Keywords", null, getJKeywordList(), null);
+			jTabbedPane.addTab("Options", null, getJOptionList(), null);
+		}
+		return jTabbedPane;
+	}
+
+	/**
+	 * This method initializes jKeywordList	
+	 * 	
+	 * @return javax.swing.JList	
+	 */
+	private JList getJKeywordList() {
+		if (jKeywordList == null) {
+			jKeywordList = new JList();
+			jKeywordList.setModel(keywordModel);
+		}
+		return jKeywordList;
+	}
+
+	/**
+	 * This method initializes jOptionList	
+	 * 	
+	 * @return javax.swing.JList	
+	 */
+	private JList getJOptionList() {
+		if (jOptionList == null) {
+			jOptionList = new JList();
+			jOptionList.setModel(keywordOptionsModels);
+		}
+		return jOptionList;
+	}
+	
+	private void showKeywords()
+	{
+		keywordModel.setSize(0);
+		String applicationUserId = userDto.getUserID();
+		Iterable<String> keywords = controller.getKeywords(applicationUserId);
+		for(String keyword : keywords)
+		{
+			keywordModel.addElement(keyword);
+		}
+	}
+
+	/**
+	 * This method initializes jButton	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJButton() {
+		if (jButton == null) {
+			jButton = new JButton();
+			jButton.setText("Load");
+			jButton.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed() for load button"); // TODO Auto-generated Event stub actionPerformed()
+					showKeywords();
+					showOptions();
+				}
+			});
+		}
+		return jButton;
+	}
+	
+	private void showOptions()
+	{
+		keywordOptionsModels.setSize(0);
+		String appUserId = userDto.getUserID();
+		String options = controller.getOptions(appUserId);
+		keywordOptionsModels.addElement(options);
 	}
 
 }  //  @jve:decl-index=0:visual-constraint="10,10"

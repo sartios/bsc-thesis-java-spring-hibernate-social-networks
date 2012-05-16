@@ -1,6 +1,10 @@
 package com.sones.facebook.controller.searcher;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -10,8 +14,11 @@ import com.sones.facebook.gui.searcher.KeywordSelectorFrame;
 import com.sones.facebook.keywordSearcher.logic.IKeywordSearcherManagerService;
 import com.sones.facebook.keywordSearcher.logic.IKeywordSearcherService;
 import com.sones.facebook.keywordSearcher.logic.KeywordSearcherService;
+import com.sones.facebook.keywordSearcher.logic.keyword.retriever.IApplicationUserKeywordRetriever;
 import com.sones.facebook.keywordSearcher.logic.retriever.IDataRetriever;
+import com.sones.sharedDto.facebook.keywordSearcher.KeywordSearchDto;
 import com.sones.sharedDto.usermanager.ApplicationUserViewDto;
+import com.sones.usermanager.model.ApplicationUser;
 
 public class SearcherMainController 
 {
@@ -19,6 +26,7 @@ public class SearcherMainController
 	private KeywordSelectorFrame selectorFrame;
 	private IKeywordSearcherService searcherService;
 	private IKeywordSearcherManagerService managerService;
+	private IApplicationUserKeywordRetriever keywordRetriever;
 	
 	public SearcherMainController()
 	{
@@ -62,9 +70,29 @@ public class SearcherMainController
 		searcherService.addDataRetriever(noteRet);
 		managerService = (IKeywordSearcherManagerService) context.getBean("keywordSearcherManagerService");
 		managerService.setSearchService(searcherService);
+		keywordRetriever = (IApplicationUserKeywordRetriever) context.getBean("keywordRetriever");
 	}
 
 	public IKeywordSearcherManagerService getService() {
 		return managerService;
+	}
+
+	public Iterable<String> getKeywords(String applicationUserId) 
+	{
+		ApplicationUser appUser = new ApplicationUser();
+		appUser.setId(applicationUserId);
+		Iterable<KeywordSearchDto> keywords = keywordRetriever.getApplicationUserKeywords(appUser);
+		Set<String> keywordValues = new HashSet<String>();
+		for(KeywordSearchDto keyword : keywords)
+		{
+			String value = keyword.getValue();
+			keywordValues.add(value);
+		}
+		return keywordValues;
+	}
+
+	public String getOptions(String appUserId) 
+	{
+		return managerService.getSearchInterval(appUserId);
 	}
 }

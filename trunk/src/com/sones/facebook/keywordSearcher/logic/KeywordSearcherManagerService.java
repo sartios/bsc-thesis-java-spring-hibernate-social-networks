@@ -112,5 +112,24 @@ public class KeywordSearcherManagerService implements IKeywordSearcherManagerSer
 	{
 		this.service = service;
 	}
+
+	@Override
+	public String getSearchInterval(String appUserId) 
+	{
+		ApplicationUser appUser = appUserDao.GetById(appUserId);
+		if(appUser == null)
+		{
+			_LOGGER.error("Application user doesn't exist.");
+			throw new NullPointerException("Application user doesn't exist");
+		}
+		
+		KeywordSearchOption option = optionDao.getByApplicationUser(appUser);
+		if(option == null)
+		{
+			_LOGGER.error("Application user hasn't set option.");
+			throw new NullPointerException("Application user hasn't set option.");
+		}
+		return option.getInterval();
+	}
 	
 }

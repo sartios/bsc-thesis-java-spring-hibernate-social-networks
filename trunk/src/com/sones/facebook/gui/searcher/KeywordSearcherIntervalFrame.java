@@ -20,7 +20,7 @@ public class KeywordSearcherIntervalFrame extends JFrame {
 	private JLabel jIntervalLabel = null;
 	private JTextField jIntervalTextField = null;
 	private JButton jSaveButton = null;
-	private KeywordSearcherIntervalController controller;
+	private KeywordSearcherIntervalController controller;  //  @jve:decl-index=0:
 	private ApplicationUserViewDto userDto;
 
 	/**
@@ -102,7 +102,11 @@ public class KeywordSearcherIntervalFrame extends JFrame {
 					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
 					String interval = jIntervalTextField.getText();
 					String appUserId = userDto.getUserID();
-					controller.saveOptions(appUserId, interval);
+					boolean actionWasSucceed = controller.saveOptions(appUserId, interval);
+					if(actionWasSucceed)
+					{
+						show(false);
+					}
 				}
 			});
 		}
